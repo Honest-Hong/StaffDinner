@@ -92,7 +92,23 @@ public interface AdminService {
     @GET("/admin/{id}/contact")
     Call<ArrayList<ContactDTO>> getContacts(@Path("id") String id);
 
+    /**
+     * 사진 업로드 요청
+     * @param id 식당 로그인 아이디
+     * @param type 식당 로그인 타입
+     * @param file 이미지 파일
+     * @return 성공시 1 반환
+     */
     @Multipart
     @POST("/admin/{id}/image/{type}")
     Call<ResultIntDTO> setImage(@Path("id") String id, @Path("type") int type, @Part MultipartBody.Part file);
+
+    /**
+     * 신청서에 작성한 견적서 존재 유무 확인 요청
+     * @param id 식당 로그인 아이디
+     * @param appId 신청서 아이디
+     * @return 존재할 경우 1 반환
+     */
+    @GET("/admin/{id}/estimate/{appId}")
+    Call<ResultIntDTO> existEstimate(@Path("id") String id, @Path("appId") String appId);
 }

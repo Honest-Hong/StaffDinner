@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,10 +14,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.project.boostcamp.publiclibrary.api.DataReceiver;
+import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.AdminApplication;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
+import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
+import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.TimeHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 
@@ -24,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ApplicationActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
+public class ApplicationDetailActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
     private AdminApplication application;
     @BindView(R.id.tool_bar) Toolbar toolbar;
     @BindView(R.id.text_name) TextView textName;
@@ -94,12 +99,27 @@ public class ApplicationActivity extends AppCompatActivity implements OnMapReady
 
     @OnClick(R.id.button_send)
     public void checkEstimate() {
-        // TODO: 2017-07-31 견적서를 이미 작성했는지 확인해야함.
-        boolean alreadyWrited = false;
-        if(!alreadyWrited) {
-            showWriteEstimateActivity();
-        }
+        String id = SharedPreperenceHelper.getInstance(this).getLoginId();
+        String appId = application.getId();
+        RetrofitAdmin.getInstance().existEstimate(id, appId, existEstimateReceiver);
     }
+
+    private DataReceiver<ResultIntDTO> existEstimateReceiver = new DataReceiver<ResultIntDTO>() {
+        @Override
+        public void onReceive(ResultIntDTO data) {
+            if(data.getResult() == 0) {
+                showWriteEstimateActivity();
+            } else {
+                Toast.makeText(ApplicationDetailActivity.this, "이미 견적서를 작성하였습니다", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+
+        @Override
+        public void onFail() {
+            Toast.makeText(ApplicationDetailActivity.this, "서버에 오류가 발생하였습니다", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     private void showWriteEstimateActivity() {
         Intent intent = new Intent(this, WriteEstimateActivity.class);

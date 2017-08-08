@@ -18,7 +18,7 @@ import com.project.boostcamp.publiclibrary.domain.AdminApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.GeoDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
-import com.project.boostcamp.staffdinnerrestraurant.activity.ApplicationActivity;
+import com.project.boostcamp.staffdinnerrestraurant.activity.ApplicationDetailActivity;
 import com.project.boostcamp.staffdinnerrestraurant.adapter.ApplicationAdapter;
 
 import java.util.ArrayList;
@@ -64,7 +64,7 @@ public class ApplicationFragment extends Fragment {
     private DataEvent<AdminApplication> dataEvent = new DataEvent<AdminApplication>() {
         @Override
         public void onClick(AdminApplication data) {
-            Intent intent = new Intent(getContext(), ApplicationActivity.class);
+            Intent intent = new Intent(getContext(), ApplicationDetailActivity.class);
             intent.putExtra(AdminApplication.class.getName(), data);
             startActivity(intent);
         }

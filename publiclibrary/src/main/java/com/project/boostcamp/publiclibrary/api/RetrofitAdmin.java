@@ -113,4 +113,20 @@ public class RetrofitAdmin {
             }
         });
     }
+
+    public void existEstimate(String id, String appId, final DataReceiver<ResultIntDTO> dataReceiver) {
+        adminService.existEstimate(id, appId).enqueue(new Callback<ResultIntDTO>() {
+            @Override
+            public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
+                Log.d("HTJ", "[Admin] existEstimate onResponse: " + new Gson().toJson(response.body()));
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResultIntDTO> call, Throwable t) {
+                t.printStackTrace();
+                dataReceiver.onFail();
+            }
+        });
+    }
 }

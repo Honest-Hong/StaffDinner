@@ -1,5 +1,6 @@
 package com.project.boostcamp.staffdinner.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,7 @@ public class EmailSignUpActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private String id;
     private final int type = AccountType.TYPE_EMAIL;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class EmailSignUpActivity extends AppCompatActivity {
     @OnClick(R.id.button_next)
     public void doEmailSignUp() {
         if(checkValidate()) {
+            progressDialog = ProgressDialog.show(this, "", "잠시만 기다려주세요");
             final String email = editEmail.getText().toString();
             final String password = editPassword.getText().toString();
             auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -142,6 +145,9 @@ public class EmailSignUpActivity extends AppCompatActivity {
      * 회원가입 화면으로 이동하는 함수
      */
     private void moveJoinActivity() {
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+        }
         Intent intent = new Intent(EmailSignUpActivity.this, JoinActivity.class);
         intent.putExtra(ExtraType.EXTRA_ID, id);
         intent.putExtra(ExtraType.EXTRA_TYPE, type);

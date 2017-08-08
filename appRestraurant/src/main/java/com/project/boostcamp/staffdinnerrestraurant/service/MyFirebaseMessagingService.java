@@ -8,7 +8,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.project.boostcamp.publiclibrary.util.NotiHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
-import com.project.boostcamp.staffdinnerrestraurant.ui.activity.MainActivity;
+import com.project.boostcamp.staffdinnerrestraurant.activity.MainActivity;
 
 /**
  * Created by Hong Tae Joon on 2017-07-27.

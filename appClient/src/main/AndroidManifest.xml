@@ -51,7 +51,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.SplashActivity">
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -62,14 +62,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.JoinActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.JoinActivity" />
         <activity
-            android:name=".ui.activity.MainActivity"
-            android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".ui.activity.EstimateDetailActivity" />
-        <activity android:name=".ui.activity.ContactDetailActivity" />
-        <activity android:name=".ui.activity.MapDetailActivity" />
+            android:name=".activity.MainActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="singleTask"/>
+        <activity android:name=".activity.EstimateDetailActivity" />
+        <activity android:name=".activity.ContactDetailActivity" />
+        <activity android:name=".activity.MapDetailActivity" />
 
         <service android:name=".service.MyFirebaseInstanceIDService">
             <intent-filter>
@@ -82,7 +83,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.activity.EmailSignUpActivity"></activity>
+        <activity android:name=".activity.EmailSignUpActivity"></activity>
     </application>
 
 </manifest>

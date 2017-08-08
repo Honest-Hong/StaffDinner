@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/colorPrimary"
-    tools:context="com.project.boostcamp.staffdinner.ui.activity.EstimateDetailActivity">
+    tools:context=".activity.EstimateDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"

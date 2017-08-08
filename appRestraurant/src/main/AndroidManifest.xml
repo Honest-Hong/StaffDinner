@@ -53,13 +53,14 @@
         </activity>
         <!-- 페이스북 관련 -->
 
-        <activity android:name=".ui.activity.SplashActivity">
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".activity.MainActivity"
+            android:launchMode="singleTask"/>
 
         <service android:name=".service.MyFirebaseInstanceIDService">
             <intent-filter>
@@ -72,13 +73,13 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.activity.LoginActivity" />
-        <activity android:name=".ui.activity.JoinActivity" />
-        <activity android:name=".ui.activity.ApplicationActivity" />
-        <activity android:name=".ui.activity.WriteEstimateActivity" />
-        <activity android:name=".ui.activity.ContactDetailActivity" />
-        <activity android:name=".ui.activity.MapDetailActivity" />
-        <activity android:name=".ui.activity.EmailSignUpActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.JoinActivity" />
+        <activity android:name=".activity.ApplicationActivity" />
+        <activity android:name=".activity.WriteEstimateActivity" />
+        <activity android:name=".activity.ContactDetailActivity" />
+        <activity android:name=".activity.MapDetailActivity" />
+        <activity android:name=".activity.EmailSignUpActivity" />
     </application>
 
 </manifest>

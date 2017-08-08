@@ -1,17 +1,14 @@
 package com.project.boostcamp.staffdinner.service;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.project.boostcamp.publiclibrary.util.NotiHelper;
 import com.project.boostcamp.staffdinner.R;
-import com.project.boostcamp.staffdinner.ui.activity.MainActivity;
-import com.project.boostcamp.staffdinner.ui.activity.SplashActivity;
+import com.project.boostcamp.staffdinner.activity.MainActivity;
 
 /**
  * Created by Hong Tae Joon on 2017-07-27.

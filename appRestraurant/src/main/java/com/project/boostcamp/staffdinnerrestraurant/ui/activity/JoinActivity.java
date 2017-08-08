@@ -3,8 +3,10 @@ package com.project.boostcamp.staffdinnerrestraurant.ui.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -34,11 +36,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.Geo;
 import com.project.boostcamp.publiclibrary.domain.AdminJoinDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
+import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.util.EditTextHelper;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
@@ -47,6 +51,7 @@ import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.ui.dialog.ImageModeDialog;
 
+import java.io.File;
 import java.io.IOException;
 
 import butterknife.BindView;
@@ -78,6 +83,7 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     private Marker marker; // 신청서의 위치 지도 마커
     private String loginId;
     private int loginType;
+    private String imageFilePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,42 +119,69 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
      * 회원가입처리를 하는 함수
      */
     @OnClick(R.id.button_join)
-    public void doJoin() {
+    public void onJoinClick() {
         if(checkInvalidate()) {
-            final AdminJoinDTO admin = new AdminJoinDTO();
-            admin.setId(loginId);
-            admin.setType(loginType);
-            admin.setName(editName.getText().toString());
-            admin.setPhone(editPhone.getText().toString());
-            admin.setStyle(editStyle.getText().toString());
-            admin.setMenu(editMenu.getText().toString());
-            admin.setCost(Integer.parseInt(editCost.getText().toString()));
-            admin.setGeo(new Geo("Point", new double[]{
-                    googleMap.getCameraPosition().target.longitude,
-                    googleMap.getCameraPosition().target.latitude
-            }).toGeoDTO());
-            admin.setToken(FirebaseInstanceId.getInstance().getToken());
-
-            RetrofitAdmin.getInstance().adminService.join(admin).enqueue(new Callback<LoginDTO>() {
-                @Override
-                public void onResponse(Call<LoginDTO> call, Response<LoginDTO> response) {
-                    Log.d("HTJ", "join onResponse: " + response.body());
-                    if(response.body().getId() != null) {
-                        SharedPreperenceHelper.getInstance(JoinActivity.this).saveLogin(response.body());
-                        SharedPreperenceHelper.getInstance(JoinActivity.this).saveGeo(admin.getGeo());
-                        startMainActivity();
-                    } else {
-                        Log.e("HTJ", "fail to join");
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<LoginDTO> call, Throwable t) {
-                    Log.e("HTJ", "join onFailure: " + t.getMessage());
-                }
-            });
+            if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }, ExtraType.REQUEST_READ_PERMISSION);
+            } else {
+                doJoin();
+            }
         }
     }
+
+    private void doJoin() {
+        final AdminJoinDTO dto = getAdminFromText();
+        SharedPreperenceHelper.getInstance(JoinActivity.this).saveGeo(dto.getGeo());
+        RetrofitAdmin.getInstance().join(dto, joinDataReceiver);
+    }
+
+    private AdminJoinDTO getAdminFromText() {
+        AdminJoinDTO dto = new AdminJoinDTO();
+        dto.setId(loginId);
+        dto.setType(loginType);
+        dto.setName(editName.getText().toString());
+        dto.setPhone(editPhone.getText().toString());
+        dto.setStyle(editStyle.getText().toString());
+        dto.setMenu(editMenu.getText().toString());
+        dto.setCost(Integer.parseInt(editCost.getText().toString()));
+        dto.setGeo(new Geo("Point", new double[]{
+                googleMap.getCameraPosition().target.longitude,
+                googleMap.getCameraPosition().target.latitude
+        }).toGeoDTO());
+        dto.setToken(FirebaseInstanceId.getInstance().getToken());
+        return dto;
+    }
+
+    /**
+     * 회원가입 요청 결과
+     */
+    private DataReceiver<LoginDTO> joinDataReceiver = new DataReceiver<LoginDTO>() {
+        @Override
+        public void onReceive(LoginDTO data) {
+            SharedPreperenceHelper.getInstance(JoinActivity.this).saveLogin(data);
+            RetrofitAdmin.getInstance().setImage(data.getId(), data.getType(), new File(imageFilePath), setImageDataReceiver);
+        }
+
+        @Override
+        public void onFail() {
+            // 회원가입 실패
+        }
+    };
+
+    /**
+     * 이미지 업로드 요청 결과
+     */
+    private DataReceiver<ResultIntDTO> setImageDataReceiver =  new DataReceiver<ResultIntDTO>() {
+        @Override
+        public void onReceive(ResultIntDTO data) {
+                startMainActivity();
+            }
+
+        @Override
+        public void onFail() {
+            // 이미지 업로드 실패
+        }
+    };
 
     /**
      * 이미지를 가져오도록 알려주는 함수
@@ -288,17 +321,34 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
             if(resultCode == RESULT_OK) {
                 Bitmap photo = (Bitmap)data.getExtras().get("data");
                 imageTitle.setImageBitmap(photo);
+                imageFilePath = getFilePathFromUri(data.getData());
             }
         } else if(requestCode == ExtraType.REQUEST_PICUTRE) {
             if(resultCode == RESULT_OK) {
                 try {
                     Bitmap photo = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
                     imageTitle.setImageBitmap(photo);
+                    imageFilePath = getFilePathFromUri(data.getData());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+        } else if(requestCode == ExtraType.REQUEST_READ_PERMISSION) {
+            if(resultCode == RESULT_OK) {
+                doJoin();
+            }
         }
+        Log.d("HTJ", "imageFilePath: " + imageFilePath);
+    }
+
+    private String getFilePathFromUri(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String filePath = cursor.getString(column_index_data);
+        cursor.close();
+        return filePath;
     }
 
     @Override

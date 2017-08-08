@@ -20,4 +20,5 @@ public class ExtraType {
     public static final int REQUEST_LOCATION = 0x100;
     public static final int REQUEST_CAMERA = 0x101;
     public static final int REQUEST_PICUTRE = 0x102;
+    public static final int REQUEST_READ_PERMISSION = 0x103;
 }

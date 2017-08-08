@@ -54,14 +54,14 @@ public class LoginActivity extends AppCompatActivity {
         LoginManager.getInstance().registerCallback(callbackManager, callbackFacebook);
     }
 
-    @OnClick({R.id.text_kakao, R.id.text_facebook})
+    @OnClick({R.id.text_kakao, R.id.text_facebook, R.id.text_email})
     public void onLoginClick(TextView v) {
         if(v.getId() == R.id.text_kakao) {
             Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, this);
         } else if(v.getId() == R.id.text_facebook) {
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-        } else {
-            finish();
+        } else if(v.getId() == R.id.text_email){
+            startActivity(new Intent(this, EmailSignUpActivity.class));
         }
     }
 

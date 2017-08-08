@@ -73,4 +73,13 @@
     <string name="contact_time">계약 시간</string>
     <string name="default_time_pattern">yyyy.MM.dd HH:mm</string>
     <string name="help_empty">데이터가 존재하지 않습니다!</string>
+
+    <string name="email_sign_up_email_help">비밀번호를 잊었을 때 찾는 용도로 사용합니다.</string>
+    <string name="email_sign_up_email">이메일</string>
+    <string name="email_sign_up_password">비밀번호</string>
+    <string name="email_sign_up_password_help">비밀번호는 8자리 이상입니다.</string>
+    <string name="email_sign_up_password_confirm">비밀번호 확인</string>
+    <string name="email_sign_up_password_confirm_help">동일한 비밀번호를 한번더 입력해주세요.</string>
+    <string name="text_prev">이전</string>
+    <string name="text_next">다음</string>
 </resources>

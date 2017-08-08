@@ -8,11 +8,6 @@ import android.os.Parcelable;
  */
 
 public class Estimate implements Parcelable{
-    public static final int STATE_WATING = 0x0;
-    public static final int STATE_CONTACTED = 0x1;
-    public static final int STATE_FAILED = 0x2;
-    public static final int STATE_CANCELED = 0x3;
-
     private int id;
     private String applierName;
     private String restName;

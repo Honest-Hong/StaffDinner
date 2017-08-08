@@ -2,6 +2,7 @@ package com.project.boostcamp.staffdinnerrestraurant;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.kakao.auth.ApprovalType;
 import com.kakao.auth.AuthType;
@@ -73,5 +74,11 @@ public class GlobalApplication extends Application {
         super.onCreate();
         instance = this;
         KakaoSDK.init(new KakaoSDKAdapter());
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }

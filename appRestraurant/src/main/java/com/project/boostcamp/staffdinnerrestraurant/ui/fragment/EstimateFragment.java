@@ -82,6 +82,7 @@ public class EstimateFragment extends Fragment {
                 item.setClientName(data.get(i).getClient().getName());
                 item.setMessage(data.get(i).getMessage());
                 item.setWritedTime(data.get(i).getWritedTime());
+                item.setState(data.get(i).getState());
                 arr.add(item);
             }
             if(arr.size() > 0) {

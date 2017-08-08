@@ -2,6 +2,7 @@ package com.project.boostcamp.staffdinnerrestraurant.ui.adapter;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,7 +10,9 @@ import android.widget.TextView;
 import com.project.boostcamp.publiclibrary.data.AdminEstimate;
 import com.project.boostcamp.publiclibrary.data.DataEvent;
 import com.project.boostcamp.publiclibrary.data.Estimate;
+import com.project.boostcamp.publiclibrary.data.StateType;
 import com.project.boostcamp.publiclibrary.object.BaseVH;
+import com.project.boostcamp.publiclibrary.util.TimeHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 
 import butterknife.BindView;
@@ -44,28 +47,29 @@ public class EstimateVH extends BaseVH<AdminEstimate> {
         this.data = data;
         setState(data.getState());
         textTitle.setText(context.getString(R.string.text_estimate_list_title, data.getClientName()));
-        textWritedTime.setText(context.getString(R.string.text_estimate_list_writed_time, data.getWritedTime() + ""));
+        textWritedTime.setText(TimeHelper.getTimeString(data.getWritedTime(), context.getString(R.string.default_time_pattern)));
         textMessage.setText(data.getMessage());
     }
 
     private void setState(int state) {
+        Log.d("HTJ", "state: " + state);
         switch(state) {
-            case Estimate.STATE_WATING:
+            case StateType.STATE_WATING:
                 imageState.setImageResource(R.drawable.ic_error_orange_24dp);
                 textState.setText(R.string.text_waiting);
                 textState.setTextColor(ContextCompat.getColor(context, R.color.yellow));
                 break;
-            case Estimate.STATE_CONTACTED:
+            case StateType.STATE_CONTACTED:
                 imageState.setImageResource(R.drawable.ic_check_circle_green_24dp);
                 textState.setText(R.string.text_contacted);
                 textState.setTextColor(ContextCompat.getColor(context, R.color.green));
                 break;
-            case Estimate.STATE_FAILED:
+            case StateType.STATE_FAILED:
                 imageState.setImageResource(R.drawable.ic_cancel_red_24dp);
                 textState.setText(R.string.text_failed);
                 textState.setTextColor(ContextCompat.getColor(context, R.color.red));
                 break;
-            case Estimate.STATE_CANCELED:
+            case StateType.STATE_CANCELED:
                 imageState.setImageResource(R.drawable.ic_cancel_red_24dp);
                 textState.setText(R.string.text_canceled);
                 textState.setTextColor(ContextCompat.getColor(context, R.color.red));

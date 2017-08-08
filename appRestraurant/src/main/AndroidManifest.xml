@@ -78,6 +78,7 @@
         <activity android:name=".ui.activity.WriteEstimateActivity" />
         <activity android:name=".ui.activity.ContactDetailActivity" />
         <activity android:name=".ui.activity.MapDetailActivity" />
+        <activity android:name=".ui.activity.EmailSignUpActivity" />
     </application>
 
 </manifest>

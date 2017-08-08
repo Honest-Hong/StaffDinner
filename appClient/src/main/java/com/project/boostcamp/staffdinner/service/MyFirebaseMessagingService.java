@@ -35,11 +35,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         NotificationManager manager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         manager.notify(0, NotiHelper.simple(this,
                 remoteMessage.getNotification().getTitle(),
                 remoteMessage.getNotification().getBody(),
                 R.drawable.ic_sms_white_24dp,
                 getColor(R.color.colorPrimary),
-                new Intent(this, MainActivity.class)));
+                intent));
     }
 }

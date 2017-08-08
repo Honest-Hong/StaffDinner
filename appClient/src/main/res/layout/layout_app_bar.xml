@@ -8,7 +8,7 @@
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:titleTextColor="@color/white">
 
     </android.support.v7.widget.Toolbar>
@@ -18,8 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabBackground="@color/colorPrimary"
-        app:tabTextColor="@color/white"
+        app:tabTextColor="@color/whiteHalf"
         app:tabSelectedTextColor="@color/white"
         app:tabIndicatorColor="@color/yellow"
-        app:tabIndicatorHeight="4dp"/>
+        app:tabIndicatorHeight="3dp"/>
 </android.support.design.widget.AppBarLayout>

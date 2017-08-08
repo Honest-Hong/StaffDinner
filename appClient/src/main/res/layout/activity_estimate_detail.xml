@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorPrimary"
+    android:background="@color/white"
     tools:context=".activity.EstimateDetailActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -23,146 +23,142 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"/>
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/fontSmall"/>
+
+            <TextView
+                android:id="@+id/text_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/fontLargest"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/text_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="4dp"
-                android:elevation="8dp">
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/black"/>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/whiteGrey" />
 
-                    <ImageView
-                        android:id="@+id/image_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_style"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/grey"/>
 
-                    <android.support.constraint.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp">
+            <TextView
+                android:id="@+id/text_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:textSize="@dimen/fontLarge"
+                android:textColor="@color/black"/>
 
-                        <LinearLayout
-                            android:id="@+id/linear"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center_vertical"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/whiteGrey"/>
 
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:layout_marginEnd="8dp"
-                                android:src="@drawable/ic_estimate_yellow_24dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/text_menu"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/grey"/>
 
-                            <TextView
-                                android:id="@+id/text_name"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/fontNormal"
-                                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/text_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/black"/>
 
-                            <TextView
-                                android:id="@+id/text_date"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@color/grey"
-                                android:textSize="@dimen/fontSmall" />
-                        </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/whiteGrey" />
 
-                        <TextView
-                            android:id="@+id/text_message"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:background="@drawable/shape_message"
-                            android:padding="8dp"
-                            android:gravity="start|top"
-                            android:textSize="@dimen/fontNormal"
-                            android:textColor="@color/black"
-                            app:layout_constraintTop_toBottomOf="@id/linear"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="@string/text_location"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/grey"/>
 
-                        <android.support.constraint.Guideline
-                            android:id="@+id/guide2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            app:layout_constraintGuide_percent="0.3"/>
+            <TextView
+                android:id="@+id/text_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/black"/>
 
-                        <TextView
-                            style="@style/DetailTextContent"
-                            android:id="@+id/text_style"
-                            app:layout_constraintTop_toBottomOf="@id/text_message"
-                            app:layout_constraintLeft_toRightOf="@id/guide2"
-                            app:layout_constraintRight_toRightOf="parent"/>
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="16dp"/>
 
-                        <TextView
-                            style="@style/DetailTextTitle"
-                            android:text="@string/text_style"
-                            app:layout_constraintTop_toBottomOf="@id/text_message"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toLeftOf="@id/guide2"/>
-
-                        <TextView
-                            style="@style/DetailTextContent"
-                            android:id="@+id/text_menu"
-                            app:layout_constraintTop_toBottomOf="@id/text_style"
-                            app:layout_constraintLeft_toRightOf="@id/guide2"
-                            app:layout_constraintRight_toRightOf="parent"/>
-
-                        <TextView
-                            style="@style/DetailTextTitle"
-                            android:text="@string/text_menu"
-                            app:layout_constraintTop_toBottomOf="@id/text_style"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toLeftOf="@id/guide2"/>
-
-                        <TextView
-                            style="@style/DetailTextContent"
-                            android:id="@+id/text_location"
-                            app:layout_constraintTop_toBottomOf="@id/text_menu"
-                            app:layout_constraintLeft_toRightOf="@id/guide2"
-                            app:layout_constraintRight_toRightOf="parent"/>
-
-                        <TextView
-                            style="@style/DetailTextTitle"
-                            android:text="@string/text_location"
-                            app:layout_constraintTop_toBottomOf="@id/text_menu"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toLeftOf="@id/guide2"/>
-                    </android.support.constraint.ConstraintLayout>
-
-                    <fragment
-                        android:id="@+id/map"
-                        android:name="com.google.android.gms.maps.SupportMapFragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="300dp"/>
-
-                    <Button
-                        android:id="@+id/button_contact"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="@string/text_start_contact"/>
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
-        </FrameLayout>
+            <Button
+                android:id="@+id/button_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:layout_gravity="end"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/colorPrimary"
+                android:background="@color/white"
+                android:elevation="12dp"
+                android:text="@string/text_start_contact"/>
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

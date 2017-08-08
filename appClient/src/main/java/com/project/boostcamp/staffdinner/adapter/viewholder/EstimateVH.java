@@ -2,6 +2,7 @@ package com.project.boostcamp.staffdinner.adapter.viewholder;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,12 +28,13 @@ public class EstimateVH extends BaseVH<ClientEstimateDTO> implements View.OnClic
     @BindView(R.id.text_name) TextView textName;
     @BindView(R.id.text_message) TextView textMessage;
     @BindView(R.id.text_date) TextView textDate;
+    @BindView(R.id.button_detail) Button btnDetail;
 
     public EstimateVH(View v, DataEvent<ClientEstimateDTO> dataEvent, Context context) {
         super(v, dataEvent);
         this.context = context;
         ButterKnife.bind(this, v);
-        v.setOnClickListener(this);
+        btnDetail.setOnClickListener(this);
     }
 
     @Override
@@ -43,8 +45,10 @@ public class EstimateVH extends BaseVH<ClientEstimateDTO> implements View.OnClic
                 .centerCrop()
                 .into(imageView);
         textName.setText(data.getAdmin().getName());
+//        String strTime = TimeHelper.getTimeString(data.getWritedTime(), context.getString(R.string.default_time_pattern));
+//        strTime += "(" + TimeHelper.getTimeDiffString(data.getWritedTime()) + ")";
         textDate.setText(TimeHelper.getTimeDiffString(data.getWritedTime()));
-        textMessage.setText(StringHelper.cutEnd(data.getMessage(), 30));
+        textMessage.setText(data.getMessage());
     }
 
     @Override

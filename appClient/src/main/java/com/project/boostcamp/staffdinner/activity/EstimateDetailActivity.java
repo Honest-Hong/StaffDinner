@@ -120,7 +120,6 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
         @Override
         public void onReceive(ResultIntDTO data) {
             if(data.getResult() == 1) {
-                Toast.makeText(EstimateDetailActivity.this, "계약 성공", Toast.LENGTH_SHORT).show();
                 finish();
             } else {
                 Toast.makeText(EstimateDetailActivity.this, "계약 실패", Toast.LENGTH_SHORT).show();
@@ -135,7 +134,6 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onNegative() {
-        Toast.makeText(this, "계약 중단", Toast.LENGTH_SHORT).show();
     }
 
     @Override

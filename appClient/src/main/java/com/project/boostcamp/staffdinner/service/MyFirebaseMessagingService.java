@@ -1,9 +1,17 @@
 package com.project.boostcamp.staffdinner.service;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.project.boostcamp.publiclibrary.util.NotiHelper;
+import com.project.boostcamp.staffdinner.R;
+import com.project.boostcamp.staffdinner.ui.activity.MainActivity;
+import com.project.boostcamp.staffdinner.ui.activity.SplashActivity;
 
 /**
  * Created by Hong Tae Joon on 2017-07-27.
@@ -26,8 +34,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
-
-        // Also if you intend on generating your own notifications as a result of a received FCM
-        // message, here is where that should be initiated. See sendNotification method below.
+        NotificationManager manager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+        manager.notify(0, NotiHelper.simple(this,
+                remoteMessage.getNotification().getTitle(),
+                remoteMessage.getNotification().getBody(),
+                R.drawable.ic_sms_white_24dp,
+                getColor(R.color.colorPrimary),
+                new Intent(this, MainActivity.class)));
     }
 }

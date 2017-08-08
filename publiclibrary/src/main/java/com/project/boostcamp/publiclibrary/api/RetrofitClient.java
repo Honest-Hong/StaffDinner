@@ -25,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static RetrofitClient instance;
+    private static final String BASE_URL = "http://52.78.76.86:3000/";
     private Retrofit retrofit;
     public ClientService clientService;
     public static RetrofitClient getInstance() {
@@ -36,7 +37,7 @@ public class RetrofitClient {
 
     public RetrofitClient() {
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://52.78.76.86:3000/")
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         clientService = retrofit.create(ClientService.class);
@@ -91,5 +92,9 @@ public class RetrofitClient {
                 dataReceiver.onFail();
             }
         });
+    }
+
+    public String getAdminImageUrl(String id, int type) {
+        return BASE_URL + "images/" + id + "-" + type + ".jpg";
     }
 }

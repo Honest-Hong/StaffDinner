@@ -10,6 +10,7 @@ import com.google.android.gms.maps.model.LatLng;
  */
 
 public class AdminDTO implements Parcelable{
+    private String id;
     private String name;
     private String phone;
     private String style;
@@ -17,11 +18,13 @@ public class AdminDTO implements Parcelable{
     private int cost;
     private GeoDTO geo;
     private String image;
+    private int type;
 
     public AdminDTO() {
     }
 
     protected AdminDTO(Parcel in) {
+        id = in.readString();
         name = in.readString();
         phone = in.readString();
         style = in.readString();
@@ -29,6 +32,7 @@ public class AdminDTO implements Parcelable{
         cost = in.readInt();
         geo = in.readParcelable(GeoDTO.class.getClassLoader());
         image = in.readString();
+        type = in.readInt();
     }
 
     public static final Creator<AdminDTO> CREATOR = new Creator<AdminDTO>() {
@@ -50,13 +54,23 @@ public class AdminDTO implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
         parcel.writeString(name);
         parcel.writeString(phone);
         parcel.writeString(style);
         parcel.writeString(menu);
         parcel.writeInt(cost);
-        parcel.writeParcelable(geo, PARCELABLE_WRITE_RETURN_VALUE);
+        parcel.writeParcelable(geo, i);
         parcel.writeString(image);
+        parcel.writeInt(type);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -113,5 +127,13 @@ public class AdminDTO implements Parcelable{
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

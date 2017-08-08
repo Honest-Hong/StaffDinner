@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
 import com.project.boostcamp.publiclibrary.object.BaseVH;
@@ -39,7 +40,7 @@ public class EstimateVH extends BaseVH<ClientEstimateDTO> implements View.OnClic
     public void setupView(ClientEstimateDTO data) {
         this.data = data;
         GlideApp.with(imageView.getContext())
-                .load(data.getAdmin().getImage())
+                .load(RetrofitClient.getInstance().getAdminImageUrl(data.getAdmin().getId(), data.getAdmin().getType()))
                 .centerCrop()
                 .into(imageView);
         textName.setText(data.getAdmin().getName());

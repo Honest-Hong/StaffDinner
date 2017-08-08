@@ -229,6 +229,10 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
             Snackbar.make(rootView, R.string.snack_menu_cost, Snackbar.LENGTH_SHORT).show();
             return false;
         }
+        if(imageFilePath.equals("")) {
+            Snackbar.make(rootView, "이미지를 선택해주세요", Snackbar.LENGTH_SHORT).show();
+            return false;
+        }
         return true;
     }
 

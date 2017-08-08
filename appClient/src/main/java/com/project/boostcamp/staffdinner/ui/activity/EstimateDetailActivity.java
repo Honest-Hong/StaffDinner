@@ -62,7 +62,7 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
         TextView textLocation = (TextView)findViewById(R.id.text_location);
 
         GlideApp.with(this)
-                .load(estimate.getAdmin().getImage())
+                .load(RetrofitClient.getInstance().getAdminImageUrl(estimate.getAdmin().getId(), estimate.getAdmin().getType()))
                 .centerCrop()
                 .into(imageView);
         textName.setText(estimate.getAdmin().getName());

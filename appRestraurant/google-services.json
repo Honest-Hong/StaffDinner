@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "1019778440840",
+    "firebase_url": "https://staffdinner-33790.firebaseio.com",
+    "project_id": "staffdinner-33790",
+    "storage_bucket": "staffdinner-33790.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019778440840:android:0d32967cc49ba514",
+        "android_client_info": {
+          "package_name": "com.project.boostcamp.staffdinner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019778440840-16p5egjpbd4fo8qe4l2ga2c59719c6ta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4neW41TzegtqXkbExFU2jdCsJyZ1xExo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019778440840:android:675b6d0b7135df63",
+        "android_client_info": {
+          "package_name": "com.project.boostcamp.staffdinnerrestraurant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019778440840-16p5egjpbd4fo8qe4l2ga2c59719c6ta.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4neW41TzegtqXkbExFU2jdCsJyZ1xExo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

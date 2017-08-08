@@ -3,7 +3,9 @@ package com.project.boostcamp.staffdinnerrestraurant.ui.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -16,6 +18,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -42,6 +45,9 @@ import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
+import com.project.boostcamp.staffdinnerrestraurant.ui.dialog.ImageModeDialog;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,10 +57,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * 식당 회원가입 액티비티
+ * 이름, 사진, 전화번호, 분위기, 메뉴, 위치를 입력하고 회원가입을 진행한다.
+ * 이전 액티비티에서 로그인이 정상적으로 이루어진 후에 이동된다.
+ */
 public class JoinActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, OnMapReadyCallback, OnSuccessListener<Location>, GoogleApiClient.OnConnectionFailedListener {
-    private static final int REQUEST_PERMISSION = 0x100;
-    public static final String EXTRA_LOGIN_ID = "login_id";
-    public static final String EXTRA_LOGIN_TYPE = "login_type";
     private View rootView;
     @BindView(R.id.edit_name) EditText editName;
     @BindView(R.id.edit_phone) EditText editPhone;
@@ -64,6 +72,7 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     @BindView(R.id.text_location) TextView textLocation;
     @BindView(R.id.button_join) Button btnJoin;
     @BindView(R.id.check_box) CheckBox checkBox;
+    @BindView(R.id.image_title) ImageView imageTitle;
     private GoogleMap googleMap;
     private FusedLocationProviderClient fusedLocationClient; // 현재 위치를 가져오는 서비스
     private Marker marker; // 신청서의 위치 지도 마커
@@ -76,8 +85,8 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
         setContentView(R.layout.activity_join);
 
         if(getIntent() != null) {
-            loginId = getIntent().getStringExtra(EXTRA_LOGIN_ID);
-            loginType = getIntent().getIntExtra(EXTRA_LOGIN_TYPE, -1);
+            loginId = getIntent().getStringExtra(ExtraType.EXTRA_LOGIN_ID);
+            loginType = getIntent().getIntExtra(ExtraType.EXTRA_LOGIN_TYPE, -1);
         }
         ButterKnife.bind(this);
 
@@ -100,6 +109,9 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
         mapFragment.getMapAsync(this);
     }
 
+    /**
+     * 회원가입처리를 하는 함수
+     */
     @OnClick(R.id.button_join)
     public void doJoin() {
         if(checkInvalidate()) {
@@ -138,6 +150,30 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
         }
     }
 
+    /**
+     * 이미지를 가져오도록 알려주는 함수
+     */
+    @OnClick(R.id.image_title)
+    public void selectImage() {
+        ImageModeDialog.newInstace(new ImageModeDialog.ImageSelector() {
+            @Override
+            public void onSelect(int mode) {
+                if(mode == ImageModeDialog.MODE_CAMERA) {
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent, ExtraType.REQUEST_CAMERA);
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_PICK);
+                    intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+                    startActivityForResult(intent, ExtraType.REQUEST_PICUTRE);
+                }
+            }
+        }).show(getSupportFragmentManager(), null);
+    }
+
+    /**
+     * 입력폼의 유효성을 판단하는 함수
+     * @return 유효하면 true를 반환
+     */
     private boolean checkInvalidate() {
         // TODO: 2017-07-31 입력한 값들의 유효성 판단
         if(!EditTextHelper.greaterLength(editName, 4)) {
@@ -177,21 +213,17 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     @Override
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
-        initGoogleMap();
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, REQUEST_PERMISSION);
-        } else {
-            setMyLocation();
-        }
-    }
-
-    private void initGoogleMap() {
         UiSettings uiSettings = googleMap.getUiSettings();
         uiSettings.setScrollGesturesEnabled(false);
         uiSettings.setZoomGesturesEnabled(false);
         googleMap.moveCamera(CameraUpdateFactory.zoomTo(16));
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, ExtraType.REQUEST_LOCATION);
+        } else {
+            setMyLocation();
+        }
     }
 
     private void setMyLocation() {
@@ -223,6 +255,10 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
         marker = googleMap.addMarker(MarkerBuilder.simple(latLng));
     }
 
+    /**
+     * 위치 탐색 버튼 클릭 이벤트
+     * 맵 액티비티로 이동하여 위치를 선택하도록 한다.
+     */
     @OnClick(R.id.button_search)
     public void searchLocation() {
         LatLng latLng = marker.getPosition();
@@ -233,6 +269,12 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
         startActivityForResult(intentMap, ExtraType.REQUEST_LOCATION);
     }
 
+    /**
+     * 맵 액티비티로부터 위치 결과를 받는다
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == ExtraType.REQUEST_LOCATION) {
@@ -241,6 +283,20 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
                         data.getDoubleExtra(ExtraType.EXTRA_LATITUDE, 0),
                         data.getDoubleExtra(ExtraType.EXTRA_LONGITUDE, 0)
                 ));
+            }
+        } else if(requestCode == ExtraType.REQUEST_CAMERA) {
+            if(resultCode == RESULT_OK) {
+                Bitmap photo = (Bitmap)data.getExtras().get("data");
+                imageTitle.setImageBitmap(photo);
+            }
+        } else if(requestCode == ExtraType.REQUEST_PICUTRE) {
+            if(resultCode == RESULT_OK) {
+                try {
+                    Bitmap photo = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
+                    imageTitle.setImageBitmap(photo);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

@@ -22,6 +22,7 @@ import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.AccountType;
+import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
@@ -147,8 +148,8 @@ public class LoginActivity extends AppCompatActivity {
                 Log.d("HTJ", "login onResponse: " + response.body().toString());
                 if(response.body().getId() == null) {
                     Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
-                    intent.putExtra(JoinActivity.EXTRA_LOGIN_ID, id);
-                    intent.putExtra(JoinActivity.EXTRA_LOGIN_TYPE, type);
+                    intent.putExtra(ExtraType.EXTRA_LOGIN_ID, id);
+                    intent.putExtra(ExtraType.EXTRA_LOGIN_TYPE, type);
                     startActivity(intent);
                     finish();
                 } else {

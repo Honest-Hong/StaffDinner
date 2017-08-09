@@ -88,4 +88,5 @@
     <string name="admin_phone">식당의 전화번호</string>
     <string name="estimate_message">견적서 메시지</string>
     <string name="client_phone">고객의 전화번호</string>
+    <string name="send">보내기</string>
 </resources>

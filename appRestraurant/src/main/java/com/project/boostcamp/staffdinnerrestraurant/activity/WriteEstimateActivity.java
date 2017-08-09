@@ -3,8 +3,13 @@ package com.project.boostcamp.staffdinnerrestraurant.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,14 +32,14 @@ import retrofit2.Response;
 
 public class WriteEstimateActivity extends AppCompatActivity implements DialogResultListener {
     private AdminApplication application;
-    @BindView(R.id.text_title_application) TextView textApplicationTitle;
+    @BindView(R.id.text_name) TextView textName;
     @BindView(R.id.text_message) TextView textMessage;
     @BindView(R.id.text_number) TextView textNumber;
-    @BindView(R.id.text_time) TextView textTime;
-    @BindView(R.id.text_distance) TextView textDistance;
-    @BindView(R.id.text_style) TextView textStyle;
-    @BindView(R.id.text_menu) TextView textMenu;
+    @BindView(R.id.text_wanted_time) TextView textTime;
+    @BindView(R.id.text_wanted_style) TextView textStyle;
+    @BindView(R.id.text_wanted_menu) TextView textMenu;
     @BindView(R.id.edit_message) EditText editMessage;
+    @BindView(R.id.card_estimate) CardView cardEstimate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +55,10 @@ public class WriteEstimateActivity extends AppCompatActivity implements DialogRe
     }
 
     private void setupView() {
-        textApplicationTitle.setText(getString(R.string.text_application_name, application.getWriterName()));
+        textName.setText(getString(R.string.text_application_name, application.getWriterName()));
         textMessage.setText(application.getTitle());
         textNumber.setText(getString(R.string.people_count, application.getNumber()));
         textTime.setText(TimeHelper.getTimeString(application.getTime(), getString(R.string.default_date)));
-        textDistance.setText(String.format(getString(R.string.distance_kilo), application.getDistance()));
         textStyle.setText(application.getStyle());
         textMenu.setText(application.getMenu());
     }
@@ -88,7 +92,23 @@ public class WriteEstimateActivity extends AppCompatActivity implements DialogRe
             public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
                 Log.d("HTJ", "Estimate add - onResponse: " + response.body().getResult());
                 if(response.body().getResult() == 1) {
-                    returnToMain();
+                    Animation animation = AnimationUtils.loadAnimation(WriteEstimateActivity.this, R.anim.disappear_up);
+                    animation.setInterpolator(new DecelerateInterpolator());
+                    animation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            returnToMain();
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                        }
+                    });
+                    cardEstimate.startAnimation(animation);
                 } else {
                     Log.e("HTJ", "reponse 에러");
                 }
@@ -103,7 +123,6 @@ public class WriteEstimateActivity extends AppCompatActivity implements DialogRe
 
     @Override
     public void onNegative() {
-
     }
 
     private void returnToMain() {

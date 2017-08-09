@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -71,7 +72,7 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     @BindView(R.id.edit_menu) EditText editMenu;
     @BindView(R.id.edit_menu_cost) EditText editCost;
     @BindView(R.id.text_location) TextView textLocation;
-    @BindView(R.id.button_join) Button btnJoin;
+    @BindView(R.id.button_join) CardView btnJoin;
     @BindView(R.id.check_box) CheckBox checkBox;
     @BindView(R.id.image_title) ImageView imageTitle;
     private GoogleMap googleMap;
@@ -240,7 +241,9 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        btnJoin.setEnabled(checkBox.isChecked());
+        btnJoin.setVisibility(checkBox.isChecked()
+                ? View.VISIBLE
+                : View.INVISIBLE);
     }
 
     @Override

@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/background_edit_text"
+                android:background="@drawable/background_edit_text_white"
                 android:inputType="text"
                 android:maxLines="1" />
 
@@ -97,7 +97,7 @@
                     android:maxLength="2"
                     android:inputType="number"
                     android:maxLines="1"
-                    android:background="@drawable/background_edit_text"
+                    android:background="@drawable/background_edit_text_white"
                     android:layout_marginStart="8dp"/>
 
                 <TextView
@@ -197,7 +197,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/background_edit_text"
+                android:background="@drawable/background_edit_text_white"
                 android:inputType="text"
                 android:maxLines="1"/>
 
@@ -216,7 +216,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/background_edit_text"
+                android:background="@drawable/background_edit_text_white"
                 android:inputType="text"
                 android:maxLines="1"/>
 

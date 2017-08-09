@@ -4,189 +4,141 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    android:padding="32dp"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="이메일 등록"
+        android:layout_marginTop="32dp"
+        android:text="@string/email_sign_up"
         android:textSize="@dimen/fontLarge"
         android:textColor="@color/white"
         android:textStyle="bold"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="4dp"
         android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
-        android:background="@color/yellow"/>
+        android:background="@color/whiteOrange"/>
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <TextView
+        style="@style/OrangeTitleTextView"
+        android:layout_marginTop="16dp"
+        android:text="@string/email_sign_up_email"/>
 
-        <android.support.constraint.Guideline
-            android:id="@+id/guide"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.3"/>
-
-        <EditText
-            android:id="@+id/edit_email"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:background="@drawable/shape_rounded_rectangle"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/guide"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/email_sign_up_email"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontNormal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/edit_email"
-            app:layout_constraintBaseline_toBaselineOf="@id/edit_email"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/email_sign_up_email_help"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontSmall"
-            app:layout_constraintLeft_toRightOf="@id/guide"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_email"/>
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
+    <EditText
+        android:id="@+id/edit_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp">
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="@dimen/fontNormal"
+        android:textColor="@color/white"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:background="@drawable/background_edit_text_orange"/>
 
-        <android.support.constraint.Guideline
-            android:id="@+id/guide2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.3"/>
-
-        <EditText
-            android:id="@+id/edit_password"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:background="@drawable/shape_rounded_rectangle"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/guide2"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/email_sign_up_password"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontNormal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/edit_password"
-            app:layout_constraintBaseline_toBaselineOf="@id/edit_password"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/email_sign_up_password_help"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontSmall"
-            app:layout_constraintLeft_toRightOf="@id/guide2"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_password"/>
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp">
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/email_sign_up_email_help"
+        android:textColor="@color/whiteOrange"
+        android:textSize="@dimen/fontSmall"/>
 
-        <android.support.constraint.Guideline
-            android:id="@+id/guide3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.3"/>
-
-        <EditText
-            android:id="@+id/edit_password2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            android:background="@drawable/shape_rounded_rectangle"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/guide3"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/email_sign_up_password_confirm"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontNormal"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/edit_password2"
-            app:layout_constraintBaseline_toBaselineOf="@id/edit_password2"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/email_sign_up_password_confirm_help"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontSmall"
-            app:layout_constraintLeft_toRightOf="@id/guide3"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/edit_password2"/>
-    </android.support.constraint.ConstraintLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="32dp"
-        android:background="@color/yellow"/>
-
-    <View
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/email_sign_up_password"
+        android:textColor="@color/whiteOrange"
+        android:textSize="@dimen/fontSmall"/>
 
-    <FrameLayout
+    <EditText
+        android:id="@+id/edit_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="@dimen/fontNormal"
+        android:textColor="@color/white"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:background="@drawable/background_edit_text_orange"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/email_sign_up_password_help"
+        android:textColor="@color/whiteOrange"
+        android:textSize="@dimen/fontSmall"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:text="@string/email_sign_up_password_confirm"
+        android:textColor="@color/whiteOrange"
+        android:textSize="@dimen/fontSmall"/>
+
+    <EditText
+        android:id="@+id/edit_password2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="@dimen/fontNormal"
+        android:textColor="@color/white"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:background="@drawable/background_edit_text_orange"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/email_sign_up_password_confirm_help"
+        android:textColor="@color/whiteOrange"
+        android:textSize="@dimen/fontSmall"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:layout_marginTop="32dp"
+        android:background="@color/whiteOrange"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/button_prev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/text_prev"/>
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/text_prev"
+            android:textSize="@dimen/fontNormal"
+            android:textColor="@color/white"/>
 
         <Button
             android:id="@+id/button_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:text="@string/text_next"/>
-    </FrameLayout>
+            android:layout_marginStart="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:text="@string/text_next"
+            android:textSize="@dimen/fontNormal"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 </LinearLayout>

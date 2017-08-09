@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +34,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
     private View rootView;
     @BindView(R.id.edit_name) EditText editName;
     @BindView(R.id.edit_phone) EditText editPhone;
-    @BindView(R.id.button_join) Button btnJoin;
+    @BindView(R.id.button_join) CardView btnJoin;
     private String id;
     private int type;
     private String name;
@@ -139,6 +140,8 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
      */
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        btnJoin.setEnabled(b);
+        btnJoin.setVisibility(b
+                ? View.VISIBLE
+                : View.INVISIBLE);
     }
 }

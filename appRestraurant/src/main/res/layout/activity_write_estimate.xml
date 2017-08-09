@@ -215,7 +215,7 @@
                         android:id="@+id/edit_message"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/background_edit_text"
+                        android:background="@drawable/background_edit_text_white"
                         app:layout_constraintTop_toBottomOf="@id/text_view"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintRight_toRightOf="parent"/>

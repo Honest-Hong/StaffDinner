@@ -89,4 +89,5 @@
     <string name="estimate_message">견적서 메시지</string>
     <string name="client_phone">고객의 전화번호</string>
     <string name="send">보내기</string>
+    <string name="email_sign_up">이메일 등록</string>
 </resources>

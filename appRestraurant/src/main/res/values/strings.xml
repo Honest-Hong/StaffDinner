@@ -39,9 +39,7 @@
     <string name="user_name">%1$s님</string>
     <string name="text_contact_list_subtitle">신청 시간: %1$s\n계약 시간: %2$s</string>
     <string name="text_contact_apply_title">신청서 내용</string>
-    <string name="text_contact_apply_detail">인원: %1$d\n\n고객 위치: %2$s\n\n신청 시간: %3$s\n\n고객 전화번호: %4$s</string>
     <string name="text_contact_estimate_title">견적서 내용</string>
-    <string name="text_contact_estimate_detail">식당 위치: %1$s\n\n견적 시간: %2$s\n\n식당 전화번호: %3$s\n\n식당 메시지: %4$s</string>
     <string name="text_contact_contact_title">계약 내용</string>
     <string name="text_contact_contact_detail">계약 시간: %1$s</string>
     <string name="text_number">인원</string>
@@ -61,6 +59,7 @@
     <string name="people_count">%1$d명</string>
     <string name="default_date">yyyy.MM.dd HH:mm</string>
     <string name="distance_kilo">약 %.2fkm</string>
+    <string name="person_number">%1$d명</string>
 
     <string name="kakao_app_key">da3852fe468833c3e1c9d83859b3ada1</string>
     <string name="facebook_app_id">1920252784901809</string>
@@ -84,4 +83,9 @@
     <string name="text_next">다음</string>
     <string name="detail_view">자세히 보기</string>
     <string name="message_content">메시지 내용</string>
+    <string name="application_location">신청서의 위치</string>
+    <string name="admin_location">식당의 위치</string>
+    <string name="admin_phone">식당의 전화번호</string>
+    <string name="estimate_message">견적서 메시지</string>
+    <string name="client_phone">고객의 전화번호</string>
 </resources>

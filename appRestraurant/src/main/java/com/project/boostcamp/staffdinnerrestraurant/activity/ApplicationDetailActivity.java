@@ -63,7 +63,7 @@ public class ApplicationDetailActivity extends AppCompatActivity implements OnMa
         textName.setText(getString(R.string.text_apply_detail_name, application.getWriterName()));
         textMessage.setText(application.getTitle());
         textNumber.setText(getString(R.string.text_apply_detail_number, application.getNumber()));
-        textWantedTime.setText(TimeHelper.getTimeString(application.getTime(), "MM월 dd일 HH시 mm분"));
+        textWantedTime.setText(TimeHelper.getTimeString(application.getTime(), getString(R.string.default_time_pattern)));
         textWantedStyle.setText(application.getStyle());
         textWantedMenu.setText(application.getMenu());
         textLocation.setText(GeocoderHelper.getAddress(

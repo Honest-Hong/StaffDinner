@@ -23,7 +23,7 @@ public class ApplicationVH extends BaseVH<AdminApplication> {
     private Context context;
     @BindView(R.id.image_view) ImageView imageView;
     @BindView(R.id.text_name) TextView textName;
-    @BindView(R.id.text_title) TextView textTitle;
+    @BindView(R.id.text_message) TextView textMessage;
     @BindView(R.id.text_number) TextView textNumber;
     @BindView(R.id.text_time) TextView textTime;
     @BindView(R.id.text_distance) TextView textDistance;
@@ -45,7 +45,7 @@ public class ApplicationVH extends BaseVH<AdminApplication> {
     public void setupView(AdminApplication data) {
         this.data = data;
         textName.setText(context.getString(R.string.text_application_name, data.getWriterName()));
-        textTitle.setText(data.getTitle());
+        textMessage.setText(data.getTitle());
         textNumber.setText(context.getString(R.string.people_count, data.getNumber()));
         textTime.setText(TimeHelper.getTimeString(data.getTime(), context.getString(R.string.default_date)));
         textDistance.setText(context.getString(R.string.distance_kilo, data.getDistance()));

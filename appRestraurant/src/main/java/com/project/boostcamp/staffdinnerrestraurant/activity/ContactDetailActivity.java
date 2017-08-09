@@ -25,10 +25,17 @@ import butterknife.ButterKnife;
 
 public class ContactDetailActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
     private ContactDTO contact;
-    @BindView(R.id.text_title) TextView textTitle;
-    @BindView(R.id.text_apply_detail) TextView textApplyDetail;
-    @BindView(R.id.text_estimate_detail) TextView textEstimateDetail;
-    @BindView(R.id.text_contact_detail) TextView textContactDetail;
+    @BindView(R.id.text_admin) TextView textAdmin;
+    @BindView(R.id.text_client) TextView textClient;
+    @BindView(R.id.text_contact_time) TextView textContactTime;
+    @BindView(R.id.text_client_phone) TextView textClientPhone;
+    @BindView(R.id.text_application_number) TextView textApplicationNumber;
+    @BindView(R.id.text_application_location) TextView textApplicationLocation;
+    @BindView(R.id.text_application_time) TextView textApplicationTime;
+    @BindView(R.id.text_admin_location) TextView textAdminLocation;
+    @BindView(R.id.text_admin_phone) TextView textAdminPhone;
+    @BindView(R.id.text_estimate_time) TextView textEstimateTime;
+    @BindView(R.id.text_estimate_message) TextView textEstimateMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,18 +58,17 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
-        textTitle.setText(getString(R.string.user_name, contact.getAdminName(), contact.getClientName()));
-        textApplyDetail.setText(getString(R.string.text_contact_apply_detail
-                , contact.getAppNumber()
-                , GeocoderHelper.getAddress(this, contact.getAppGeo().toLatLng())
-                , TimeHelper.getTimeString(contact.getAppTime(), getString(R.string.default_time_pattern))
-                , contact.getClientPhone()));
-        textEstimateDetail.setText(getString(R.string.text_contact_estimate_detail
-                , GeocoderHelper.getAddress(this, contact.getAdminGeo().toLatLng())
-                , TimeHelper.getTimeString(contact.getEstimateTime(), getString(R.string.default_time_pattern))
-                , contact.getAdminPhone()
-                , contact.getEstimateMessage()));
-        textContactDetail.setText(getString(R.string.text_contact_contact_detail, TimeHelper.getTimeString(contact.getContactTime(), getString(R.string.default_time_pattern))));
+        textAdmin.setText(contact.getAdminName());
+        textClient.setText(getString(R.string.user_name, contact.getClientName()));
+        textContactTime.setText(TimeHelper.getTimeString(contact.getContactTime(), getString(R.string.default_time_pattern)));
+        textClientPhone.setText(contact.getClientPhone());
+        textApplicationNumber.setText(getString(R.string.person_number, contact.getAppNumber()));
+        textApplicationLocation.setText(GeocoderHelper.getAddress(this, contact.getAppGeo().toLatLng()));
+        textApplicationTime.setText(TimeHelper.getTimeString(contact.getAppTime(), getString(R.string.default_time_pattern)));
+        textAdminLocation.setText(GeocoderHelper.getAddress(this, contact.getAdminGeo().toLatLng()));
+        textAdminPhone.setText(contact.getAdminPhone());
+        textEstimateTime.setText(TimeHelper.getTimeString(contact.getEstimateTime(), getString(R.string.default_time_pattern)));
+        textEstimateMessage.setText(contact.getEstimateMessage());
 
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);

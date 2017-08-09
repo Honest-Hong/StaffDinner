@@ -70,4 +70,10 @@
     <string name="contact_time">계약한 시간</string>
     <string name="message_content">메시지 내용</string>
     <string name="detail_view">자세히 보기</string>
+    <string name="application_location">신청서의 위치</string>
+    <string name="admin_location">식당의 위치</string>
+    <string name="admin_phone">식당의 전화번호</string>
+    <string name="estimate_message">견적서 메시지</string>
+    <string name="client_phone">고객의 전화번호</string>
+    <string name="person_number">%1$d명</string>
 </resources>

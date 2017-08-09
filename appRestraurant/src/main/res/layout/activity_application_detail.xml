@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
@@ -20,169 +20,197 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <FrameLayout
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:cardCornerRadius="4dp"
-                app:contentPadding="8dp"
-                android:elevation="8dp">
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/image_view"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_account_yellow_24dp"/>
 
-                    <LinearLayout
-                        android:id="@+id/linear"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginStart="16dp"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent">
+                <TextView
+                    android:id="@+id/text_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textSize="@dimen/fontLarge"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+            </LinearLayout>
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:src="@drawable/ic_account_yellow_24dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/message_content"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/grey"/>
 
-                        <TextView
-                            android:id="@+id/text_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:textSize="@dimen/fontNormal"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"/>
-                    </LinearLayout>
+            <TextView
+                android:id="@+id/text_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/black"/>
 
-                    <android.support.constraint.Guideline
-                        android:id="@+id/guide"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.3"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/whiteGrey" />
 
-                    <TextView
-                        android:id="@+id/text_message"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginTop="16dp"
-                        android:textSize="@dimen/fontNormal"
-                        android:textColor="@color/black"
-                        android:background="@drawable/shape_message"
-                        android:padding="8dp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/linear"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/text_number"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/grey"/>
 
-                    <TextView
-                        android:id="@+id/text_number"
-                        style="@style/DetailTextContent"
-                        app:layout_constraintLeft_toRightOf="@id/guide"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/text_message"/>
+            <TextView
+                android:id="@+id/text_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/black"/>
 
-                    <TextView
-                        style="@style/DetailTextTitle"
-                        android:text="@string/text_number"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guide"
-                        app:layout_constraintTop_toBottomOf="@id/text_message"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/whiteGrey" />
 
-                    <TextView
-                        android:id="@+id/text_wanted_time"
-                        style="@style/DetailTextContent"
-                        app:layout_constraintLeft_toRightOf="@id/guide"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/text_number"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/text_wanted_time"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/grey"/>
 
-                    <TextView
-                        style="@style/DetailTextTitle"
-                        android:text="@string/text_wanted_time"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guide"
-                        app:layout_constraintTop_toBottomOf="@id/text_number"/>
+            <TextView
+                android:id="@+id/text_wanted_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/black"/>
 
-                    <TextView
-                        android:id="@+id/text_wanted_style"
-                        style="@style/DetailTextContent"
-                        android:textSize="@dimen/fontSmall"
-                        android:textColor="@color/black"
-                        app:layout_constraintLeft_toRightOf="@id/guide"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/text_wanted_time"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/whiteGrey" />
 
-                    <TextView
-                        style="@style/DetailTextTitle"
-                        android:text="@string/text_wanted_style"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guide"
-                        app:layout_constraintTop_toBottomOf="@id/text_wanted_time"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/text_wanted_style"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/grey"/>
 
-                    <TextView
-                        android:id="@+id/text_wanted_menu"
-                        style="@style/DetailTextContent"
-                        android:textSize="@dimen/fontSmall"
-                        android:textColor="@color/black"
-                        app:layout_constraintLeft_toRightOf="@id/guide"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/text_wanted_style"/>
+            <TextView
+                android:id="@+id/text_wanted_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/black"/>
 
-                    <TextView
-                        style="@style/DetailTextTitle"
-                        android:text="@string/text_wanted_menu"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guide"
-                        app:layout_constraintTop_toBottomOf="@id/text_wanted_style"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/whiteGrey" />
 
-                    <TextView
-                        android:id="@+id/text_location"
-                        style="@style/DetailTextContent"
-                        android:textSize="@dimen/fontSmall"
-                        android:textColor="@color/black"
-                        app:layout_constraintLeft_toRightOf="@id/guide"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/text_wanted_menu"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/text_wanted_menu"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/grey"/>
 
-                    <TextView
-                        style="@style/DetailTextTitle"
-                        android:text="@string/text_location"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toLeftOf="@id/guide"
-                        app:layout_constraintTop_toBottomOf="@id/text_wanted_menu"/>
+            <TextView
+                android:id="@+id/text_wanted_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/black"/>
 
-                    <fragment
-                        android:id="@+id/map"
-                        android:layout_width="0dp"
-                        android:layout_height="300dp"
-                        android:layout_marginTop="16dp"
-                        android:name="com.google.android.gms.maps.SupportMapFragment"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/text_location"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/whiteGrey" />
 
-                    <Button
-                        android:id="@+id/button_send"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/text_send_estimate"
-                        app:layout_constraintTop_toBottomOf="@id/map"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"/>
-                </android.support.constraint.ConstraintLayout>
-            </android.support.v7.widget.CardView>
-        </FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/text_location"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/grey"/>
+
+            <TextView
+                android:id="@+id/text_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/black"/>
+
+            <fragment
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="8dp"
+                android:name="com.google.android.gms.maps.SupportMapFragment"/>
+        </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/button_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:textSize="@dimen/fontNormal"
+        android:textColor="@color/colorPrimary"
+        android:text="@string/text_send_estimate"/>
 </LinearLayout>

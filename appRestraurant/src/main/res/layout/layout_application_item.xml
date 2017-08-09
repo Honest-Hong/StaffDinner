@@ -47,7 +47,7 @@
             android:textColor="@color/grey"/>
 
         <TextView
-            android:id="@+id/text_title"
+            android:id="@+id/text_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

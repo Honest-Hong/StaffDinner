@@ -34,7 +34,7 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationVH> {
 
     @Override
     public ApplicationVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ApplicationVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_apply_item, parent, false), dataEvent, context);
+        return new ApplicationVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_application_item, parent, false), dataEvent, context);
     }
 
     @Override

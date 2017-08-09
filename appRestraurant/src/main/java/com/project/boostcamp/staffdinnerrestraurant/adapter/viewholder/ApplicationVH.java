@@ -2,6 +2,7 @@ package com.project.boostcamp.staffdinnerrestraurant.adapter.viewholder;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,12 +27,13 @@ public class ApplicationVH extends BaseVH<AdminApplication> {
     @BindView(R.id.text_number) TextView textNumber;
     @BindView(R.id.text_time) TextView textTime;
     @BindView(R.id.text_distance) TextView textDistance;
+    @BindView(R.id.button_detail) Button btnDetail;
 
     public ApplicationVH(View v, final DataEvent<AdminApplication> dataEvent, Context context) {
         super(v, dataEvent);
         this.context = context;
         ButterKnife.bind(this, v);
-        v.setOnClickListener(new View.OnClickListener() {
+        btnDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 dataEvent.onClick(data);

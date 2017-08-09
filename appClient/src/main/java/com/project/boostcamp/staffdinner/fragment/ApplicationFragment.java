@@ -140,7 +140,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
         UiSettings uiSettings = googleMap.getUiSettings();
         uiSettings.setScrollGesturesEnabled(false);
         uiSettings.setZoomGesturesEnabled(false);
-        googleMap.moveCamera(CameraUpdateFactory.zoomTo(16));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.4973932,127.02744170000005), 16));
 
         // TODO: 2017-08-04 신청서가 존재하는 경우 현재 위치로 하지 않도록 하기
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -166,7 +166,8 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
      */
     private void setMyLocation() {
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
+                == PackageManager.PERMISSION_GRANTED
+                && application.getGeo() != null) {
             fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {

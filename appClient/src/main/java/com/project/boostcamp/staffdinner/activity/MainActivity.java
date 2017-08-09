@@ -1,6 +1,8 @@
 package com.project.boostcamp.staffdinner.activity;
 
 import android.content.Intent;
+import android.location.LocationManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -21,6 +23,8 @@ import com.google.android.gms.location.LocationServices;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.project.boostcamp.publiclibrary.data.AccountType;
+import com.project.boostcamp.publiclibrary.dialog.DialogResultListener;
+import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.R;
@@ -60,6 +64,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addApi(LocationServices.API)
                 .build();
         googleApiClient.connect();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkGPS();
     }
 
     private void setupToolbar() {
@@ -162,4 +172,34 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             finish();
         }
     }
+
+    /**
+     * GPS 기능이 켜있는지 확인하고 알람을 띄워 GPS기능을 키도록 유도하는 함수
+     */
+    private void checkGPS() {
+        LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            MyAlertDialog.newInstance(
+                    getString(R.string.dialog_alert_title),
+                    getString(R.string.need_gps_on_help),
+                    gpsDialogListener)
+                    .show(getSupportFragmentManager(), null);
+        }
+    }
+
+    /**
+     * GPS 기능을 킬 수 있도록 설정으로 연결하거나 아무 행동도 하지 않는다
+     */
+    private DialogResultListener gpsDialogListener = new DialogResultListener() {
+        @Override
+        public void onPositive() {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onNegative() {
+        }
+    };
 }

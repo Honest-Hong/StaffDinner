@@ -7,8 +7,10 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -42,6 +44,8 @@ import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.Geo;
 import com.project.boostcamp.publiclibrary.dialog.ArrayResultListener;
+import com.project.boostcamp.publiclibrary.dialog.DialogResultListener;
+import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
 import com.project.boostcamp.publiclibrary.domain.AdminJoinDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
@@ -389,6 +393,36 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
                 }
             }
             textStyle.setText(str);
+        }
+    };
+
+    /**
+     * GPS 기능이 켜있는지 확인하고 알람을 띄워 GPS기능을 키도록 유도하는 함수
+     */
+    private void checkGPS() {
+        LocationManager locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+        if(!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            MyAlertDialog.newInstance(
+                    getString(R.string.dialog_alert_title),
+                    getString(R.string.need_gps_on_help),
+                    gpsDialogListener)
+                    .show(getSupportFragmentManager(), null);
+        }
+    }
+
+    /**
+     * GPS 기능을 킬 수 있도록 설정으로 연결하거나 아무 행동도 하지 않는다
+     */
+    private DialogResultListener gpsDialogListener = new DialogResultListener() {
+        @Override
+        public void onPositive() {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            startActivity(intent);
+        }
+
+        @Override
+        public void onNegative() {
         }
     };
 }

@@ -91,4 +91,6 @@
     <string name="send">보내기</string>
     <string name="email_sign_up">이메일 등록</string>
     <string name="select">선택</string>
+    <string name="dialog_alert_title">알림</string>
+    <string name="need_gps_on_help">지도를 현재 위치로 맞추기 위해서 GPS기능을 켜야합니다. 설정화면으로 이동하시겠습니까?</string>
 </resources>

@@ -54,7 +54,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
 
-        textTitle.setText(getString(R.string.text_contact_list_title, contact.getClientName(), contact.getAdminName()));
+        textTitle.setText(getString(R.string.user_name, contact.getClientName(), contact.getAdminName()));
         textApplyDetail.setText(getString(R.string.text_contact_apply_detail
                 , contact.getAppNumber()
                 , GeocoderHelper.getAddress(this, contact.getAppGeo().toLatLng())

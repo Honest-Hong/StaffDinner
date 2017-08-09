@@ -19,22 +19,25 @@ import butterknife.ButterKnife;
 
 public class ContactVH extends BaseVH<ContactDTO> implements View.OnClickListener {
     private Context context;
-    @BindView(R.id.text_title) TextView textTitle;
+    @BindView(R.id.text_client) TextView textClient;
+    @BindView(R.id.text_admin) TextView textAdmin;
     @BindView(R.id.text_application_time) TextView textApplicationTime;
     @BindView(R.id.text_estimate_time) TextView textEstimateTime;
     @BindView(R.id.text_contact_time) TextView textContactTime;
+    @BindView(R.id.button_detail) TextView btnDetail;
 
     public ContactVH(View itemView, DataEvent<ContactDTO> dataEvent, Context context) {
         super(itemView, dataEvent);
         this.context = context;
         ButterKnife.bind(this, itemView);
-        itemView.setOnClickListener(this);
+        btnDetail.setOnClickListener(this);
     }
 
     @Override
     public void setupView(ContactDTO data) {
         this.data = data;
-        textTitle.setText(context.getString(R.string.text_contact_list_title, data.getAdminName(), data.getClientName()));
+        textClient.setText(context.getString(R.string.user_name, data.getClientName()));
+        textAdmin.setText(data.getAdminName());
         String appTime = TimeHelper.getTimeString(data.getAppTime(), context.getString(R.string.default_time_pattern));
         textApplicationTime.setText(appTime);
         String estimateTime = TimeHelper.getTimeString(data.getEstimateTime(), context.getString(R.string.default_time_pattern));

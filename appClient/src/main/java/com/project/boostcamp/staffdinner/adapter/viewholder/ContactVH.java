@@ -36,7 +36,7 @@ public class ContactVH extends BaseVH<ContactDTO> implements View.OnClickListene
     @Override
     public void setupView(ContactDTO data) {
         this.data = data;
-        textClient.setText(context.getString(R.string.text_contact_list_title, data.getClientName()));
+        textClient.setText(context.getString(R.string.user_name, data.getClientName()));
         textAdmin.setText(data.getAdminName());
         String appTime = TimeHelper.getTimeString(data.getAppTime(), context.getString(R.string.default_time_pattern));
         textApplicationTime.setText(appTime);

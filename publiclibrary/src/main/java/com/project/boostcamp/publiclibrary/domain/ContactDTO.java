@@ -13,7 +13,6 @@ public class ContactDTO implements Parcelable{
     private long appTime;
     private String appStyle;
     private String appMenu;
-    private long appWritedTime;
     private GeoDTO appGeo;
     private String clientName;
     private String clientPhone;
@@ -33,7 +32,6 @@ public class ContactDTO implements Parcelable{
         appTime = in.readLong();
         appStyle = in.readString();
         appMenu = in.readString();
-        appWritedTime = in.readLong();
         appGeo = in.readParcelable(GeoDTO.class.getClassLoader());
         clientName = in.readString();
         clientPhone = in.readString();
@@ -69,7 +67,6 @@ public class ContactDTO implements Parcelable{
         parcel.writeLong(appTime);
         parcel.writeString(appStyle);
         parcel.writeString(appMenu);
-        parcel.writeLong(appWritedTime);
         parcel.writeParcelable(appGeo, i);
         parcel.writeString(clientName);
         parcel.writeString(clientPhone);
@@ -119,14 +116,6 @@ public class ContactDTO implements Parcelable{
 
     public void setAppMenu(String appMenu) {
         this.appMenu = appMenu;
-    }
-
-    public long getAppWritedTime() {
-        return appWritedTime;
-    }
-
-    public void setAppWritedTime(long appWritedTime) {
-        this.appWritedTime = appWritedTime;
     }
 
     public GeoDTO getAppGeo() {

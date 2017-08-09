@@ -27,7 +27,7 @@
     <string name="text_rewrite">다시 작성</string>
     <string name="text_search">탐색</string>
     <string name="text_need_input">작성 필요</string>
-    <string name="text_contact_list_title">%1$s님 - %2$s</string>
+    <string name="text_contact_list_title">%1$s님</string>
     <string name="text_contact_list_subtitle">신청 시간: %1$s\n계약 시간: %2$s</string>
     <string name="text_contact_apply_title">신청서 내용</string>
     <string name="text_contact_apply_detail">인원: %1$d\n\n고객 위치: %2$s\n\n신청 시간: %3$s\n\n고객 전화번호: %4$s</string>
@@ -69,4 +69,5 @@
     <string name="estimate_time">견적서 시간</string>
     <string name="contact_time">계약한 시간</string>
     <string name="message_content">메시지 내용</string>
+    <string name="detail_view">자세히 보기</string>
 </resources>

@@ -1,330 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:overScrollMode="never">
+    android:orientation="vertical"
+    android:background="@color/white">
 
-    <FrameLayout
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:overScrollMode="never">
 
-        <android.support.v7.widget.CardView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:cardCornerRadius="4dp"
-            app:cardElevation="8dp"
-            app:contentPadding="8dp">
+            android:orientation="vertical">
 
-            <android.support.constraint.ConstraintLayout
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                xmlns:app="http://schemas.android.com/apk/res-auto">
-
-                <android.support.constraint.Guideline
-                    android:id="@+id/guide2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.25"
-                    tools:layout_editor_absoluteY="25dp"
-                    tools:layout_editor_absoluteX="96dp" />
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/image_state"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:focusable="true"
-                    android:src="@drawable/ic_error_orange_24dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    android:layout_width="32dp"
+                    android:layout_height="32dp" />
 
                 <TextView
                     android:id="@+id/text_state"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
                     android:textSize="@dimen/fontLargest"
-                    android:text="@string/text_need_input"
                     android:textColor="@color/orange"
-                    android:textStyle="bold"
-                    android:gravity="center_vertical"
-                    app:layout_constraintLeft_toRightOf="@+id/image_state"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/whiteGrey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/text_title"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/grey"/>
+
+            <EditText
+                android:id="@+id/edit_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/background_edit_text"
+                android:inputType="text"
+                android:maxLines="1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/text_number"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/fontSmall"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical">
+
+                <ImageButton
+                    android:id="@+id/button_up"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_add_orange_24dp"/>
 
                 <EditText
-                    android:id="@+id/edit_title"
-                    android:layout_width="0dp"
+                    android:id="@+id/edit_number"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:inputType="text"
+                    android:maxLength="2"
+                    android:inputType="number"
                     android:maxLines="1"
-                    android:background="@drawable/shape_rounded_rectangle"
-                    app:layout_constraintTop_toBottomOf="@+id/image_state"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toLeftOf="@+id/guide2" />
+                    android:background="@drawable/background_edit_text"
+                    android:layout_marginStart="8dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/text_title"
-                    android:textSize="@dimen/fontNormal"
+                    android:layout_marginStart="4dp"
+                    android:text="@string/text_count_person"
                     android:textColor="@color/black"
-                    android:gravity="center"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/guide2"
-                    app:layout_constraintTop_toTopOf="@+id/edit_title"
-                    app:layout_constraintBottom_toBottomOf="@+id/edit_title"/>
+                    android:textSize="@dimen/fontNormal"/>
 
-                <LinearLayout
-                    android:id="@+id/linear"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                <ImageButton
+                    android:id="@+id/button_down"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center_vertical"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/edit_title"
-                    app:layout_constraintLeft_toLeftOf="@+id/guide2">
+                    android:src="@drawable/ic_remove_orange_24dp"/>
+            </LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/button_up"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:src="@drawable/ic_add_orange_24dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/whiteGrey" />
 
-                    <EditText
-                        android:id="@+id/edit_number"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ems="2"
-                        android:maxLength="2"
-                        android:inputType="number"
-                        android:maxLines="1"
-                        android:background="@drawable/shape_rounded_rectangle"
-                        android:layout_marginStart="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_time"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/fontSmall"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="@string/text_count_person"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/fontNormal"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/shape_rounded_rectangle"
+                android:gravity="center"
+                android:padding="8dp">
 
-                    <ImageButton
-                        android:id="@+id/button_down"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginStart="8dp"
-                        android:src="@drawable/ic_remove_orange_24dp"/>
-                </LinearLayout>
+                <com.project.boostcamp.publiclibrary.view.WheelPicker
+                    android:id="@+id/wheel_hour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/text_number"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fontNormal"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/guide2"
-                    app:layout_constraintTop_toTopOf="@+id/linear"
-                    app:layout_constraintBottom_toBottomOf="@+id/linear"/>
+                    android:text="시"
+                    android:textSize="@dimen/fontLarge"/>
 
-                <TextView
-                    android:id="@+id/text_time"
+                <com.project.boostcamp.publiclibrary.view.WheelPicker
+                    android:id="@+id/wheel_minute"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/text_time"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fontNormal"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/guide2"
-                    app:layout_constraintTop_toBottomOf="@id/linear"/>
+                    android:layout_marginStart="16dp"/>
 
-                <LinearLayout
-                    android:id="@+id/linear2"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="분"
+                    android:textSize="@dimen/fontLarge"/>
+
+                <com.project.boostcamp.publiclibrary.view.WheelPicker
+                    android:id="@+id/wheel_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/whiteGrey" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="16dp"
+                android:text="@string/text_style"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/grey"/>
+
+            <EditText
+                android:id="@+id/edit_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/background_edit_text"
+                android:inputType="text"
+                android:maxLines="1"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_menu"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/grey"/>
+
+            <EditText
+                android:id="@+id/edit_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/background_edit_text"
+                android:inputType="text"
+                android:maxLines="1"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_location"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/grey"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_location"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/fontSmall"/>
+
+                <ImageButton
+                    android:id="@+id/button_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/shape_rounded_rectangle"
-                    android:gravity="center"
-                    android:padding="8dp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_time"
-                    app:layout_constraintLeft_toLeftOf="parent">
+                    android:src="@drawable/ic_search_orange_24dp"/>
+            </LinearLayout>
 
-                    <com.project.boostcamp.publiclibrary.view.WheelPicker
-                        android:id="@+id/wheel_hour"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="시"
-                        android:textSize="@dimen/fontLarge"/>
-
-                    <com.project.boostcamp.publiclibrary.view.WheelPicker
-                        android:id="@+id/wheel_minute"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="분"
-                        android:textSize="@dimen/fontLarge"/>
-
-                    <com.project.boostcamp.publiclibrary.view.WheelPicker
-                        android:id="@+id/wheel_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"/>
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/edit_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:background="@drawable/shape_rounded_rectangle"
-                    app:layout_constraintTop_toBottomOf="@+id/linear2"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toLeftOf="@+id/guide2"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/text_style"
-                    android:textSize="@dimen/fontNormal"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/guide2"
-                    app:layout_constraintTop_toTopOf="@+id/edit_style"
-                    app:layout_constraintBottom_toBottomOf="@+id/edit_style"/>
-
-                <EditText
-                    android:id="@+id/edit_menu"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:background="@drawable/shape_rounded_rectangle"
-                    app:layout_constraintTop_toBottomOf="@+id/edit_style"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toLeftOf="@+id/guide2" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/text_menu"
-                    android:textSize="@dimen/fontNormal"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/guide2"
-                    app:layout_constraintTop_toTopOf="@+id/edit_menu"
-                    app:layout_constraintBottom_toBottomOf="@+id/edit_menu"/>
-
-                <LinearLayout
-                    android:id="@+id/linear3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="16dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    app:layout_constraintTop_toBottomOf="@+id/edit_menu"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintLeft_toLeftOf="@+id/guide2">
-
-                    <TextView
-                        android:id="@+id/text_location"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/fontSmall"
-                        android:background="@drawable/shape_rounded_rectangle" />
-
-                    <ImageButton
-                        android:id="@+id/button_search"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:src="@drawable/ic_search_orange_24dp"/>
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
-                    android:text="@string/text_location"
-                    android:textSize="@dimen/fontNormal"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/guide2"
-                    app:layout_constraintTop_toTopOf="@+id/linear3"
-                    app:layout_constraintBottom_toBottomOf="@+id/linear3"/>
-
-                <fragment
-                    android:id="@+id/map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
-                    android:layout_width="0dp"
-                    android:layout_height="300dp"
-                    android:layout_marginTop="16dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linear3" />
-
-                <Button
-                    android:id="@+id/button_apply"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/text_apply"
-                    app:layout_constraintTop_toBottomOf="@+id/map"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"/>
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
-    </FrameLayout>
-</android.support.v4.widget.NestedScrollView>
+    <Button
+        android:id="@+id/button_apply"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:text="@string/text_apply"
+        android:textSize="@dimen/fontNormal"
+        android:textColor="@color/colorPrimary"/>
+</LinearLayout>

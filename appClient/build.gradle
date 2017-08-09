@@ -56,7 +56,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     // 멀티 덱스
     compile 'com.android.support:multidex:1.0.1'
-    
+
     compile project(':publiclibrary')
     testCompile 'junit:junit:4.12'
 }

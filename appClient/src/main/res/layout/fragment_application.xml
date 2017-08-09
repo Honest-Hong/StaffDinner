@@ -191,15 +191,39 @@
                 android:textSize="@dimen/fontSmall"
                 android:textColor="@color/grey"/>
 
-            <EditText
-                android:id="@+id/edit_style"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/background_edit_text_white"
-                android:inputType="text"
-                android:maxLines="1"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/fontNormal"
+                    android:textColor="@color/black"/>
+
+                <Button
+                    android:id="@+id/button_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="@string/select"
+                    android:textSize="@dimen/fontNormal"
+                    android:textColor="@color/colorPrimary"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@color/whiteGrey"/>
 
             <TextView
                 android:layout_width="wrap_content"

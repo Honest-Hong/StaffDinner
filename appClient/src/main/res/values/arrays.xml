@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="styles">
+        <item>일반</item>
+        <item>포차</item>
+        <item>호프</item>
+        <item>주점</item>
+        <item>고깃집</item>
+        <item>선술집</item>
+        <item>룸</item>
+        <item>바</item>
+    </string-array>
+</resources>

@@ -1,6 +1,7 @@
 package com.project.boostcamp.staffdinnerrestraurant.activity;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,7 +18,6 @@ import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -41,6 +41,7 @@ import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.Geo;
+import com.project.boostcamp.publiclibrary.dialog.ArrayResultListener;
 import com.project.boostcamp.publiclibrary.domain.AdminJoinDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
@@ -49,11 +50,13 @@ import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
+import com.project.boostcamp.staffdinner.dialog.StyleSelectDialog;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.dialog.ImageModeDialog;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,7 +71,7 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     private View rootView;
     @BindView(R.id.edit_name) EditText editName;
     @BindView(R.id.edit_phone) EditText editPhone;
-    @BindView(R.id.edit_style) EditText editStyle;
+    @BindView(R.id.text_style) TextView textStyle;
     @BindView(R.id.edit_menu) EditText editMenu;
     @BindView(R.id.edit_menu_cost) EditText editCost;
     @BindView(R.id.text_location) TextView textLocation;
@@ -80,7 +83,8 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     private Marker marker; // 신청서의 위치 지도 마커
     private String loginId;
     private int loginType;
-    private String imageFilePath;
+    private String imageFilePath = "";
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +131,7 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     }
 
     private void doJoin() {
+        progressDialog = ProgressDialog.show(this, "", "잠시만 기다려주세요...", true, false);
         final AdminJoinDTO dto = getAdminFromText();
         SharedPreperenceHelper.getInstance(JoinActivity.this).saveGeo(dto.getGeo());
         RetrofitAdmin.getInstance().join(dto, joinDataReceiver);
@@ -138,7 +143,7 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
         dto.setType(loginType);
         dto.setName(editName.getText().toString());
         dto.setPhone(editPhone.getText().toString());
-        dto.setStyle(editStyle.getText().toString());
+        dto.setStyle(textStyle.getText().toString());
         dto.setMenu(editMenu.getText().toString());
         dto.setCost(Integer.parseInt(editCost.getText().toString()));
         dto.setGeo(new Geo("Point", new double[]{
@@ -162,6 +167,9 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
         @Override
         public void onFail() {
             // 회원가입 실패
+            if(progressDialog != null) {
+                progressDialog.dismiss();
+            }
         }
     };
 
@@ -171,12 +179,18 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     private DataReceiver<ResultIntDTO> setImageDataReceiver =  new DataReceiver<ResultIntDTO>() {
         @Override
         public void onReceive(ResultIntDTO data) {
-                startMainActivity();
+            if (progressDialog != null) {
+                progressDialog.dismiss();
             }
+            startMainActivity();
+        }
 
         @Override
         public void onFail() {
             // 이미지 업로드 실패
+            if(progressDialog != null) {
+                progressDialog.dismiss();
+            }
         }
     };
 
@@ -212,10 +226,6 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
         }
         if(!EditTextHelper.greaterLength(editPhone, 7)) {
             Snackbar.make(rootView, R.string.snack_phone, Snackbar.LENGTH_SHORT).show();
-            return false;
-        }
-        if(!EditTextHelper.greaterLength(editStyle, 1)) {
-            Snackbar.make(rootView, R.string.snack_style_select, Snackbar.LENGTH_SHORT).show();
             return false;
         }
         if(!EditTextHelper.greaterLength(editMenu, 1)) {
@@ -358,4 +368,27 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.e("HTJ", connectionResult.getErrorMessage());
     }
+
+    @OnClick(R.id.button_style)
+    public void selectStyle() {
+        StyleSelectDialog dialog = StyleSelectDialog.newInstance(styleResult);
+        dialog.show(getSupportFragmentManager(), null);
+    }
+
+    /**
+     * 스타일 선택 다이얼로그의 결과를 받는 인터페이스
+     */
+    private ArrayResultListener<String> styleResult = new ArrayResultListener<String>() {
+        @Override
+        public void onResult(ArrayList<String> array) {
+            String str = "";
+            for(int i=0; i<array.size(); i++) {
+                str += array.get(i);
+                if(i < array.size() - 1) {
+                    str += ", ";
+                }
+            }
+            textStyle.setText(str);
+        }
+    };
 }

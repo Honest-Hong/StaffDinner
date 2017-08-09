@@ -17,7 +17,7 @@
     <string name="text_image_title">대표사진</string>
     <string name="text_image_title_help">사진을 선택하려면 클릭하세요.</string>
     <string name="text_style">분위기</string>
-    <string name="text_style_help">식당의 분위기를 나타낼 수 있는 단어를 입력해주세요.</string>
+    <string name="text_style_help">식당의 분위기를 나타낼 수 있는 선택해주세요.</string>
     <string name="text_menu">대표메뉴</string>
     <string name="text_menu_help">식당에서 대표로하는 메뉴와 가격을 입력해주세요.</string>
     <string name="text_cost">가격</string>
@@ -90,4 +90,5 @@
     <string name="client_phone">고객의 전화번호</string>
     <string name="send">보내기</string>
     <string name="email_sign_up">이메일 등록</string>
+    <string name="select">선택</string>
 </resources>

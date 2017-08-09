@@ -36,6 +36,7 @@ import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.ApplicationStateType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.Geo;
+import com.project.boostcamp.publiclibrary.dialog.ArrayResultListener;
 import com.project.boostcamp.publiclibrary.domain.ClientApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultStringDTO;
@@ -51,8 +52,10 @@ import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
+import com.project.boostcamp.staffdinner.dialog.StyleSelectDialog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -80,7 +83,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
     @BindView(R.id.text_state) TextView textState; // 상단의 신청서 상태 텍스트
     @BindView(R.id.edit_title) EditText editTitle; // 신청서의 제목 입력창
     @BindView(R.id.edit_number) EditText editNumber; // 신청서의 인원 입력창
-    @BindView(R.id.edit_style) EditText autoStyle; // 신청서의 분위기 입력창
+    @BindView(R.id.text_style) TextView textStyle;
     @BindView(R.id.edit_menu) EditText editMenu; // 신청서의 메뉴 입력창
     @BindView(R.id.text_location) TextView textLocation; // 신청서의 위치 텍스트
     @BindView(R.id.button_apply) Button btnApply; // 신청 버튼
@@ -97,6 +100,8 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
     private Marker marker; // 신청서의 위치 지도 마커
     private FusedLocationProviderClient fusedLocationClient; // 현재 위치를 가져오는 서비스
     private Application application = new Application(); // 현재 신청서 정보
+
+    private ArrayList<String> styles;
 
     public static ApplicationFragment newInstance() {
         return new ApplicationFragment();
@@ -115,9 +120,10 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 
     private void setupView(View v) {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
-
         SupportMapFragment mapFragment = (SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        styles = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.styles)));
 
         // TODO: 2017-07-28 키보드로 잘못 된 입력 예외 처리 하기
         // TODO: 2017-07-31 분위기를 선택하면서 해시태깅을 하도록 추가!
@@ -258,7 +264,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 
         editTitle.setText(application.getTitle());
         editNumber.setText(application.getNumber() + "");
-        autoStyle.setText(application.getWantedStyle());
+        textStyle.setText(application.getWantedStyle());
         editMenu.setText(application.getWantedMenu());
         wheelHour.setSelectedIndex(TimeHelper.getHour(application.getWantedTime()));
         wheelMinute.setSelectedIndex(TimeHelper.getMinute(application.getWantedTime()) / 10);
@@ -267,7 +273,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
         // TODO: 2017-07-28 저장된 위치 맵에 출력하기
     }
 
-    @OnClick({R.id.button_up, R.id.button_down, R.id.button_apply, R.id.button_search})
+    @OnClick({R.id.button_up, R.id.button_down, R.id.button_apply, R.id.button_search, R.id.button_style})
     public void onClick(View view) {
         int number = application.getNumber();
         switch(view.getId()) {
@@ -294,6 +300,10 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
                 intentMap.putExtra(ExtraType.EXTRA_LONGITUDE, googleMap.getCameraPosition().target.longitude);
                 intentMap.putExtra(ExtraType.EXTRA_READ_ONLY, false);
                 startActivityForResult(intentMap, ExtraType.REQUEST_LOCATION);
+                break;
+            case R.id.button_style:
+                StyleSelectDialog dialog = StyleSelectDialog.newInstance(styleResult);
+                dialog.show(getFragmentManager(), null);
                 break;
         }
     }
@@ -421,7 +431,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
                 Integer.parseInt(date.substring(3,5)),
                 Integer.parseInt(hour)
                 , Integer.parseInt(minute)));
-        application.setWantedStyle(autoStyle.getText().toString());
+        application.setWantedStyle(textStyle.getText().toString());
         application.setWantedMenu(editMenu.getText().toString());
         application.setGeo(new Geo("Point",
                 marker.getPosition().longitude,
@@ -497,6 +507,23 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
     }
 
     /**
+     * 스타일 선택 다이얼로그의 결과를 받는 인터페이스
+     */
+    private ArrayResultListener<String> styleResult = new ArrayResultListener<String>() {
+        @Override
+        public void onResult(ArrayList<String> array) {
+            String str = "";
+            for(int i=0; i<array.size(); i++) {
+                str += array.get(i);
+                if(i < array.size() - 1) {
+                    str += ", ";
+                }
+            }
+            textStyle.setText(str);
+        }
+    };
+
+    /**
      * 입력 폼을 사용 불가능하게 하는 함수
      * @param block
      */
@@ -506,7 +533,8 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
         wheelHour.setEnableScroll(!block);
         wheelMinute.setEnableScroll(!block);
         wheelDate.setEnableScroll(!block);
-        autoStyle.setEnabled(!block);
+//        editStyle.setEnabled(!block);
+        textStyle.setEnabled(!block);
         editMenu.setEnabled(!block);
         editMenu.setEnabled(!block);
         btnUp.setEnabled(!block);

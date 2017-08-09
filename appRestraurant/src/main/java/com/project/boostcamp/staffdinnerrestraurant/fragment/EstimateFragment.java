@@ -3,6 +3,7 @@ package com.project.boostcamp.staffdinnerrestraurant.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,6 +31,7 @@ import butterknife.ButterKnife;
 
 public class EstimateFragment extends Fragment {
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
     @BindView(R.id.help_empty) View viewEmpty;
     private EstimateAdapter recyclerAdapter;
 
@@ -50,9 +52,9 @@ public class EstimateFragment extends Fragment {
         ButterKnife.bind(this, v);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         recyclerAdapter = new EstimateAdapter(getContext(), dataEvent);
         recyclerView.setAdapter(recyclerAdapter);
+        swipeRefresh.setOnRefreshListener(onRefreshListener);
     }
 
     private DataEvent<AdminEstimate> dataEvent = new DataEvent<AdminEstimate>() {
@@ -90,12 +92,22 @@ public class EstimateFragment extends Fragment {
                 viewEmpty.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             }
+            if(swipeRefresh.isRefreshing()) {
+                swipeRefresh.setRefreshing(false);
+            }
             recyclerAdapter.setData(arr);
         }
 
         @Override
         public void onFail() {
             Log.e("HTJ", "Fail to loading estimate list");
+        }
+    };
+
+    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            loadData();
         }
     };
 }

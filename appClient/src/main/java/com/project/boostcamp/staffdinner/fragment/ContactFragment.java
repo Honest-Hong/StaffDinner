@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -32,6 +33,7 @@ import butterknife.ButterKnife;
 
 public class ContactFragment extends Fragment {
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
     @BindView(R.id.help_empty) View viewEmpty;
     private ContactRecyclerAdapter adapter;
 
@@ -61,6 +63,7 @@ public class ContactFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ContactRecyclerAdapter(getContext(), dataEvent);
         recyclerView.setAdapter(adapter);
+        swipeRefresh.setOnRefreshListener(onRefreshListener);
     }
 
     private void loadData() {
@@ -88,11 +91,21 @@ public class ContactFragment extends Fragment {
                 viewEmpty.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
             }
+            if(swipeRefresh.isRefreshing()) {
+                swipeRefresh.setRefreshing(false);
+            }
         }
 
         @Override
         public void onFail() {
             Toast.makeText(getContext(), "서버 오류", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            loadData();
         }
     };
 }

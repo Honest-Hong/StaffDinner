@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.transition.Explode;
@@ -35,6 +36,7 @@ import butterknife.ButterKnife;
 // TODO: 2017-08-07 계약이 진행되었을 때 신청서를 작성하거나 계약된 것만 보여주도록
 public class EstimateFragment extends Fragment {
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
     @BindView(R.id.help_empty) View viewEmpty;
     private EstimateRecyclerAdapter adapter;
 
@@ -63,6 +65,7 @@ public class EstimateFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new EstimateRecyclerAdapter(getContext(), dataEvent);
         recyclerView.setAdapter(adapter);
+        swipeRefresh.setOnRefreshListener(onRefreshListener);
     }
 
     private void loadData() {
@@ -90,11 +93,21 @@ public class EstimateFragment extends Fragment {
                 viewEmpty.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
             }
+            if(swipeRefresh.isRefreshing()) {
+                swipeRefresh.setRefreshing(false);
+            }
         }
 
         @Override
         public void onFail() {
             Toast.makeText(getContext(), "계약 내역을 불러오는데 실패하였습니다", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            loadData();
         }
     };
 }

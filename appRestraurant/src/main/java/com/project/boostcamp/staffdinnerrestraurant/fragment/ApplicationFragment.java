@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -37,6 +38,7 @@ import retrofit2.Response;
 public class ApplicationFragment extends Fragment {
     private static final float MAX_DISTANCE = 2.0f;
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
     @BindView(R.id.help_empty) View viewEmpty;
     private ApplicationAdapter adapter;
 
@@ -59,6 +61,7 @@ public class ApplicationFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ApplicationAdapter(getContext(), dataEvent);
         recyclerView.setAdapter(adapter);
+        swipeRefresh.setOnRefreshListener(onRefreshListener);
     }
 
     private DataEvent<AdminApplication> dataEvent = new DataEvent<AdminApplication>() {
@@ -91,12 +94,17 @@ public class ApplicationFragment extends Fragment {
                     app.setWritedTime(dto.getWritedTime());
                     arr.add(app);
                 }
+                // 데이터가 존재하면 보여주고 존재하지 않으면 데이터가 없다는 것을 표시해줌
                 if(arr.size() > 0) {
                     viewEmpty.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                 } else {
                     viewEmpty.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
+                }
+                // Refreshing 애니메이션 중지
+                if(swipeRefresh.isRefreshing()) {
+                    swipeRefresh.setRefreshing(false);
                 }
                 adapter.setData(arr);
             }
@@ -107,4 +115,11 @@ public class ApplicationFragment extends Fragment {
             }
         });
     }
+
+    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            loadData();
+        }
+    };
 }

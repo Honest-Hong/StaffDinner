@@ -70,7 +70,6 @@ import retrofit2.Response;
  */
 
 public class ApplicationFragment extends Fragment implements View.OnClickListener, OnMapReadyCallback, DialogResultListener {
-    private static final int REQUEST_PERMISSION = 0x100;
     public static final int MAX_NUMBER = 99;
     public static final int MIN_NUMBER = 1;
     public static final int MAX_HOUR = 24;
@@ -140,7 +139,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
         // TODO: 2017-08-04 신청서가 존재하는 경우 현재 위치로 하지 않도록 하기
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_DENIED) {
-            requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, REQUEST_PERMISSION);
+            requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, ExtraType.REQUEST_LOCATION_PERMISSION);
         } else {
             setMyLocation();
         }
@@ -151,7 +150,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == REQUEST_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if(requestCode == ExtraType.REQUEST_LOCATION_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             setMyLocation();
         }
     }

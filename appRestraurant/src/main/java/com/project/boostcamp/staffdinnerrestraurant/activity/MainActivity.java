@@ -21,6 +21,8 @@ import com.google.android.gms.location.LocationServices;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.project.boostcamp.publiclibrary.data.AccountType;
+import com.project.boostcamp.publiclibrary.data.ExtraType;
+import com.project.boostcamp.publiclibrary.data.NotiType;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setupToolbar();
         setupTabLayout();
         setupViewPager();
-        handleIntent();
+        handleIntent(getIntent());
 
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */,
@@ -107,15 +109,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         Log.d("HTJ", "setupViewPager end");
     }
 
-    private void handleIntent() {
-        Log.d("HTJ", "handleIntent");
-        int type = getIntent().getIntExtra(EXTRA_NOTIFICATION_TYPE, NOTIFICATION_TYPE_NONE);
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
+    /**
+     * Noti로 넘어온 Intent를 처리하는 메소드
+     * Noti의 Type에 따라서 탭의 위치를 변경시켜준다.
+     * 새로운 견적서 알람
+     */
+    private void handleIntent(Intent intent) {
+        if(intent == null) {
+            return;
+        }
+        int type = intent.getIntExtra(ExtraType.EXTRA_NOTIFICATION_TYPE, NotiType.NOTIFICATION_TYPE_NONE);
         switch(type) {
-            case NOTIFICATION_TYPE_NONE:
+            case NotiType.NOTIFICATION_TYPE_NONE:
                 viewPager.setCurrentItem(0);
                 break;
-            case NOTIFICATION_TYPE_ESTIMATE:
+            case NotiType.NOTIFICATION_TYPE_ESTIMATE:
                 viewPager.setCurrentItem(1);
+                break;
+            case NotiType.NOTIFICATION_TYPE_CONTACT:
+                viewPager.setCurrentItem(2);
                 break;
             default:
                 viewPager.setCurrentItem(0);

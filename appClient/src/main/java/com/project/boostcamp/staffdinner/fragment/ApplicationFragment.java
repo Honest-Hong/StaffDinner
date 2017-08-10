@@ -31,6 +31,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.ApplicationStateType;
@@ -79,6 +80,8 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
     public static final int MAX_HOUR = 24;
     public static final int MAX_MINUTE = 60;
     public static final int MAX_DATE = 14;
+    private static final LatLng DEFAULT_LOCATION = new LatLng(37.4973932,127.02744170000005);
+    private static final int DEFAULT_ZOON = 16;
     @BindView(R.id.scroll_view) NestedScrollView scrollView;
     @BindView(R.id.image_state) ImageView imageState; // 상단의 신청서 상태 이미지
     @BindView(R.id.text_state) TextView textState; // 상단의 신청서 상태 텍스트
@@ -127,7 +130,6 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
         styles = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.styles)));
 
         // TODO: 2017-07-28 키보드로 잘못 된 입력 예외 처리 하기
-        // TODO: 2017-07-31 분위기를 선택하면서 해시태깅을 하도록 추가!
     }
 
     /**
@@ -141,7 +143,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
         UiSettings uiSettings = googleMap.getUiSettings();
         uiSettings.setScrollGesturesEnabled(false);
         uiSettings.setZoomGesturesEnabled(false);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(37.4973932,127.02744170000005), 16));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DEFAULT_ZOON));
 
         // TODO: 2017-08-04 신청서가 존재하는 경우 현재 위치로 하지 않도록 하기
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -180,6 +182,12 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
                     } else {
                         textLocation.setText(R.string.text_no_address);
                     }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.e("HTJ", "fusedLocationClient onFailure");
+                    setLocation(DEFAULT_LOCATION);
                 }
             });
         }

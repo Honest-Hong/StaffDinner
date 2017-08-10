@@ -8,6 +8,7 @@ import com.project.boostcamp.publiclibrary.domain.AdminJoinDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
+import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 
 import java.io.File;
@@ -128,5 +129,12 @@ public class RetrofitAdmin {
                 dataReceiver.onFail();
             }
         });
+    }
+
+    public void refreshToken(String id, int type, String token) {
+        TokenRefreshDTO dto = new TokenRefreshDTO();
+        dto.setType(type);
+        dto.setToken(token);
+        adminService.updateToken(id, dto);
     }
 }

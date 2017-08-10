@@ -23,24 +23,10 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         String loginId = SharedPreperenceHelper.getInstance(getApplicationContext()).getLoginId();
         int loginType = SharedPreperenceHelper.getInstance(getApplicationContext()).getLoginType();
         if(!loginId.equals("")) {
-            RetrofitAdmin.getInstance().adminService.updateToken(
+            RetrofitAdmin.getInstance().refreshToken(
                     loginId,
                     loginType,
-                    FirebaseInstanceId.getInstance().getToken()).enqueue(new Callback<ResultIntDTO>() {
-                @Override
-                public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
-                    if(response.body().getResult() == 1) {
-                        Log.d("HTJ", "success to token refresh");
-                    } else {
-                        Log.d("HTJ", "fail to token refresh");
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResultIntDTO> call, Throwable t) {
-                    Log.e("HTJ", "onFailure onTokenRefresh: " + t.getMessage());
-                }
-            });
+                    FirebaseInstanceId.getInstance().getToken());
         }
     }
 }

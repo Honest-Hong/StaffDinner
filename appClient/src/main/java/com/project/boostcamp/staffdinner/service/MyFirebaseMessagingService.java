@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.util.NotiHelper;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.activity.MainActivity;
@@ -34,6 +35,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationManager manager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(ExtraType.EXTRA_NOTIFICATION_TYPE, Integer.parseInt(remoteMessage.getData().get("type")));
         manager.notify(0, NotiHelper.simple(this,
                 remoteMessage.getNotification().getTitle(),
                 remoteMessage.getNotification().getBody(),

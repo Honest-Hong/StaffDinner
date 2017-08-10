@@ -14,6 +14,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
@@ -135,8 +136,11 @@ public class EmailSignUpActivity extends AppCompatActivity {
                 if(dto.getId() == null) {
                     moveJoinActivity();
                 } else {
+                    RetrofitClient.getInstance().refreshToken(dto.getId(), dto.getType(), FirebaseInstanceId.getInstance().getToken());
                     SharedPreperenceHelper.getInstance(EmailSignUpActivity.this).saveLogin(dto);
-                    startActivity(new Intent(EmailSignUpActivity.this, MainActivity.class));
+                    Intent intent = new Intent(EmailSignUpActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                     finish();
                 }
             }

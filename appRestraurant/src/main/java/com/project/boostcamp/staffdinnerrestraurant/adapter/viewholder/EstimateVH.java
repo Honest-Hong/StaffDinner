@@ -51,7 +51,6 @@ public class EstimateVH extends BaseVH<AdminEstimate> {
     }
 
     private void setState(int state) {
-        Log.d("HTJ", "state: " + state);
         switch(state) {
             case EstimateStateType.STATE_WATING:
                 imageState.setImageResource(R.drawable.ic_error_orange_24dp);

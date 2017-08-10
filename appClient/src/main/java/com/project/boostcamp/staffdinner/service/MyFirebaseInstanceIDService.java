@@ -16,7 +16,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         String id = SharedPreperenceHelper.getInstance(getApplicationContext()).getLoginId();
         int type = SharedPreperenceHelper.getInstance(getApplicationContext()).getLoginType();
         if(!id.equals("")) {
-            RetrofitClient.getInstance().clientService.updateToken(
+            RetrofitClient.getInstance().refreshToken(
                     id,
                     type,
                     FirebaseInstanceId.getInstance().getToken());

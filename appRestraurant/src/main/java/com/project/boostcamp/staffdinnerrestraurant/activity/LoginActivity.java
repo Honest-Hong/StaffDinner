@@ -12,6 +12,7 @@ import com.facebook.FacebookException;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
@@ -153,9 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    SharedPreperenceHelper.getInstance(getApplicationContext()).saveLogin(response.body());
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    finish();
+                    redirectMainActivity(response.body());
                 }
             }
 
@@ -164,5 +163,12 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("HTJ", "login onFailure: " + t.getMessage());
             }
         });
+    }
+
+    private void redirectMainActivity(LoginDTO loginDTO) {
+        RetrofitAdmin.getInstance().refreshToken(loginDTO.getId(), loginDTO.getType(), FirebaseInstanceId.getInstance().getToken());
+        SharedPreperenceHelper.getInstance(getApplicationContext()).saveLogin(loginDTO);
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
     }
 }

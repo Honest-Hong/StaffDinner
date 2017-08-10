@@ -20,6 +20,7 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.project.boostcamp.publiclibrary.data.AccountType;
@@ -52,11 +53,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.i("HTJ", "token: " + FirebaseInstanceId.getInstance().getToken());
+
         ButterKnife.bind(this);
         setupToolbar();
         setupTabLayout();
         setupViewPager();
-        handleIntent();
+        handleIntent(getIntent());
 
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */,
@@ -126,19 +129,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         });
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        handleIntent(intent);
+    }
+
     /**
      * Noti로 넘어온 Intent를 처리하는 메소드
      * Noti의 Type에 따라서 탭의 위치를 변경시켜준다.
      * 새로운 견적서 알람
      */
-    private void handleIntent() {
-        int type = getIntent().getIntExtra(ExtraType.EXTRA_NOTIFICATION_TYPE, NotiType.NOTIFICATION_TYPE_NONE);
+    private void handleIntent(Intent intent) {
+        if(intent == null) {
+            return;
+        }
+        int type = intent.getIntExtra(ExtraType.EXTRA_NOTIFICATION_TYPE, NotiType.NOTIFICATION_TYPE_NONE);
         switch(type) {
             case NotiType.NOTIFICATION_TYPE_NONE:
                 viewPager.setCurrentItem(0);
                 break;
             case NotiType.NOTIFICATION_TYPE_ESTIMATE:
                 viewPager.setCurrentItem(1);
+                break;
+            case NotiType.NOTIFICATION_TYPE_CONTACT:
+                viewPager.setCurrentItem(2);
                 break;
             default:
                 viewPager.setCurrentItem(0);
@@ -197,14 +212,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             UserManagement.requestLogout(new LogoutResponseCallback() {
                 @Override
                 public void onCompleteLogout() {
-                    finish();
                     startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    finish();
                 }
             });
         } else if(type == AccountType.TYPE_FACEBOOK) {
             LoginManager.getInstance().logOut();
-            finish();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
         } else {
             finish();
         }

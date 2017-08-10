@@ -7,6 +7,7 @@ import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactAddDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
+import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -95,5 +96,20 @@ public class RetrofitClient {
 
     public String getAdminImageUrl(String id, int type) {
         return BASE_URL + "images/" + id + "-" + type + ".jpg";
+    }
+
+    public void refreshToken(String id, int type, String token) {
+        TokenRefreshDTO dto = new TokenRefreshDTO();
+        dto.setType(type);
+        dto.setToken(token);
+        clientService.updateToken(id, dto).enqueue(new Callback<ResultIntDTO>() {
+            @Override
+            public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
+            }
+
+            @Override
+            public void onFailure(Call<ResultIntDTO> call, Throwable t) {
+            }
+        });
     }
 }

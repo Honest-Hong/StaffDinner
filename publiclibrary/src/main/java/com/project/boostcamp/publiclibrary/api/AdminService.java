@@ -7,6 +7,7 @@ import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.EstimateAddDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
+import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,13 +60,11 @@ public interface AdminService {
     /**
      * 토큰 최신화 요청
      * @param id 로그인 Id
-     * @param type 로그인 Type
-     * @param token 토큰값
+     * @param tokenRefreshDTO 토큰 정보
      * @return 성공시 1, 실패시 0
      */
-    @FormUrlEncoded
     @PUT("/admin/{id}/token")
-    Call<ResultIntDTO> updateToken(@Path("id") String id, @Field("type") int type, @Field("token") String token);
+    Call<ResultIntDTO> updateToken(@Path("id") String id, @Body TokenRefreshDTO tokenRefreshDTO);
 
     /**
      * 신청서에 견적서를 추가 교청

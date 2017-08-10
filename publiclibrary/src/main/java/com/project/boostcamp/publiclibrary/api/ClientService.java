@@ -8,6 +8,7 @@ import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultStringDTO;
+import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -72,13 +73,11 @@ public interface ClientService {
     /**
      * 토큰 최신화 요청
      * @param id 로그인 id
-     * @param type 로그인 type
-     * @param token 토큰
+     * @param tokenRefreshDTO 전달 인자값
      * @return 성공시 1 반환
      */
-    @FormUrlEncoded
     @PUT("/client/{id}/token")
-    Call<ResultIntDTO> updateToken(@Path("id") String id, @Field("type") int type, @Field("token") String token);
+    Call<ResultIntDTO> updateToken(@Path("id") String id, @Body TokenRefreshDTO tokenRefreshDTO);
 
     /**
      * 견적서 목록 요청

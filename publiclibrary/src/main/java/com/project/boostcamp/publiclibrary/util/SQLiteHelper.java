@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.HandlerThread;
-import android.util.Log;
 
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.GeoDTO;
@@ -109,7 +107,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
      * @param contacts
      */
     synchronized public void refreshContact(ArrayList<ContactDTO> contacts) {
-        Cursor cursor = getReadableDatabase().rawQuery(SQLData.QUERY_SELECT_CONTACT_ID, null);
+        Cursor cursor = getReadableDatabase().rawQuery(SQLData.QUERY_SELECT_CONTACT_LASTEST_ID, null);
         String topId = null;
         while(cursor.moveToNext()) {
             topId = cursor.getString(0);

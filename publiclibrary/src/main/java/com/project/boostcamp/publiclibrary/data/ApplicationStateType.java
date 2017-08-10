@@ -11,5 +11,6 @@ package com.project.boostcamp.publiclibrary.data;
 public class ApplicationStateType {
     public static final int STATE_EDITING = 0x0;
     public static final int STATE_APPLIED = 0x1;
-    public static final int STATE_CANCELED = 0x2;
+    public static final int STATE_CONTACTED = 0x2;
+    public static final int STATE_CANCELED = 0x3;
 }

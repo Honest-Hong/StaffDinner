@@ -1,4 +1,4 @@
-package com.project.boostcamp.publiclibrary.dialog;
+package com.project.boostcamp.publiclibrary.inter;
 
 /**
  * Created by Hong Tae Joon on 2017-07-26.

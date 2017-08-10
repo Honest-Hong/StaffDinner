@@ -3,7 +3,7 @@ package com.project.boostcamp.publiclibrary.object;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.project.boostcamp.publiclibrary.data.DataEvent;
+import com.project.boostcamp.publiclibrary.inter.DataEvent;
 
 /**
  * Created by Hong Tae Joon on 2017-07-28.

@@ -1,4 +1,4 @@
-package com.project.boostcamp.publiclibrary.dialog;
+package com.project.boostcamp.publiclibrary.inter;
 
 import java.util.ArrayList;
 

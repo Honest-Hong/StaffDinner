@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,8 @@ import android.widget.Toast;
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.AdminEstimate;
-import com.project.boostcamp.publiclibrary.data.DataEvent;
+import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.AdminEstimateDTO;
-import com.project.boostcamp.publiclibrary.util.LogHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.adapter.EstimateAdapter;
@@ -66,7 +64,8 @@ public class EstimateFragment extends Fragment {
         }
     };
 
-    private void loadData() {
+    public void loadData() {
+        showRefreshing();
         String id = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
         RetrofitAdmin.getInstance().getEstimateList(id, dataReceiver);
     }
@@ -94,17 +93,13 @@ public class EstimateFragment extends Fragment {
                 viewEmpty.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             }
-            if(swipeRefresh.isRefreshing()) {
-                swipeRefresh.setRefreshing(false);
-            }
+            hideRefreshing();
             recyclerAdapter.setData(arr);
         }
 
         @Override
         public void onFail() {
-            if(swipeRefresh.isRefreshing()) {
-                swipeRefresh.setRefreshing(false);
-            }
+            hideRefreshing();
             Toast.makeText(getContext(), R.string.fail_to_load_estimates, Toast.LENGTH_SHORT).show();
         }
     };
@@ -115,4 +110,16 @@ public class EstimateFragment extends Fragment {
             loadData();
         }
     };
+
+    private void showRefreshing() {
+        if(!swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(true);
+        }
+    }
+
+    private void hideRefreshing() {
+        if(swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
+    }
 }

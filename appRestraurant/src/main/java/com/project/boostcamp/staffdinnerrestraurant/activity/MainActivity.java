@@ -27,6 +27,9 @@ import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.adapter.MainViewPagerAdapter;
+import com.project.boostcamp.staffdinnerrestraurant.fragment.ApplicationFragment;
+import com.project.boostcamp.staffdinnerrestraurant.fragment.ContactFragment;
+import com.project.boostcamp.staffdinnerrestraurant.fragment.EstimateFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -126,14 +129,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
         int type = intent.getIntExtra(ExtraType.EXTRA_NOTIFICATION_TYPE, NotiType.NOTIFICATION_TYPE_NONE);
         switch(type) {
-            case NotiType.NOTIFICATION_TYPE_NONE:
+            case NotiType.NOTIFICATION_TYPE_APPLICATION:
                 viewPager.setCurrentItem(0);
+                ApplicationFragment applicationFragment = (ApplicationFragment) getSupportFragmentManager().getFragments().get(1);
+                applicationFragment.loadData();
                 break;
             case NotiType.NOTIFICATION_TYPE_ESTIMATE:
                 viewPager.setCurrentItem(1);
+                EstimateFragment estimateFragment = (EstimateFragment) getSupportFragmentManager().getFragments().get(2);
+                estimateFragment.loadData();
                 break;
             case NotiType.NOTIFICATION_TYPE_CONTACT:
                 viewPager.setCurrentItem(2);
+                ContactFragment contactFragment = (ContactFragment) getSupportFragmentManager().getFragments().get(3);
+                contactFragment.loadData();
                 break;
             default:
                 viewPager.setCurrentItem(0);

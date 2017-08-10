@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
-import com.project.boostcamp.publiclibrary.data.DataEvent;
+import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.util.SQLiteHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
@@ -66,7 +66,8 @@ public class ContactFragment extends Fragment {
         swipeRefresh.setOnRefreshListener(onRefreshListener);
     }
 
-    private void loadData() {
+    public void loadData() {
+        showRefreshing();
         String clientID = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
         RetrofitClient.getInstance().getContacts(clientID, dataReceiver);
     }
@@ -99,19 +100,15 @@ public class ContactFragment extends Fragment {
                 viewEmpty.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
             }
-            if(swipeRefresh.isRefreshing()) {
-                swipeRefresh.setRefreshing(false);
-            }
             SQLiteHelper.getInstance(getContext()).refreshContact(data);
+            hideRefreshing();
         }
 
         @Override
         public void onFail() {
             adapter.setData(SQLiteHelper.getInstance(getContext()).selectContact());
             Toast.makeText(getContext(), R.string.fail_to_load_contacts, Toast.LENGTH_SHORT).show();
-            if(swipeRefresh.isRefreshing()) {
-                swipeRefresh.setRefreshing(false);
-            }
+            hideRefreshing();
         }
     };
 
@@ -121,4 +118,16 @@ public class ContactFragment extends Fragment {
             loadData();
         }
     };
+
+    private void showRefreshing() {
+        if(!swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(true);
+        }
+    }
+
+    private void hideRefreshing() {
+        if(swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
+    }
 }

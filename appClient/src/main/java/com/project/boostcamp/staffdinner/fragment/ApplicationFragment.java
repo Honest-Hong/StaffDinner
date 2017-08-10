@@ -38,7 +38,7 @@ import com.project.boostcamp.publiclibrary.data.ApplicationStateType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.Geo;
 import com.project.boostcamp.publiclibrary.data.RequestType;
-import com.project.boostcamp.publiclibrary.dialog.ArrayResultListener;
+import com.project.boostcamp.publiclibrary.inter.ArrayResultListener;
 import com.project.boostcamp.publiclibrary.domain.ClientApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultStringDTO;
@@ -46,7 +46,7 @@ import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.publiclibrary.data.Application;
 import com.project.boostcamp.staffdinner.activity.MapDetailActivity;
 import com.project.boostcamp.staffdinner.adapter.TextWheelAdapter;
-import com.project.boostcamp.publiclibrary.dialog.DialogResultListener;
+import com.project.boostcamp.publiclibrary.inter.DialogResultListener;
 import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
 import com.project.boostcamp.publiclibrary.view.WheelPicker;
 import com.project.boostcamp.publiclibrary.util.TimeHelper;
@@ -74,7 +74,7 @@ import retrofit2.Response;
  * 신청서를 작성하거나 취소할 수 있다.
  */
 
-public class ApplicationFragment extends Fragment implements View.OnClickListener, OnMapReadyCallback, DialogResultListener {
+public class ApplicationFragment extends Fragment implements OnMapReadyCallback, DialogResultListener {
     public static final int MAX_NUMBER = 99;
     public static final int MIN_NUMBER = 1;
     public static final int MAX_HOUR = 24;
@@ -105,8 +105,6 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
     private FusedLocationProviderClient fusedLocationClient; // 현재 위치를 가져오는 서비스
     private Application application = new Application(); // 현재 신청서 정보
 
-    private ArrayList<String> styles;
-
     public static ApplicationFragment newInstance() {
         return new ApplicationFragment();
     }
@@ -126,8 +124,6 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
         SupportMapFragment mapFragment = (SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        styles = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.styles)));
 
         // TODO: 2017-07-28 키보드로 잘못 된 입력 예외 처리 하기
     }
@@ -283,24 +279,38 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
         // TODO: 2017-07-28 저장된 위치 맵에 출력하기
     }
 
-    @OnClick({R.id.button_up, R.id.button_down, R.id.button_apply, R.id.button_search, R.id.button_style})
-    public void onClick(View view) {
+    /**
+     * 인원 숫자 컨트롤 버튼
+     * @param view
+     */
+    @OnClick({R.id.button_up, R.id.button_down})
+    public void onNumberControlClick(View view) {
         int number = application.getNumber();
         switch(view.getId()) {
             case R.id.button_up:
-                if(number < MAX_NUMBER) {
+                if (number < MAX_NUMBER) {
                     number++;
                     editNumber.setText(Integer.toString(number));
                     application.setNumber(number);
                 }
                 break;
             case R.id.button_down:
-                if(number > MIN_NUMBER) {
+                if (number > MIN_NUMBER) {
                     number--;
                     editNumber.setText(Integer.toString(number));
                     application.setNumber(number);
                 }
                 break;
+        }
+    }
+
+    /**
+     * 신청하기, 위치 찾기, 스타일 선택 버튼 이벤트
+     * @param view
+     */
+    @OnClick({R.id.button_apply, R.id.button_search, R.id.button_style})
+    public void onClick(View view) {
+        switch(view.getId()) {
             case R.id.button_apply:
                 handleApplyButton();
                 break;
@@ -325,16 +335,25 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
      * 취소됨 상태의 경우 신청서를 다시 작성하도록 입력창이 비워진다
      */
     private void handleApplyButton() {
-        if(application.getState() == ApplicationStateType.STATE_EDITING) {
-            MyAlertDialog.newInstance(getString(R.string.dialog_alert_title), getString(R.string.dialog_apply_message), this)
-                    .show(getChildFragmentManager(), null);
-        } else if(application.getState() == ApplicationStateType.STATE_APPLIED) {
-            MyAlertDialog.newInstance(getString(R.string.dialog_alert_title), getString(R.string.dialog_cancel_message), this)
-                    .show(getChildFragmentManager(), null);
-        } else {
-            application = new Application();
-            setupTexts(application);
-            setState(ApplicationStateType.STATE_EDITING);
+        switch(application.getState()) {
+            case ApplicationStateType.STATE_EDITING:
+                MyAlertDialog.newInstance(getString(R.string.dialog_alert_title), getString(R.string.dialog_apply_message), this)
+                        .show(getChildFragmentManager(), null);
+                break;
+            case ApplicationStateType.STATE_APPLIED:
+                MyAlertDialog.newInstance(getString(R.string.dialog_alert_title), getString(R.string.dialog_cancel_message), this)
+                        .show(getChildFragmentManager(), null);
+                break;
+            case ApplicationStateType.STATE_CONTACTED:
+                application = new Application();
+                setupTexts(application);
+                setState(ApplicationStateType.STATE_EDITING);
+                break;
+            case ApplicationStateType.STATE_CANCELED:
+                application = new Application();
+                setupTexts(application);
+                setState(ApplicationStateType.STATE_EDITING);
+                break;
         }
     }
 
@@ -490,7 +509,8 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
      * 신청서의 상태에 따라서 화면을 다르게 표시해주는 함수
      * @param state
      */
-    private void setState(int state) {
+    public void setState(int state) {
+        application.setState(state);
         switch(state) {
             case ApplicationStateType.STATE_EDITING:
                 btnApply.setText(R.string.text_apply);
@@ -503,6 +523,13 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
                 btnApply.setText(R.string.text_cancel);
                 imageState.setImageResource(R.drawable.ic_check_circle_green_24dp);
                 textState.setText(R.string.text_apply_success);
+                textState.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
+                blockView(true);
+                break;
+            case ApplicationStateType.STATE_CONTACTED:
+                btnApply.setText(R.string.text_rewrite);
+                imageState.setImageResource(R.drawable.ic_check_circle_green_24dp);
+                textState.setText(R.string.text_apply_contacted);
                 textState.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
                 blockView(true);
                 break;

@@ -21,6 +21,7 @@
     <string name="text_location">위치</string>
     <string name="text_apply_success">신청 완료</string>
     <string name="text_apply_canceled">취소됨</string>
+    <string name="text_apply_contacted">계약됨</string>
     <string name="text_count_person">명</string>
     <string name="text_apply">신청</string>
     <string name="text_cancel">취소</string>

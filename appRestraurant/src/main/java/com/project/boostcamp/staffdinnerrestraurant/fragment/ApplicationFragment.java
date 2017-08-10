@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.AdminApplication;
-import com.project.boostcamp.publiclibrary.data.DataEvent;
+import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.AdminApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.GeoDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
@@ -73,7 +73,8 @@ public class ApplicationFragment extends Fragment {
         }
     };
 
-    private void loadData() {
+    public void loadData() {
+        showRefreshing();
         GeoDTO geo = SharedPreperenceHelper.getInstance(getContext()).getGeo();
         RetrofitAdmin.getInstance().adminService.get(geo.getCoordinates()[1], geo.getCoordinates()[0], MAX_DISTANCE).enqueue(new Callback<List<AdminApplicationDTO>>() {
             @Override
@@ -102,15 +103,13 @@ public class ApplicationFragment extends Fragment {
                     viewEmpty.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
                 }
-                // Refreshing 애니메이션 중지
-                if(swipeRefresh.isRefreshing()) {
-                    swipeRefresh.setRefreshing(false);
-                }
+                hideRefreshing();
                 adapter.setData(arr);
             }
 
             @Override
             public void onFailure(Call<List<AdminApplicationDTO>> call, Throwable t) {
+                hideRefreshing();
                 Log.e("HTJ", "ApplicationFragment-loadData-onFailure: " + t.getMessage());
             }
         });
@@ -122,4 +121,16 @@ public class ApplicationFragment extends Fragment {
             loadData();
         }
     };
+
+    private void showRefreshing() {
+        if(!swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(true);
+        }
+    }
+
+    private void hideRefreshing() {
+        if(swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
+    }
 }

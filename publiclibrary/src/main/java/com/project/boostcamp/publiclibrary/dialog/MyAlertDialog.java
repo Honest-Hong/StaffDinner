@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 
 import com.project.boostcamp.publiclibrary.R;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
+import com.project.boostcamp.publiclibrary.inter.DialogResultListener;
 
 /**
  * Created by Hong Tae Joon on 2017-07-26.

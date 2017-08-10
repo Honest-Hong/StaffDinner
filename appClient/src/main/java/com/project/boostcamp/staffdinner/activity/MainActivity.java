@@ -24,15 +24,23 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.project.boostcamp.publiclibrary.data.AccountType;
+import com.project.boostcamp.publiclibrary.data.AdminEstimate;
 import com.project.boostcamp.publiclibrary.data.Application;
+import com.project.boostcamp.publiclibrary.data.ApplicationStateType;
+import com.project.boostcamp.publiclibrary.data.BaseData;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.NotiType;
-import com.project.boostcamp.publiclibrary.dialog.DialogResultListener;
+import com.project.boostcamp.publiclibrary.inter.ContactEventListener;
+import com.project.boostcamp.publiclibrary.inter.DialogResultListener;
 import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
+import com.project.boostcamp.publiclibrary.util.LogHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.MainViewPagerAdapter;
+import com.project.boostcamp.staffdinner.fragment.ApplicationFragment;
+import com.project.boostcamp.staffdinner.fragment.ContactFragment;
+import com.project.boostcamp.staffdinner.fragment.EstimateFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +49,7 @@ import butterknife.ButterKnife;
  * 메인 액티비티.
  * 신청서, 견적서, 계약서 탭 3가지가 존재한다.
  */
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener, ContactEventListener{
     @BindView(R.id.drawer) DrawerLayout drawer;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.view_pager) ViewPager viewPager;
@@ -146,14 +154,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
         int type = intent.getIntExtra(ExtraType.EXTRA_NOTIFICATION_TYPE, NotiType.NOTIFICATION_TYPE_NONE);
         switch(type) {
-            case NotiType.NOTIFICATION_TYPE_NONE:
+            case NotiType.NOTIFICATION_TYPE_APPLICATION:
                 viewPager.setCurrentItem(0);
                 break;
             case NotiType.NOTIFICATION_TYPE_ESTIMATE:
                 viewPager.setCurrentItem(1);
+                EstimateFragment estimateFragment = (EstimateFragment) getSupportFragmentManager().getFragments().get(2);
+                estimateFragment.loadData();
                 break;
             case NotiType.NOTIFICATION_TYPE_CONTACT:
                 viewPager.setCurrentItem(2);
+                ContactFragment contactFragment = (ContactFragment) getSupportFragmentManager().getFragments().get(3);
+                contactFragment.loadData();
                 break;
             default:
                 viewPager.setCurrentItem(0);
@@ -255,4 +267,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         public void onNegative() {
         }
     };
+
+    /**
+     * 계약 발생 이벤트
+     * 신청서 프래그먼트를 업데이트 시켜준다
+     *
+     * 왜 인덱스를 1로해야하는가?
+     * 인덱스 0은 무슨 프래그먼트인가?
+     */
+    @Override
+    public void onContact() {
+        viewPager.setCurrentItem(0);
+        ApplicationFragment fragment = (ApplicationFragment) getSupportFragmentManager().getFragments().get(1);
+        fragment.setState(ApplicationStateType.STATE_CONTACTED);
+    }
 }

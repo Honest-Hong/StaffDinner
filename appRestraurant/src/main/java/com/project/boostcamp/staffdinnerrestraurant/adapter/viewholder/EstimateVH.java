@@ -2,13 +2,12 @@ package com.project.boostcamp.staffdinnerrestraurant.adapter.viewholder;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.project.boostcamp.publiclibrary.data.AdminEstimate;
-import com.project.boostcamp.publiclibrary.data.DataEvent;
+import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.data.EstimateStateType;
 import com.project.boostcamp.publiclibrary.object.BaseVH;
 import com.project.boostcamp.publiclibrary.util.TimeHelper;

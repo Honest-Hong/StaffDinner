@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
-import com.project.boostcamp.publiclibrary.data.DataEvent;
+import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.util.SQLiteHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
@@ -59,7 +59,8 @@ public class ContactFragment extends Fragment {
         swipeRefresh.setOnRefreshListener(onRefreshListener);
     }
 
-    private void loadData() {
+    public void loadData() {
+        showRefreshing();
         String adminID = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
         RetrofitAdmin.getInstance().getContacts(adminID, dataReceiver);
     }
@@ -96,14 +97,13 @@ public class ContactFragment extends Fragment {
                 swipeRefresh.setRefreshing(false);
             }
             SQLiteHelper.getInstance(getContext()).refreshContact(data);
+            hideRefreshing();
         }
 
         @Override
         public void onFail() {
+            hideRefreshing();
             adapter.setData(SQLiteHelper.getInstance(getContext()).selectContact());
-            if(swipeRefresh.isRefreshing()) {
-                swipeRefresh.setRefreshing(false);
-            }
             Toast.makeText(getContext(), R.string.fail_to_load_contacts, Toast.LENGTH_SHORT).show();
         }
     };
@@ -114,4 +114,16 @@ public class ContactFragment extends Fragment {
             loadData();
         }
     };
+
+    private void showRefreshing() {
+        if(!swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(true);
+        }
+    }
+
+    private void hideRefreshing() {
+        if(swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
+    }
 }

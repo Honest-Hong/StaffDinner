@@ -5,7 +5,8 @@ package com.project.boostcamp.publiclibrary.data;
  */
 
 public class NotiType {
-    public static final int NOTIFICATION_TYPE_NONE = 0x00;
+    public static final int NOTIFICATION_TYPE_NONE = -0x01;
+    public static final int NOTIFICATION_TYPE_APPLICATION = 0x00;
     public static final int NOTIFICATION_TYPE_ESTIMATE = 0x01;
     public static final int NOTIFICATION_TYPE_CONTACT = 0x02;
 }

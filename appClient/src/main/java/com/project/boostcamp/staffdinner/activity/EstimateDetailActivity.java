@@ -25,7 +25,7 @@ import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.util.TimeHelper;
 import com.project.boostcamp.staffdinner.GlideApp;
 import com.project.boostcamp.staffdinner.R;
-import com.project.boostcamp.publiclibrary.dialog.DialogResultListener;
+import com.project.boostcamp.publiclibrary.inter.DialogResultListener;
 import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
@@ -149,6 +149,7 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
         @Override
         public void onReceive(ResultIntDTO data) {
             if(data.getResult() == 1) {
+                setResult(RESULT_OK);
                 finish();
             } else {
                 Toast.makeText(EstimateDetailActivity.this, "계약 실패", Toast.LENGTH_SHORT).show();

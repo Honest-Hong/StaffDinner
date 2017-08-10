@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.transition.Explode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,9 @@ import android.widget.Toast;
 
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
-import com.project.boostcamp.publiclibrary.data.DataEvent;
+import com.project.boostcamp.publiclibrary.inter.ContactEventListener;
+import com.project.boostcamp.publiclibrary.inter.DataEvent;
+import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.R;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Hong Tae Joon on 2017-07-25.
@@ -39,6 +42,7 @@ public class EstimateFragment extends Fragment {
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
     @BindView(R.id.help_empty) View viewEmpty;
     private EstimateRecyclerAdapter adapter;
+    private ContactEventListener contactEventListener;
 
     public static EstimateFragment newInstance() {
         EstimateFragment fragment = new EstimateFragment();
@@ -48,6 +52,11 @@ public class EstimateFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        try {
+            contactEventListener = (ContactEventListener)context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Fail to casting contactEventListener");
+        }
     }
 
     @Nullable
@@ -68,7 +77,8 @@ public class EstimateFragment extends Fragment {
         swipeRefresh.setOnRefreshListener(onRefreshListener);
     }
 
-    private void loadData() {
+    public void loadData() {
+        showRefreshing();
         String clientId = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
         RetrofitClient.getInstance().getEstimates(clientId, dataReceiver);
     }
@@ -78,7 +88,7 @@ public class EstimateFragment extends Fragment {
         public void onClick(ClientEstimateDTO data) {
             Intent intent = new Intent(getContext(), EstimateDetailActivity.class);
             intent.putExtra(ClientEstimateDTO.class.getName(), data);
-            startActivity(intent);
+            startActivityForResult(intent, RequestType.REQUEST_CONTACT);
         }
     };
 
@@ -93,17 +103,13 @@ public class EstimateFragment extends Fragment {
                 viewEmpty.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
             }
-            if(swipeRefresh.isRefreshing()) {
-                swipeRefresh.setRefreshing(false);
-            }
+            hideRefreshing();
         }
 
         @Override
         public void onFail() {
             Toast.makeText(getContext(), R.string.fail_to_load_estimates, Toast.LENGTH_SHORT).show();
-            if(swipeRefresh.isRefreshing()) {
-                swipeRefresh.setRefreshing(false);
-            }
+            hideRefreshing();
         }
     };
 
@@ -113,4 +119,25 @@ public class EstimateFragment extends Fragment {
             loadData();
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == RequestType.REQUEST_CONTACT) {
+            if(resultCode == RESULT_OK) {
+                contactEventListener.onContact();
+            }
+        }
+    }
+
+    private void showRefreshing() {
+        if(!swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(true);
+        }
+    }
+
+    private void hideRefreshing() {
+        if(swipeRefresh.isRefreshing()) {
+            swipeRefresh.setRefreshing(false);
+        }
+    }
 }

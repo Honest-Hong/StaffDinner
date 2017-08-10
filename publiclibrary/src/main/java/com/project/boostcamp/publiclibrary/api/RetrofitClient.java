@@ -3,7 +3,6 @@ package com.project.boostcamp.publiclibrary.api;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.project.boostcamp.publiclibrary.data.Estimate;
 import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactAddDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;

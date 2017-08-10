@@ -43,6 +43,7 @@ import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.Geo;
+import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.dialog.ArrayResultListener;
 import com.project.boostcamp.publiclibrary.dialog.DialogResultListener;
 import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
@@ -127,7 +128,7 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     public void onJoinClick() {
         if(checkInvalidate()) {
             if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }, ExtraType.REQUEST_READ_PERMISSION);
+                ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }, RequestType.REQUEST_READ_PERMISSION);
             } else {
                 doJoin();
             }
@@ -208,11 +209,11 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
             public void onSelect(int mode) {
                 if(mode == ImageModeDialog.MODE_CAMERA) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, ExtraType.REQUEST_CAMERA);
+                    startActivityForResult(intent, RequestType.REQUEST_CAMERA);
                 } else {
                     Intent intent = new Intent(Intent.ACTION_PICK);
                     intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                    startActivityForResult(intent, ExtraType.REQUEST_PICUTRE);
+                    startActivityForResult(intent, RequestType.REQUEST_PICUTRE);
                 }
             }
         }).show(getSupportFragmentManager(), null);
@@ -270,7 +271,7 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, ExtraType.REQUEST_LOCATION);
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, RequestType.REQUEST_LOCATION);
         } else {
             setMyLocation();
         }
@@ -316,7 +317,7 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
         intentMap.putExtra(ExtraType.EXTRA_LATITUDE, latLng.latitude);
         intentMap.putExtra(ExtraType.EXTRA_LONGITUDE, latLng.longitude);
         intentMap.putExtra(ExtraType.EXTRA_READ_ONLY, false);
-        startActivityForResult(intentMap, ExtraType.REQUEST_LOCATION);
+        startActivityForResult(intentMap, RequestType.REQUEST_LOCATION);
     }
 
     /**
@@ -327,20 +328,20 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == ExtraType.REQUEST_LOCATION) {
+        if(requestCode == RequestType.REQUEST_LOCATION) {
             if(resultCode == RESULT_OK) {
                 setLocation(new LatLng(
                         data.getDoubleExtra(ExtraType.EXTRA_LATITUDE, 0),
                         data.getDoubleExtra(ExtraType.EXTRA_LONGITUDE, 0)
                 ));
             }
-        } else if(requestCode == ExtraType.REQUEST_CAMERA) {
+        } else if(requestCode == RequestType.REQUEST_CAMERA) {
             if(resultCode == RESULT_OK) {
                 Bitmap photo = (Bitmap)data.getExtras().get("data");
                 imageTitle.setImageBitmap(photo);
                 imageFilePath = getFilePathFromUri(data.getData());
             }
-        } else if(requestCode == ExtraType.REQUEST_PICUTRE) {
+        } else if(requestCode == RequestType.REQUEST_PICUTRE) {
             if(resultCode == RESULT_OK) {
                 try {
                     Bitmap photo = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
@@ -350,7 +351,7 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
                     e.printStackTrace();
                 }
             }
-        } else if(requestCode == ExtraType.REQUEST_READ_PERMISSION) {
+        } else if(requestCode == RequestType.REQUEST_READ_PERMISSION) {
             if(resultCode == RESULT_OK) {
                 doJoin();
             }

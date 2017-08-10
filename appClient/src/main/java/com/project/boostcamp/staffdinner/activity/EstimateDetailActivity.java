@@ -30,8 +30,19 @@ import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class EstimateDetailActivity extends AppCompatActivity implements View.OnClickListener, OnMapReadyCallback, DialogResultListener, GoogleMap.OnMapClickListener {
     private ClientEstimateDTO estimate;
+    @BindView(R.id.image_view) ImageView imageView;
+    @BindView(R.id.text_name) TextView textName;
+    @BindView(R.id.text_date)TextView textDate;
+    @BindView(R.id.text_message)TextView textMessage;
+    @BindView(R.id.text_style)TextView textStyle;
+    @BindView(R.id.text_menu)TextView textMenu;
+    @BindView(R.id.text_location)TextView textLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +57,18 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
         }
     }
 
+    /**
+     * 툴바를 설정한다
+     * 신청서 내용을 텍스트뷰에 표시한다
+     * 구글 맵스의 위치를 변경한다
+     */
     private void setupView() {
+        ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar);
         toolbar.setTitle(R.string.estimate_detail_activity_title);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
-
-        ImageView imageView = (ImageView)findViewById(R.id.image_view);
-        TextView textName = (TextView)findViewById(R.id.text_name);
-        TextView textDate = (TextView)findViewById(R.id.text_date);
-        TextView textMessage = (TextView)findViewById(R.id.text_message);
-        TextView textStyle = (TextView)findViewById(R.id.text_style);
-        TextView textMenu = (TextView)findViewById(R.id.text_menu);
-        TextView textLocation = (TextView)findViewById(R.id.text_location);
 
         GlideApp.with(this)
                 .load(RetrofitClient.getInstance().getAdminImageUrl(estimate.getAdmin().getId(), estimate.getAdmin().getType()))
@@ -72,12 +81,15 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
         textMenu.setText(estimate.getAdmin().getMenu());
         textLocation.setText(GeocoderHelper.getAddress(this, estimate.getAdmin().getGeo().toLatLng()));
 
-        findViewById(R.id.button_contact).setOnClickListener(this);
-
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
+    /**
+     * 홈 버튼 클릭 처리
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -88,12 +100,21 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    /**
+     * 계약하기 버튼 클릭
+     * @param view
+     */
+    @OnClick(R.id.button_contact)
     public void onClick(View view) {
         MyAlertDialog.newInstance(getString(R.string.dialog_alert_title), getString(R.string.dialog_contact_message), this)
                 .show(getSupportFragmentManager(), null);
     }
 
+    /**
+     * 구글 맵스가 준비되면 카메라를 옮겨준다.
+     * 맵의 위치를 옮길 수 없도록 제스쳐를 막아준다.
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         UiSettings uiSettings = googleMap.getUiSettings();
@@ -106,9 +127,12 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
         googleMap.setOnMapClickListener(this);
     }
 
+    /**
+     * 계약하시겠습니까? 다이얼로그에서 예 버튼을 눌렀을 때
+     * 계약을 하기위한 DTO를 설정하고 서버에 계약 요청을 한다.
+     */
     @Override
     public void onPositive() {
-        // TODO: 2017-08-07 계약서 서버에 등록하기
         ContactAddDTO dto = new ContactAddDTO();
         dto.setApp_id(estimate.getAppId());
         dto.setEstimate_id(estimate.getEstimateId());
@@ -116,6 +140,11 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
         RetrofitClient.getInstance().addContact(dto, dataReceiver);
     }
 
+    /**
+     * 계약 요청 결과
+     * 계약에 성공하면 메인화면으로 돌아간다
+     * 실패할경우에는 토스트 메시지를 띄워준다.
+     */
     private DataReceiver<ResultIntDTO> dataReceiver = new DataReceiver<ResultIntDTO>() {
         @Override
         public void onReceive(ResultIntDTO data) {
@@ -132,10 +161,17 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
         }
     };
 
+    /**
+     * 계약하기 다이얼로그 취소 버튼
+     */
     @Override
     public void onNegative() {
     }
 
+    /**
+     * 구글 맵스를 클릭하였을 때 맵 자세히보기 화면으로 넘어간다
+     * @param notThing
+     */
     @Override
     public void onMapClick(LatLng notThing) {
         Intent intentMap = new Intent(this, MapDetailActivity.class);

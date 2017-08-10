@@ -53,6 +53,10 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         }
     }
 
+    /**
+     * 뷰를 가져오고 툴바를 설정하는 함수
+     * 또한 인텐트로 전달받은 신청서 데이터를 텍스트뷰에 뿌려준다
+     */
     private void setupView() {
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
@@ -96,6 +100,11 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         googleMap.setOnMapClickListener(this);
     }
 
+    /**
+     * 홈버튼 클릭을 처리하기 위해서 추가
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

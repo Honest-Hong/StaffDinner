@@ -66,6 +66,11 @@ public class LoginActivity extends AppCompatActivity {
         LoginManager.getInstance().registerCallback(callbackManager, callbackFacebook);
     }
 
+    /**
+     * 로그인 버튼 클릭 이벤트
+     * 카카오, 페이스북, 이메일
+     * @param v
+     */
     @OnClick({R.id.text_kakao, R.id.text_facebook, R.id.button_email})
     public void onLoginClick(TextView v) {
         if(v.getId() == R.id.text_kakao) {
@@ -77,6 +82,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 카카오 또는 페이스북 로그인 결과
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
@@ -86,6 +97,9 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+    /**
+     * 액티비티가 파괴될 때 카카오 로그인 콜백 제거
+     */
     @Override
     protected void onDestroy() {
         super.onDestroy();

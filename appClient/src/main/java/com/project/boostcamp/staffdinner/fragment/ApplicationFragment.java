@@ -36,6 +36,7 @@ import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.ApplicationStateType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.Geo;
+import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.dialog.ArrayResultListener;
 import com.project.boostcamp.publiclibrary.domain.ClientApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
@@ -145,7 +146,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
         // TODO: 2017-08-04 신청서가 존재하는 경우 현재 위치로 하지 않도록 하기
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_DENIED) {
-            requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, ExtraType.REQUEST_LOCATION_PERMISSION);
+            requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, RequestType.REQUEST_LOCATION_PERMISSION);
         } else {
             setMyLocation();
         }
@@ -156,7 +157,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == ExtraType.REQUEST_LOCATION_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+        if(requestCode == RequestType.REQUEST_LOCATION_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             setMyLocation();
         }
     }
@@ -300,7 +301,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
                 intentMap.putExtra(ExtraType.EXTRA_LATITUDE, googleMap.getCameraPosition().target.latitude);
                 intentMap.putExtra(ExtraType.EXTRA_LONGITUDE, googleMap.getCameraPosition().target.longitude);
                 intentMap.putExtra(ExtraType.EXTRA_READ_ONLY, false);
-                startActivityForResult(intentMap, ExtraType.REQUEST_LOCATION);
+                startActivityForResult(intentMap, RequestType.REQUEST_LOCATION);
                 break;
             case R.id.button_style:
                 StyleSelectDialog dialog = StyleSelectDialog.newInstance(styleResult);
@@ -362,7 +363,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == ExtraType.REQUEST_LOCATION) {
+        if(requestCode == RequestType.REQUEST_LOCATION) {
             if(resultCode == Activity.RESULT_OK) {
                 LatLng latLng = new LatLng(
                         data.getDoubleExtra(ExtraType.EXTRA_LATITUDE, 0)
@@ -382,7 +383,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
         String appId = application.getId();
         application = getApplicationFromEditText(appId);
         // 로컬에 저장
-        SharedPreperenceHelper.getInstance(getContext()).saveApply(application);
+        SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
 
         // 서버에 전달
         ClientApplicationDTO dto = new ClientApplicationDTO();
@@ -400,7 +401,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
                 Log.d("HTJ", "ApplicationFragment-submitApplication-onResponse: " + response.body());
                 if(response.body().getResult() != null) {
                     application.setId(response.body().getResult());
-                    SharedPreperenceHelper.getInstance(getContext()).saveApply(application);
+                    SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
                     setState(ApplicationStateType.STATE_APPLIED);;
                 } else {
                     Log.d("HTJ", "Not receive application id");
@@ -457,7 +458,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
                     setupTexts(application);
                     application.setState(ApplicationStateType.STATE_EDITING);
                     setState(ApplicationStateType.STATE_EDITING);
-                    SharedPreperenceHelper.getInstance(getContext()).saveApply(application);
+                    SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
                 } else {
                     Log.e("HTJ", "Fail to canceling application");
                 }
@@ -472,7 +473,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
                 setupTexts(application);
                 application.setState(ApplicationStateType.STATE_EDITING);
                 setState(ApplicationStateType.STATE_EDITING);
-                SharedPreperenceHelper.getInstance(getContext()).saveApply(application);
+                SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
             }
         });
     }

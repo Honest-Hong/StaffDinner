@@ -3,9 +3,9 @@ package com.project.boostcamp.publiclibrary.data;
 /**
  * Created by Hong Tae Joon on 2017-08-03.
  * 신청서의 상태 종류 클래스
- * 작성중
- * 신청함
- * 취소됨
+ * 0 : 작성중
+ * 1 : 신청함
+ * 2 : 취소됨
  */
 
 public class ApplicationStateType {

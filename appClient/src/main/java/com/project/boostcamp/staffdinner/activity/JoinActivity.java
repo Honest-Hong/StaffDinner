@@ -23,6 +23,7 @@ import com.project.boostcamp.staffdinner.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -34,7 +35,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
     private View rootView;
     @BindView(R.id.edit_name) EditText editName;
     @BindView(R.id.edit_phone) EditText editPhone;
-    @BindView(R.id.button_join) CardView btnJoin;
+    @BindView(R.id.button_join) CardView buttonJoin;
     private String id;
     private int type;
     private String name;
@@ -53,17 +54,24 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         setupView();
     }
 
+    /**
+     * 스낵바 사용의 편의를 위해 루트뷰를 저장한다.
+     * 이전의 액티비티에서 전달받은 이름을 입력창에 표시한다.
+     *
+     */
     private void setupView() {
         rootView = getWindow().getDecorView().getRootView();
-        btnJoin.setOnClickListener(this);
-
         CheckBox checkBox = (CheckBox)findViewById(R.id.check_box);
         checkBox.setOnCheckedChangeListener(this);
-
         editName.setText(name);
     }
 
-    @Override
+    /**
+     * 회원가입 버튼을 클릭하였을 때
+     * 입력폼의 유효성을 판단한 후 회원가입 DTO를 생성하여 서버에 요청한다
+     * @param view
+     */
+    @OnClick(R.id.button_join)
     public void onClick(View view) {
         if (checkValidate()) {
             String name = editName.getText().toString();
@@ -140,7 +148,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
      */
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        btnJoin.setVisibility(b
+        buttonJoin.setVisibility(b
                 ? View.VISIBLE
                 : View.INVISIBLE);
     }

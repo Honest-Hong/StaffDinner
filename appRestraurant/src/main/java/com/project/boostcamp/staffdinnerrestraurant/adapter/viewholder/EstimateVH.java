@@ -9,8 +9,7 @@ import android.widget.TextView;
 
 import com.project.boostcamp.publiclibrary.data.AdminEstimate;
 import com.project.boostcamp.publiclibrary.data.DataEvent;
-import com.project.boostcamp.publiclibrary.data.Estimate;
-import com.project.boostcamp.publiclibrary.data.StateType;
+import com.project.boostcamp.publiclibrary.data.EstimateStateType;
 import com.project.boostcamp.publiclibrary.object.BaseVH;
 import com.project.boostcamp.publiclibrary.util.TimeHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
@@ -54,22 +53,17 @@ public class EstimateVH extends BaseVH<AdminEstimate> {
     private void setState(int state) {
         Log.d("HTJ", "state: " + state);
         switch(state) {
-            case StateType.STATE_WATING:
+            case EstimateStateType.STATE_WATING:
                 imageState.setImageResource(R.drawable.ic_error_orange_24dp);
                 textState.setText(R.string.text_waiting);
                 textState.setTextColor(ContextCompat.getColor(context, R.color.yellow));
                 break;
-            case StateType.STATE_CONTACTED:
+            case EstimateStateType.STATE_CONTACTED:
                 imageState.setImageResource(R.drawable.ic_check_circle_green_24dp);
                 textState.setText(R.string.text_contacted);
                 textState.setTextColor(ContextCompat.getColor(context, R.color.green));
                 break;
-            case StateType.STATE_FAILED:
-                imageState.setImageResource(R.drawable.ic_cancel_red_24dp);
-                textState.setText(R.string.text_failed);
-                textState.setTextColor(ContextCompat.getColor(context, R.color.red));
-                break;
-            case StateType.STATE_CANCELED:
+            case EstimateStateType.STATE_CANCELED:
                 imageState.setImageResource(R.drawable.ic_cancel_red_24dp);
                 textState.setText(R.string.text_canceled);
                 textState.setTextColor(ContextCompat.getColor(context, R.color.red));

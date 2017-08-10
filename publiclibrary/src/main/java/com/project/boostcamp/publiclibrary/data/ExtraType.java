@@ -2,6 +2,7 @@ package com.project.boostcamp.publiclibrary.data;
 
 /**
  * Created by Hong Tae Joon on 2017-08-03.
+ * 인텐트 또는 SharedPreference에 저장할 때 사용되는 키 값들을 모아 둔다.
  */
 
 public class ExtraType {
@@ -16,10 +17,5 @@ public class ExtraType {
     public static final String EXTRA_LATITUDE = "latitude";
     public static final String EXTRA_LONGITUDE = "longitude";
     public static final String EXTRA_READ_ONLY = "readOnly";
-
-    public static final int REQUEST_LOCATION = 0x100;
-    public static final int REQUEST_CAMERA = 0x101;
-    public static final int REQUEST_PICUTRE = 0x102;
-    public static final int REQUEST_READ_PERMISSION = 0x103;
-    public static final int REQUEST_LOCATION_PERMISSION = 0x100;
+    public static final String EXTRA_NOTIFICATION_TYPE = "noti_type";
 }

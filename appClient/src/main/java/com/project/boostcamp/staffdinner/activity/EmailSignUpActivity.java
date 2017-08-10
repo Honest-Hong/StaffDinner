@@ -49,10 +49,17 @@ public class EmailSignUpActivity extends AppCompatActivity {
         initFirebaseAuth();
     }
 
+    /**
+     * 파이어베이스 인증 초기화 작업
+     */
     private void initFirebaseAuth() {
         auth = FirebaseAuth.getInstance();
     }
 
+    /**
+     * 이전 버튼 클릭 작업
+     * @param v
+     */
     @OnClick(R.id.button_prev)
     public void doPrev(View v) {
         finish();
@@ -153,15 +160,5 @@ public class EmailSignUpActivity extends AppCompatActivity {
         intent.putExtra(ExtraType.EXTRA_TYPE, type);
         startActivity(intent);
         finish();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 }

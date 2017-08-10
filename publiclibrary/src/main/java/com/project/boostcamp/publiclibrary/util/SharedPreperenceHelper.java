@@ -49,7 +49,7 @@ public class SharedPreperenceHelper {
      * 신청서 정보를 로컬에 저장하는 함수
      * @param application 신청서 정보
      */
-    public void saveApply(Application application) {
+    public void saveApplication(Application application) {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(Application.class.getName(), gson.toJson(application));
         editor.apply();

@@ -2,6 +2,7 @@ package com.project.boostcamp.staffdinner.service;
 
 import android.app.NotificationManager;
 import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -40,7 +41,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 remoteMessage.getNotification().getTitle(),
                 remoteMessage.getNotification().getBody(),
                 R.drawable.ic_sms_white_24dp,
-                getColor(R.color.colorPrimary),
+                ContextCompat.getColor(MyFirebaseMessagingService.this, R.color.colorPrimary),
                 intent));
     }
 }

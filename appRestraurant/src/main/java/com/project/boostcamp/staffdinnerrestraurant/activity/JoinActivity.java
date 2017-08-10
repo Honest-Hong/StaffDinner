@@ -172,6 +172,7 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
         }
 
         @Override
+
         public void onFail() {
             // 회원가입 실패
             if(progressDialog != null) {

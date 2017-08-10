@@ -50,6 +50,7 @@ import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
 import com.project.boostcamp.publiclibrary.domain.AdminJoinDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
+import com.project.boostcamp.publiclibrary.util.BitmapHelper;
 import com.project.boostcamp.publiclibrary.util.EditTextHelper;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
@@ -166,7 +167,8 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
         @Override
         public void onReceive(LoginDTO data) {
             SharedPreperenceHelper.getInstance(JoinActivity.this).saveLogin(data);
-            RetrofitAdmin.getInstance().setImage(data.getId(), data.getType(), new File(imageFilePath), setImageDataReceiver);
+            final File imageFile = BitmapHelper.resizeImage(JoinActivity.this, imageFilePath, 960, 720);
+            RetrofitAdmin.getInstance().setImage(data.getId(), data.getType(), imageFile, setImageDataReceiver);
         }
 
         @Override
@@ -426,4 +428,10 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
         public void onNegative() {
         }
     };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        checkGPS();
+    }
 }

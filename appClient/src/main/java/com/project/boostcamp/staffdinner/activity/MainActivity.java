@@ -15,6 +15,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
@@ -24,17 +26,14 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.project.boostcamp.publiclibrary.data.AccountType;
-import com.project.boostcamp.publiclibrary.data.AdminEstimate;
 import com.project.boostcamp.publiclibrary.data.Application;
 import com.project.boostcamp.publiclibrary.data.ApplicationStateType;
-import com.project.boostcamp.publiclibrary.data.BaseData;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.NotiType;
 import com.project.boostcamp.publiclibrary.inter.ContactEventListener;
 import com.project.boostcamp.publiclibrary.inter.DialogResultListener;
 import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
-import com.project.boostcamp.publiclibrary.util.LogHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.MainViewPagerAdapter;
@@ -67,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setupToolbar();
         setupTabLayout();
         setupViewPager();
+        setupNavigation();
         handleIntent(getIntent());
 
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
@@ -75,6 +75,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addApi(LocationServices.API)
                 .build();
         googleApiClient.connect();
+    }
+
+    private void setupNavigation() {
+        View v = navigationView.getHeaderView(0);
+        TextView textName = (TextView) v.findViewById(R.id.text_name);
+        TextView textPhone = (TextView) v.findViewById(R.id.text_phone);
+        textName.setText("홍길동");
+        textPhone.setText("01012341234");
     }
 
     /**
@@ -202,8 +210,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.menu_logout:
+            case R.id.nav_logout:
                 logout();
+                break;
+            case R.id.nav_account:
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

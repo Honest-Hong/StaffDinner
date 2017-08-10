@@ -55,7 +55,7 @@
     <string name="facebook_app_id">1586397501435939</string>
     <string name="fb_login_protocol_scheme">fb1586397501435939</string>
     <string name="text_email">계정 이메일</string>
-    <string name="menu_logout">로그아웃</string>
+    <string name="nav_logout">로그아웃</string>
     <string name="email_sign_up_email_help">비밀번호를 잊었을 때 찾는 용도로 사용합니다.</string>
     <string name="email_sign_up_email">이메일</string>
     <string name="email_sign_up_password">비밀번호</string>
@@ -84,4 +84,7 @@
     <string name="need_gps_on_help">지도를 현재 위치로 맞추기 위해서 GPS기능을 켜야합니다. 설정화면으로 이동하시겠습니까?</string>
     <string name="fail_to_load_estimates">견적서 목록을 불러오는데 실패하였습니다</string>
     <string name="fail_to_load_contacts">계약서 목록을 불러오는데 실패하여 기존 목록을 가져옵니다</string>
+    <string name="nav_account">계정 설정</string>
+    <string name="account">계정</string>
+    <string name="settings">설정</string>
 </resources>

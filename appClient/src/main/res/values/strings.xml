@@ -12,7 +12,7 @@
     <string name="text_join">회원가입</string>
     <string name="tab_title_application">신청서</string>
     <string name="tab_title_estimate">견적서</string>
-    <string name="tab_title_contact">계약</string>
+    <string name="tab_title_contact">계약서</string>
     <string name="text_title">제목</string>
     <string name="text_number">인원</string>
     <string name="text_time">시간</string>
@@ -81,4 +81,6 @@
     <string name="complete_select">선택 완료</string>
     <string name="select">선택</string>
     <string name="need_gps_on_help">지도를 현재 위치로 맞추기 위해서 GPS기능을 켜야합니다. 설정화면으로 이동하시겠습니까?</string>
+    <string name="fail_to_load_estimates">견적서 목록을 불러오는데 실패하였습니다</string>
+    <string name="fail_to_load_contacts">계약서 목록을 불러오는데 실패하여 기존 목록을 가져옵니다</string>
 </resources>

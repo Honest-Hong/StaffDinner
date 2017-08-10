@@ -8,6 +8,7 @@ import android.os.Parcelable;
  */
 
 public class ContactDTO implements Parcelable{
+    private String _id;
     private String appTitle;
     private int appNumber;
     private long appTime;
@@ -27,6 +28,7 @@ public class ContactDTO implements Parcelable{
     }
 
     protected ContactDTO(Parcel in) {
+        _id = in.readString();
         appTitle = in.readString();
         appNumber = in.readInt();
         appTime = in.readLong();
@@ -62,6 +64,7 @@ public class ContactDTO implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(_id);
         parcel.writeString(appTitle);
         parcel.writeInt(appNumber);
         parcel.writeLong(appTime);
@@ -76,6 +79,14 @@ public class ContactDTO implements Parcelable{
         parcel.writeString(estimateMessage);
         parcel.writeLong(estimateTime);
         parcel.writeLong(contactTime);
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getAppTitle() {

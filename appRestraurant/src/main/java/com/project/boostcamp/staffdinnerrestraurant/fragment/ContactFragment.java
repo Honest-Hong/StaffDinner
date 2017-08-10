@@ -16,6 +16,7 @@ import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
+import com.project.boostcamp.publiclibrary.util.SQLiteHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.activity.ContactDetailActivity;
@@ -72,6 +73,14 @@ public class ContactFragment extends Fragment {
         }
     };
 
+    /**
+     * 계약서 목록을 불러왔을 때 결과 처리
+     * - 성공할 경우
+     * 서버에서 불러온 데이터를 보여주도록 처리한다.
+     * 로컬에 저장된 계약 내역을 최신화 한다
+     * - 실패할 경우
+     * 로컬에 저장된 데이터를 보여주도록 처리한다.
+     */
     private DataReceiver<ArrayList<ContactDTO>> dataReceiver = new DataReceiver<ArrayList<ContactDTO>>() {
         @Override
         public void onReceive(ArrayList<ContactDTO> data) {
@@ -86,11 +95,16 @@ public class ContactFragment extends Fragment {
             if(swipeRefresh.isRefreshing()) {
                 swipeRefresh.setRefreshing(false);
             }
+            SQLiteHelper.getInstance(getContext()).refreshContact(data);
         }
 
         @Override
         public void onFail() {
-            Toast.makeText(getContext(), "서버 오류", Toast.LENGTH_SHORT).show();
+            adapter.setData(SQLiteHelper.getInstance(getContext()).selectContact());
+            if(swipeRefresh.isRefreshing()) {
+                swipeRefresh.setRefreshing(false);
+            }
+            Toast.makeText(getContext(), R.string.fail_to_load_contacts, Toast.LENGTH_SHORT).show();
         }
     };
 

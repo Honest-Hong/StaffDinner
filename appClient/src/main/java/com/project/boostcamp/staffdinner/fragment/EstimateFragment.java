@@ -100,7 +100,10 @@ public class EstimateFragment extends Fragment {
 
         @Override
         public void onFail() {
-            Toast.makeText(getContext(), "계약 내역을 불러오는데 실패하였습니다", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.fail_to_load_estimates, Toast.LENGTH_SHORT).show();
+            if(swipeRefresh.isRefreshing()) {
+                swipeRefresh.setRefreshing(false);
+            }
         }
     };
 

@@ -8,7 +8,6 @@
         android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_scrollFlags="scroll|enterAlways"
         app:titleTextColor="@color/white">
 
     </android.support.v7.widget.Toolbar>

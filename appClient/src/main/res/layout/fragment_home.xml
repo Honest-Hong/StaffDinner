@@ -33,18 +33,30 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground">
+            android:background="?attr/selectableItemBackground"
+            android:orientation="horizontal">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="회식이 사용 가이드 보러가기"
-                android:textColor="@color/white"
-                android:textSize="@dimen/fontLarge"
                 android:paddingTop="16dp"
                 android:paddingBottom="16dp"
-                android:background="@color/colorPrimary"/>
+                android:background="@color/colorPrimary">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_help_white"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="회식이 사용 가이드 보러가기"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fontLarge"/>
+            </LinearLayout>
         </FrameLayout>
 
         <View
@@ -87,7 +99,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_review"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/home_recycler_view_size"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"/>

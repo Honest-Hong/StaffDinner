@@ -86,9 +86,11 @@
 
                 <ImageButton
                     android:id="@+id/button_up"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/ic_add_orange_24dp"/>
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_add_green_24dp"
+                    android:background="@drawable/background_bottom_button"/>
 
                 <EditText
                     android:id="@+id/edit_number"
@@ -110,10 +112,11 @@
 
                 <ImageButton
                     android:id="@+id/button_down"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginStart="8dp"
-                    android:src="@drawable/ic_remove_orange_24dp"/>
+                    android:src="@drawable/ic_remove_green_24dp"
+                    android:background="@drawable/background_bottom_button"/>
             </LinearLayout>
 
             <View
@@ -205,25 +208,19 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="@dimen/fontNormal"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black"
+                    android:background="@drawable/background_edit_text_white"/>
 
                 <Button
                     android:id="@+id/button_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@drawable/background_bottom_button"
                     android:text="@string/select"
                     android:textSize="@dimen/fontNormal"
                     android:textColor="@color/colorPrimary"/>
             </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:background="@color/whiteGrey"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -268,14 +265,17 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/fontSmall"/>
+                    android:textSize="@dimen/fontSmall"
+                    android:background="@drawable/background_edit_text_white"/>
 
                 <ImageButton
                     android:id="@+id/button_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:src="@drawable/ic_search_orange_24dp"/>
+                    android:padding="8dp"
+                    android:src="@drawable/ic_search_green_24dp"
+                    android:background="@drawable/background_bottom_button"/>
             </LinearLayout>
 
             <fragment

@@ -20,4 +20,5 @@ public class ExtraType {
     public static final String EXTRA_NOTIFICATION_TYPE = "noti_type";
     public static final String EXTRA_RECEIVER = "receiver";
     public static final String EXTRA_WRITER = "writer";
+    public static final String EXTRA_SHOWN_GUIDE = "shown_guide";
 }

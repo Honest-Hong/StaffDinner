@@ -16,13 +16,15 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.project.boostcamp.publiclibrary.data.AccountType;
@@ -34,6 +36,7 @@ import com.project.boostcamp.publiclibrary.inter.ContactEventListener;
 import com.project.boostcamp.publiclibrary.inter.DialogResultListener;
 import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
+import com.project.boostcamp.publiclibrary.inter.GuidePlayer;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.MainViewPagerAdapter;
@@ -48,12 +51,17 @@ import butterknife.ButterKnife;
  * 메인 액티비티.
  * 신청서, 견적서, 계약서 탭 3가지가 존재한다.
  */
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener, ContactEventListener{
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener, ContactEventListener, GuidePlayer{
     @BindView(R.id.drawer) DrawerLayout drawer;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.navigation) NavigationView navigationView;
     private MainViewPagerAdapter pagerAdapter;
+
+    private ShowcaseView showcaseView;
+    private int showcaseCount = 0;
+    private String[] showcaseTitles;
+    private String[] showcaseTexts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setupTabLayout();
         setupViewPager();
         setupNavigation();
+        setupShowcase();
         handleIntent(getIntent());
 
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
@@ -73,6 +82,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addApi(LocationServices.API)
                 .build();
         googleApiClient.connect();
+    }
+
+    private void setupShowcase() {
+        showcaseTitles = getResources().getStringArray(R.array.showcase_titles);
+        showcaseTexts = getResources().getStringArray(R.array.showcase_texts);
+        showcaseCount = 0;
+        if(!SharedPreperenceHelper.getInstance(this).getShownGuide()) {
+            SharedPreperenceHelper.getInstance(this).setShownGuide();
+            showGuide(showcaseCount);
+        }
     }
 
     private void setupNavigation() {
@@ -195,6 +214,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onBackPressed() {
         if(drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if(showcaseView.isShowing()) {
+            showcaseView.hide();
+            showcaseCount = 0;
         } else {
             super.onBackPressed();
         }
@@ -290,4 +312,39 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         ApplicationFragment fragment = (ApplicationFragment) getSupportFragmentManager().getFragments().get(2);
         fragment.setState(ApplicationStateType.STATE_CONTACTED);
     }
+
+    /**
+     * 가이드 실행
+     * 탭의 0번째 부터 3번째 까지 모두 설명해준다.
+     */
+    @Override
+    public void showGuide(int index) {
+        if(showcaseCount < 4) {
+            viewPager.setCurrentItem(index);
+            View target = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(index);
+            showcaseView = new ShowcaseView.Builder(this)
+                    .setTarget(new ViewTarget(target))
+                    .setContentTitle(showcaseTitles[index])
+                    .setContentText(showcaseTexts[index])
+                    .setOnClickListener(showcaseClick)
+                    .setStyle(R.style.CustomShowcaseTheme)
+                    .build();
+            showcaseView.show();
+        } else {
+            viewPager.setCurrentItem(0);
+            showcaseCount = 0;
+        }
+    }
+
+    /**
+     * 쇼케이스 내부의 버튼 클릭 리스너
+     */
+    private View.OnClickListener showcaseClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            showcaseView.hide();
+            showcaseCount++;
+            showGuide(showcaseCount);
+        }
+    };
 }

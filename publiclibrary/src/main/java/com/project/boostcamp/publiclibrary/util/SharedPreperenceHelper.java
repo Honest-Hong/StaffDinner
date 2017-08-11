@@ -111,4 +111,17 @@ public class SharedPreperenceHelper {
         String str = preferences.getString(ExtraType.EXTRA_GEO, "");
         return gson.fromJson(str, GeoDTO.class);
     }
+
+    /**
+     * 최초 가이드 판단용
+     */
+    public void setShownGuide() {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(ExtraType.EXTRA_SHOWN_GUIDE, true);
+        editor.apply();
+    }
+
+    public boolean getShownGuide() {
+        return preferences.getBoolean(ExtraType.EXTRA_SHOWN_GUIDE, false);
+    }
 }

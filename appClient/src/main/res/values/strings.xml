@@ -93,4 +93,5 @@
     <string name="lastest_review">최근 리뷰</string>
     <string name="send_review">리뷰 남기기</string>
     <string name="rating">평점</string>
+    <string name="play_app_guide">회식이 사용 가이드 보러가기</string>
 </resources>

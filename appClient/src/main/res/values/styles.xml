@@ -35,4 +35,23 @@
         <item name="android:textColor">@color/whiteOrange</item>
         <item name="android:textSize">@dimen/fontSmall</item>
     </style>
+
+    <style name="CustomShowcaseTheme" parent="ShowcaseView.Light">
+        <item name="sv_backgroundColor">@color/colorShowcaseBackground</item>
+        <item name="sv_showcaseColor">@color/colorShowcase</item>
+        <item name="sv_buttonText">다음</item>
+        <item name="sv_tintButtonColor">false</item>
+        <item name="sv_titleTextAppearance">@style/CustomTitle</item>
+        <item name="sv_detailTextAppearance">@style/CustomText</item>
+    </style>
+
+    <style name="CustomTitle" parent="TextAppearance.ShowcaseView.Title">
+        <item name="android:textSize">@dimen/fontGraphic</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="CustomText" parent="TextAppearance.ShowcaseView.Detail.Light">
+        <item name="android:textSize">@dimen/fontLarge</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
 </resources>

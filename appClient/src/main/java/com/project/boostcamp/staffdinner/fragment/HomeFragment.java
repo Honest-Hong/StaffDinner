@@ -1,6 +1,7 @@
 package com.project.boostcamp.staffdinner.fragment;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import com.project.boostcamp.publiclibrary.domain.EventDTO;
 import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
+import com.project.boostcamp.publiclibrary.inter.GuidePlayer;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.EventPagerAdapter;
 import com.project.boostcamp.staffdinner.adapter.NearAdminRecyclerAdapter;
@@ -38,6 +40,7 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.relex.circleindicator.CircleIndicator;
 
 /**
@@ -54,9 +57,20 @@ public class HomeFragment extends Fragment {
     private NearReviewRecyclerAdapter nearReviewRecyclerAdapter;
     private Handler scrollHandler;
     private FusedLocationProviderClient fusedLocationClient; // 현재 위치를 가져오는 서비스
+    private GuidePlayer guidePlayer;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            guidePlayer = (GuidePlayer)context;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
@@ -188,4 +202,9 @@ public class HomeFragment extends Fragment {
 
         }
     };
+
+    @OnClick(R.id.button_guide)
+    public void playGuide() {
+        guidePlayer.showGuide(0);
+    }
 }

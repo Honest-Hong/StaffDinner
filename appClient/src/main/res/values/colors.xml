@@ -5,6 +5,9 @@
     <color name="colorPrimaryDark">#0f705d</color>
     <color name="colorAccent">#1fe0ba</color>
 
+    <color name="colorShowcase">#8000</color>
+    <color name="colorShowcaseBackground">#8000</color>
+
     <color name="white">#fff</color>
     <color name="whiteHalf">#8fff</color>
     <color name="black">#000</color>

@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.i("HTJ", "token: " + FirebaseInstanceId.getInstance().getToken());
-
         ButterKnife.bind(this);
         setupToolbar();
         setupTabLayout();
@@ -114,6 +112,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
      * 신청서, 견적서, 계약 탭 3개를 추가해준다.
      */
     private void setupTabLayout() {
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_home));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_application));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_estimate));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_contact));
@@ -127,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void setupViewPager() {
         pagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(4);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -163,16 +162,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         int type = intent.getIntExtra(ExtraType.EXTRA_NOTIFICATION_TYPE, NotiType.NOTIFICATION_TYPE_NONE);
         switch(type) {
             case NotiType.NOTIFICATION_TYPE_APPLICATION:
-                viewPager.setCurrentItem(0);
+                viewPager.setCurrentItem(1);
                 break;
             case NotiType.NOTIFICATION_TYPE_ESTIMATE:
-                viewPager.setCurrentItem(1);
-                EstimateFragment estimateFragment = (EstimateFragment) getSupportFragmentManager().getFragments().get(2);
+                viewPager.setCurrentItem(2);
+                EstimateFragment estimateFragment = (EstimateFragment) getSupportFragmentManager().getFragments().get(3);
                 estimateFragment.loadData();
                 break;
             case NotiType.NOTIFICATION_TYPE_CONTACT:
-                viewPager.setCurrentItem(2);
-                ContactFragment contactFragment = (ContactFragment) getSupportFragmentManager().getFragments().get(3);
+                viewPager.setCurrentItem(3);
+                ContactFragment contactFragment = (ContactFragment) getSupportFragmentManager().getFragments().get(4);
                 contactFragment.loadData();
                 break;
             default:
@@ -287,8 +286,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
      */
     @Override
     public void onContact() {
-        viewPager.setCurrentItem(0);
-        ApplicationFragment fragment = (ApplicationFragment) getSupportFragmentManager().getFragments().get(1);
+        viewPager.setCurrentItem(1);
+        ApplicationFragment fragment = (ApplicationFragment) getSupportFragmentManager().getFragments().get(2);
         fragment.setState(ApplicationStateType.STATE_CONTACTED);
     }
 }

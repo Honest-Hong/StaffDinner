@@ -46,8 +46,8 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_join);
 
         if(getIntent() != null) {
-            id = getIntent().getStringExtra(ExtraType.EXTRA_ID);
-            type = getIntent().getIntExtra(ExtraType.EXTRA_TYPE, -1);
+            id = getIntent().getStringExtra(ExtraType.EXTRA_LOGIN_ID);
+            type = getIntent().getIntExtra(ExtraType.EXTRA_LOGIN_TYPE, -1);
             name = getIntent().getStringExtra(ExtraType.EXTRA_NAME);
         }
         ButterKnife.bind(this);

@@ -34,7 +34,7 @@ public class EstimateRecyclerAdapter extends RecyclerView.Adapter<EstimateVH> {
 
     @Override
     public EstimateVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new EstimateVH(LayoutInflater.from(context).inflate(R.layout.layout_estimate_item, parent, false), dataEvent, context);
+        return new EstimateVH(LayoutInflater.from(context).inflate(R.layout.item_estimate, parent, false), dataEvent, context);
     }
 
     @Override

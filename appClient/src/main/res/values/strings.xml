@@ -10,6 +10,7 @@
     <string name="contact_detail_activity_title">계약서 내용</string>
     <string name="text_i_agree">동의합니다.</string>
     <string name="text_join">회원가입</string>
+    <string name="tab_title_home">홈</string>
     <string name="tab_title_application">신청서</string>
     <string name="tab_title_estimate">견적서</string>
     <string name="tab_title_contact">계약서</string>
@@ -24,7 +25,7 @@
     <string name="text_apply_contacted">계약됨</string>
     <string name="text_count_person">명</string>
     <string name="text_apply">신청</string>
-    <string name="text_cancel">취소</string>
+    <string name="cancel">취소</string>
     <string name="text_rewrite">다시 작성</string>
     <string name="text_search">탐색</string>
     <string name="text_need_input">작성 필요</string>
@@ -87,4 +88,9 @@
     <string name="nav_account">계정 설정</string>
     <string name="account">계정</string>
     <string name="settings">설정</string>
+    <string name="distance_km">%1$.1fkm</string>
+    <string name="near_admin">근처 식당</string>
+    <string name="lastest_review">최근 리뷰</string>
+    <string name="send_review">리뷰 남기기</string>
+    <string name="rating">평점</string>
 </resources>

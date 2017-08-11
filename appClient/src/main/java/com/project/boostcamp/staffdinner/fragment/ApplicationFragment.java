@@ -35,6 +35,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.ApplicationStateType;
+import com.project.boostcamp.publiclibrary.data.DefaultValue;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.Geo;
 import com.project.boostcamp.publiclibrary.data.RequestType;
@@ -56,8 +57,8 @@ import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.staffdinner.dialog.StyleSelectDialog;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -75,13 +76,7 @@ import retrofit2.Response;
  */
 
 public class ApplicationFragment extends Fragment implements OnMapReadyCallback, DialogResultListener {
-    public static final int MAX_NUMBER = 99;
-    public static final int MIN_NUMBER = 1;
-    public static final int MAX_HOUR = 24;
-    public static final int MAX_MINUTE = 60;
-    public static final int MAX_DATE = 14;
-    private static final LatLng DEFAULT_LOCATION = new LatLng(37.4973932,127.02744170000005);
-    private static final int DEFAULT_ZOON = 16;
+    private static final LatLng DEFAULT_LOCATION = new LatLng(DefaultValue.DEFAULT_LATITUDE, DefaultValue.DEFAULT_LONGITUDE);
     @BindView(R.id.scroll_view) NestedScrollView scrollView;
     @BindView(R.id.image_state) ImageView imageState; // 상단의 신청서 상태 이미지
     @BindView(R.id.text_state) TextView textState; // 상단의 신청서 상태 텍스트
@@ -139,23 +134,11 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         UiSettings uiSettings = googleMap.getUiSettings();
         uiSettings.setScrollGesturesEnabled(false);
         uiSettings.setZoomGesturesEnabled(false);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DEFAULT_ZOON));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DefaultValue.DEFAULT_ZOON));
 
         // TODO: 2017-08-04 신청서가 존재하는 경우 현재 위치로 하지 않도록 하기
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_DENIED) {
-            requestPermissions(new String[] { Manifest.permission.ACCESS_FINE_LOCATION }, RequestType.REQUEST_LOCATION_PERMISSION);
-        } else {
-            setMyLocation();
-        }
-    }
-
-    /**
-     * 권한 요청이 허가 되면 맵을 현재 위치로 지정한다
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == RequestType.REQUEST_LOCATION_PERMISSION && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                == PackageManager.PERMISSION_GRANTED) {
             setMyLocation();
         }
     }
@@ -192,7 +175,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
     private void setupWheel(View v) {
         wheelAdapterHour = new TextWheelAdapter();
         ArrayList<String> hours = new ArrayList<>();
-        for(int i = 0; i< MAX_HOUR; i++) {
+        for(int i = 0; i< DefaultValue.DEFAULT_MAX_HOUR; i++) {
             hours.add(String.format("%02d", i));
         }
         wheelAdapterHour.setData(hours);
@@ -200,7 +183,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
 
         wheelAdapterMinute = new TextWheelAdapter();
         ArrayList<String> minutes = new ArrayList<>();
-        for(int i = 0; i< MAX_MINUTE; i+= 10) {
+        for(int i = 0; i< DefaultValue.DEFAULT_MAX_MINUTE; i+= 10) {
             minutes.add(String.format("%02d", i));
         }
         wheelAdapterMinute.setData(minutes);
@@ -210,7 +193,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         ArrayList<String> dates = new ArrayList<>();
 
         Calendar calendar = Calendar.getInstance();
-        for(int i = 0; i< MAX_DATE; i++) {
+        for(int i = 0; i< DefaultValue.DEFAULT_MAX_DATE; i++) {
             dates.add(String.format("%02d/%02d", calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE)));
             calendar.add(Calendar.DATE, 1);
         }
@@ -274,6 +257,21 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         editMenu.setText(application.getWantedMenu());
         wheelHour.setSelectedIndex(TimeHelper.getHour(application.getWantedTime()));
         wheelMinute.setSelectedIndex(TimeHelper.getMinute(application.getWantedTime()) / 10);
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(application.getWantedTime());
+        String str = new SimpleDateFormat("hh/mm").format(cal.getTime());
+        int i=0;
+        for(String date : wheelAdapterDate.getData()) {
+            if(date.equals(str)) {
+                wheelDate.setSelectedIndex(i);
+                break;
+            }
+            i++;
+        }
+        if(i == wheelAdapterDate.getData().size()) {
+            wheelDate.setSelectedIndex(0);
+        }
         // TODO: 2017-08-03 정확한 날짜를 가리키도록 하기
         setState(application.getState());
         // TODO: 2017-07-28 저장된 위치 맵에 출력하기
@@ -288,14 +286,14 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         int number = application.getNumber();
         switch(view.getId()) {
             case R.id.button_up:
-                if (number < MAX_NUMBER) {
+                if (number < DefaultValue.DEFAULT_MAX_NUMBER) {
                     number++;
                     editNumber.setText(Integer.toString(number));
                     application.setNumber(number);
                 }
                 break;
             case R.id.button_down:
-                if (number > MIN_NUMBER) {
+                if (number > DefaultValue.DEFAULT_MIN_NUMBER) {
                     number--;
                     editNumber.setText(Integer.toString(number));
                     application.setNumber(number);
@@ -520,7 +518,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
                 blockView(false);
                 break;
             case ApplicationStateType.STATE_APPLIED:
-                btnApply.setText(R.string.text_cancel);
+                btnApply.setText(R.string.cancel);
                 imageState.setImageResource(R.drawable.ic_check_circle_green_24dp);
                 textState.setText(R.string.text_apply_success);
                 textState.setTextColor(ContextCompat.getColor(getContext(), R.color.green));

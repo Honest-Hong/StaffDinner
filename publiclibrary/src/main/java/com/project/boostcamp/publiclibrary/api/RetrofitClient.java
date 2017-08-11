@@ -6,11 +6,15 @@ import com.google.gson.Gson;
 import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactAddDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
+import com.project.boostcamp.publiclibrary.domain.EventDTO;
+import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewAddDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
+import com.project.boostcamp.publiclibrary.util.LogHelper;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -94,10 +98,6 @@ public class RetrofitClient {
         });
     }
 
-    public String getAdminImageUrl(String id, int type) {
-        return BASE_URL + "images/" + id + "-" + type + ".jpg";
-    }
-
     public void refreshToken(String id, int type, String token) {
         TokenRefreshDTO dto = new TokenRefreshDTO();
         dto.setType(type);
@@ -111,5 +111,75 @@ public class RetrofitClient {
             public void onFailure(Call<ResultIntDTO> call, Throwable t) {
             }
         });
+    }
+
+    public void getEvents(final DataReceiver<ArrayList<EventDTO>> dataReceiver) {
+        clientService.getEvents().enqueue(new Callback<ArrayList<EventDTO>>() {
+            @Override
+            public void onResponse(Call<ArrayList<EventDTO>> call, Response<ArrayList<EventDTO>> response) {
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<EventDTO>> call, Throwable t) {
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    public void getNearAdmins(double lat, double lng, final DataReceiver<ArrayList<NearAdminDTO>> dataReceiver) {
+        clientService.getNearAdmins(lat, lng).enqueue(new Callback<ArrayList<NearAdminDTO>>() {
+            @Override
+            public void onResponse(Call<ArrayList<NearAdminDTO>> call, Response<ArrayList<NearAdminDTO>> response) {
+                LogHelper.inform(this, new Gson().toJson(response.body()));
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<NearAdminDTO>> call, Throwable t) {
+                LogHelper.error(this, t.getMessage());
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    public void getNearReviews(double lat, double lng, final DataReceiver<ArrayList<ReviewDTO>> dataReceiver) {
+        clientService.getNearReviews(lat, lng).enqueue(new Callback<ArrayList<ReviewDTO>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ReviewDTO>> call, Response<ArrayList<ReviewDTO>> response) {
+                LogHelper.inform(this, new Gson().toJson(response.body()));
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ReviewDTO>> call, Throwable t) {
+                LogHelper.error(this, t.getMessage());
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    public void addReview(String adminId, ReviewAddDTO dto, final DataReceiver<ResultIntDTO> dataReceiver) {
+        clientService.addReview(adminId, dto).enqueue(new Callback<ResultIntDTO>() {
+            @Override
+            public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
+                LogHelper.inform(this, new Gson().toJson(response.body()));
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResultIntDTO> call, Throwable t) {
+                LogHelper.error(this, t.getMessage());
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    public String getAdminImageUrl(String id, int type) {
+        return BASE_URL + "images/" + id + "-" + type + ".jpg";
+    }
+
+    public String getEventImageUrl(int id) {
+        return BASE_URL + "images/event_" + id + ".jpg";
     }
 }

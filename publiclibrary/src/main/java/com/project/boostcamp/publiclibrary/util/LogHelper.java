@@ -9,10 +9,14 @@ import android.util.Log;
 public class LogHelper {
     public static final String TAG = "HTJ";
     public static void debug(Object o, String message) {
-        Log.d(TAG, o.getClass().getCanonicalName() + ">>" + message);
+        Log.d(TAG, o.getClass().getName() + ">>" + message);
     }
 
     public static void inform(Object o, String message) {
-        Log.i(TAG, o.getClass().getCanonicalName() + ">>" + message);
+        Log.i(TAG, o.getClass().getName() + ">>" + message);
+    }
+
+    public static void error(Object o, String message) {
+        Log.e(TAG, o.getClass().getName() + ">>" + message);
     }
 }

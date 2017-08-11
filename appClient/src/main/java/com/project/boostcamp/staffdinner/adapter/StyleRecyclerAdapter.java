@@ -33,7 +33,7 @@ public class StyleRecyclerAdapter extends RecyclerView.Adapter<StyleVH> {
     @Override
     public StyleVH onCreateViewHolder(ViewGroup parent, int viewType) {
         return new StyleVH(
-                LayoutInflater.from(context).inflate(R.layout.layout_style_item, parent, false),
+                LayoutInflater.from(context).inflate(R.layout.item_style, parent, false),
                 dataEvent
         );
     }

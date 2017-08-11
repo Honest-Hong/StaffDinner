@@ -15,7 +15,7 @@ import com.project.boostcamp.publiclibrary.view.WheelPickerAdapter;
 public class TextWheelAdapter extends WheelPickerAdapter<String> {
     @Override
     public View getView(LayoutInflater inflater, ViewGroup parent, int pos) {
-        TextView textView = (TextView)inflater.inflate(R.layout.layout_wheel_item, parent, false);
+        TextView textView = (TextView)inflater.inflate(R.layout.item_wheel, parent, false);
         textView.setText(data.get(pos));
         return textView;
     }

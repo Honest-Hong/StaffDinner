@@ -5,19 +5,19 @@ import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientJoinDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactAddDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
+import com.project.boostcamp.publiclibrary.domain.EventDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
+import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultStringDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewAddDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -102,4 +102,29 @@ public interface ClientService {
      */
     @GET("/client/{id}/contact")
     Call<ArrayList<ContactDTO>> getContacts(@Path("id") String id);
+
+    /**
+     * 이벤트 목록 요청
+     * @return
+     */
+    @GET("/event")
+    Call<ArrayList<EventDTO>> getEvents();
+
+    /**
+     * 근접 식당 목록 요청
+     */
+    @GET("/nearAdmin/{lat}/{lng}")
+    Call<ArrayList<NearAdminDTO>> getNearAdmins(@Path("lat") double lat, @Path("lng") double lng);
+
+    /**
+     * 근접 식당 리뷰 목록 요청
+     */
+    @GET("/nearReview/{lat}/{lng}")
+    Call<ArrayList<ReviewDTO>> getNearReviews(@Path("lat") double lat, @Path("lng") double lng);
+
+    /**
+     * 식당 리뷰 추가 요청
+     */
+    @POST("/admin/{id}/review")
+    Call<ResultIntDTO> addReview(@Path("id") String adminId, @Body ReviewAddDTO reviewAddDTO);
 }

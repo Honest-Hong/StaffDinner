@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,15 +14,23 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.project.boostcamp.publiclibrary.api.DataReceiver;
+import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
+import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewAddDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
+import com.project.boostcamp.publiclibrary.inter.ReviewListener;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
 import com.project.boostcamp.publiclibrary.util.TimeHelper;
 import com.project.boostcamp.staffdinner.R;
+import com.project.boostcamp.staffdinner.dialog.WriteReviewDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  *  계약서를 자세히 볼 수 잇는 액티비티
@@ -127,4 +136,37 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         intentMap.putExtra(ExtraType.EXTRA_READ_ONLY, true);
         startActivity(intentMap);
     }
+
+    /**
+     * 리뷰 남기기
+     */
+    @OnClick(R.id.button_review)
+    public void sendReview() {
+        WriteReviewDialog.newInstance(contact.getAdminName(), contact.getClientName(), reviewListener)
+                .show(getSupportFragmentManager(), null);
+    }
+    
+    private ReviewListener reviewListener = new ReviewListener() {
+        @Override
+        public void onReview(String content, int rating) {
+            ReviewAddDTO dto = new ReviewAddDTO();
+            dto.setWriterId(contact.getClientId());
+            dto.setContent(content);
+            dto.setRating((float) rating / 2.0f);
+            dto.setWritedTime(TimeHelper.now());
+            RetrofitClient.getInstance().addReview(contact.getAdminId(), dto, reviewResultReceiver);
+        }
+    };
+
+    private DataReceiver<ResultIntDTO> reviewResultReceiver = new DataReceiver<ResultIntDTO>() {
+        @Override
+        public void onReceive(ResultIntDTO data) {
+            Toast.makeText(ContactDetailActivity.this, "리뷰 성공!", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onFail() {
+            Toast.makeText(ContactDetailActivity.this, "리뷰 실패!", Toast.LENGTH_SHORT).show();
+        }
+    };
 }

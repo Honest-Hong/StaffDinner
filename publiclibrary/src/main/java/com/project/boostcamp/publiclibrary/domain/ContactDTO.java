@@ -15,8 +15,10 @@ public class ContactDTO implements Parcelable{
     private String appStyle;
     private String appMenu;
     private GeoDTO appGeo;
+    private String clientId;
     private String clientName;
     private String clientPhone;
+    private String adminId;
     private String adminName;
     private String adminPhone;
     private GeoDTO adminGeo;
@@ -27,6 +29,7 @@ public class ContactDTO implements Parcelable{
     public ContactDTO() {
     }
 
+
     protected ContactDTO(Parcel in) {
         _id = in.readString();
         appTitle = in.readString();
@@ -35,8 +38,10 @@ public class ContactDTO implements Parcelable{
         appStyle = in.readString();
         appMenu = in.readString();
         appGeo = in.readParcelable(GeoDTO.class.getClassLoader());
+        clientId = in.readString();
         clientName = in.readString();
         clientPhone = in.readString();
+        adminId = in.readString();
         adminName = in.readString();
         adminPhone = in.readString();
         adminGeo = in.readParcelable(GeoDTO.class.getClassLoader());
@@ -71,8 +76,10 @@ public class ContactDTO implements Parcelable{
         parcel.writeString(appStyle);
         parcel.writeString(appMenu);
         parcel.writeParcelable(appGeo, i);
+        parcel.writeString(clientId);
         parcel.writeString(clientName);
         parcel.writeString(clientPhone);
+        parcel.writeString(adminId);
         parcel.writeString(adminName);
         parcel.writeString(adminPhone);
         parcel.writeParcelable(adminGeo, i);
@@ -137,6 +144,14 @@ public class ContactDTO implements Parcelable{
         this.appGeo = appGeo;
     }
 
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
     public String getClientName() {
         return clientName;
     }
@@ -151,6 +166,14 @@ public class ContactDTO implements Parcelable{
 
     public void setClientPhone(String clientPhone) {
         this.clientPhone = clientPhone;
+    }
+
+    public String getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(String adminId) {
+        this.adminId = adminId;
     }
 
     public String getAdminName() {

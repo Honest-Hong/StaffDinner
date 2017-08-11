@@ -160,8 +160,8 @@ public class EmailSignUpActivity extends AppCompatActivity {
             progressDialog.dismiss();
         }
         Intent intent = new Intent(EmailSignUpActivity.this, JoinActivity.class);
-        intent.putExtra(ExtraType.EXTRA_ID, id);
-        intent.putExtra(ExtraType.EXTRA_TYPE, type);
+        intent.putExtra(ExtraType.EXTRA_LOGIN_ID, id);
+        intent.putExtra(ExtraType.EXTRA_LOGIN_TYPE, type);
         startActivity(intent);
         finish();
     }

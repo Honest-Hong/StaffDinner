@@ -18,6 +18,10 @@ public abstract class WheelPickerAdapter<T> {
         this.data = data;
     }
 
+    public ArrayList<T> getData() {
+        return data;
+    }
+
     public int getCount() {
         return data != null
                 ? data.size()

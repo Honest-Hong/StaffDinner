@@ -1,6 +1,11 @@
 package com.project.boostcamp.staffdinner.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +31,7 @@ import com.kakao.util.exception.KakaoException;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
+import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.R;
@@ -65,6 +71,11 @@ public class LoginActivity extends AppCompatActivity {
         Session.getCurrentSession().checkAndImplicitOpen();
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager, callbackFacebook);
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, RequestType.REQUEST_LOCATION_PERMISSION);
+        }
     }
 
     /**
@@ -98,6 +109,16 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
+
+    /**
+     * 권한 요청이 허가 되면 맵을 현재 위치로 지정한다
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == RequestType.REQUEST_LOCATION_PERMISSION && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+            finish();
+        }
+    }
     /**
      * 액티비티가 파괴될 때 카카오 로그인 콜백 제거
      */
@@ -210,8 +231,8 @@ public class LoginActivity extends AppCompatActivity {
                 LoginDTO dto = response.body();
                 if(dto.getId() == null) {
                     Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
-                    intent.putExtra(ExtraType.EXTRA_ID, id);
-                    intent.putExtra(ExtraType.EXTRA_TYPE, type);
+                    intent.putExtra(ExtraType.EXTRA_LOGIN_ID, id);
+                    intent.putExtra(ExtraType.EXTRA_LOGIN_TYPE, type);
                     intent.putExtra(ExtraType.EXTRA_NAME, name);
                     startActivity(intent);
                     finish();

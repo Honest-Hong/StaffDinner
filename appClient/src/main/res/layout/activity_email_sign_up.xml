@@ -41,7 +41,7 @@
         android:textColor="@color/white"
         android:inputType="textEmailAddress"
         android:maxLines="1"
-        android:background="@drawable/background_edit_text_orange"/>
+        android:background="@drawable/background_edit_text_primary"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -71,7 +71,7 @@
         android:textColor="@color/white"
         android:inputType="textPassword"
         android:maxLines="1"
-        android:background="@drawable/background_edit_text_orange"/>
+        android:background="@drawable/background_edit_text_primary"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -101,7 +101,7 @@
         android:textColor="@color/white"
         android:inputType="textPassword"
         android:maxLines="1"
-        android:background="@drawable/background_edit_text_orange"/>
+        android:background="@drawable/background_edit_text_primary"/>
 
     <TextView
         android:layout_width="match_parent"

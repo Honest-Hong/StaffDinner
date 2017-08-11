@@ -6,10 +6,10 @@ package com.project.boostcamp.publiclibrary.data;
  */
 
 public class ExtraType {
-    public static final String EXTRA_ID = "id";
-    public static final String EXTRA_TYPE = "type";
     public static final String EXTRA_NAME = "name";
     public static final String EXTRA_TITLE = "title";
+    public static final String EXTRA_CONTENT = "content";
+    public static final String EXTRA_IMAGE = "image";
     public static final String EXTRA_MESSAGE = "message";
     public static final String EXTRA_LOGIN_ID = "login_id";
     public static final String EXTRA_LOGIN_TYPE = "login_type";
@@ -18,4 +18,6 @@ public class ExtraType {
     public static final String EXTRA_LONGITUDE = "longitude";
     public static final String EXTRA_READ_ONLY = "readOnly";
     public static final String EXTRA_NOTIFICATION_TYPE = "noti_type";
+    public static final String EXTRA_RECEIVER = "receiver";
+    public static final String EXTRA_WRITER = "writer";
 }

@@ -291,7 +291,7 @@
         android:id="@+id/button_apply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@drawable/background_bottom_button"
         android:text="@string/text_apply"
         android:textSize="@dimen/fontNormal"
         android:textColor="@color/colorPrimary"/>

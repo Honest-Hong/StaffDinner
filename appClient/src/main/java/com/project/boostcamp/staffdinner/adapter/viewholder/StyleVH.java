@@ -9,6 +9,8 @@ import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.object.BaseVH;
 import com.project.boostcamp.staffdinner.R;
 
+import java.util.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -16,20 +18,19 @@ import butterknife.ButterKnife;
  * Created by Hong Tae Joon on 2017-08-09.
  */
 
-public class StyleVH extends BaseVH<String> {
+public class StyleVH extends BaseVH<Map.Entry<String, Boolean>> {
     CardView cardView;
     @BindView(R.id.text_view) TextView textView;
-    private boolean isChecked = false;
 
-    public StyleVH(final View itemView, final DataEvent<String> dataEvent) {
+    public StyleVH(final View itemView, final DataEvent<Map.Entry<String, Boolean>> dataEvent) {
         super(itemView, dataEvent);
         ButterKnife.bind(this, itemView);
         cardView = (CardView) itemView;
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isChecked = !isChecked;
-                cardView.setBackgroundColor(isChecked
+                data.setValue(!data.getValue());
+                cardView.setBackgroundColor(data.getValue()
                         ? ContextCompat.getColor(itemView.getContext(), R.color.colorPrimary)
                         : ContextCompat.getColor(itemView.getContext(), R.color.white));
                 dataEvent.onClick(data);
@@ -38,8 +39,11 @@ public class StyleVH extends BaseVH<String> {
     }
 
     @Override
-    public void setupView(String data) {
+    public void setupView(Map.Entry<String, Boolean> data) {
         this.data = data;
-        textView.setText(data);
+        textView.setText(data.getKey());
+        cardView.setBackgroundColor(data.getValue()
+                ? ContextCompat.getColor(itemView.getContext(), R.color.colorPrimary)
+                : ContextCompat.getColor(itemView.getContext(), R.color.white));
     }
 }

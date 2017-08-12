@@ -55,7 +55,6 @@ import com.project.boostcamp.publiclibrary.util.TimeHelper;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
-import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.staffdinner.dialog.StyleSelectDialog;
 
 import java.text.SimpleDateFormat;
@@ -334,7 +333,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
                 startActivityForResult(intentMap, RequestType.REQUEST_LOCATION);
                 break;
             case R.id.button_style:
-                StyleSelectDialog dialog = StyleSelectDialog.newInstance(styleResult);
+                StyleSelectDialog dialog = StyleSelectDialog.newInstance(styleResult, textStyle.getText().toString());
                 dialog.show(getFragmentManager(), null);
                 break;
         }
@@ -421,7 +420,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         if(!checkInvalidate()) {
             return;
         }
-        /*
+
         String appId = application.getId();
         application = getApplicationFromEditText(appId);
         // 로컬에 저장
@@ -455,7 +454,6 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
                 Log.e("HTJ", "ApplicationFragment-submitApplication-onFailure: " + t.getMessage());
             }
         });
-        */
         scrollView.smoothScrollTo(0,0);
     }
 

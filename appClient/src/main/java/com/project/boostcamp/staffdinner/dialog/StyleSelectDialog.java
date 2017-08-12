@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.util.ArraySet;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -19,21 +20,36 @@ import com.project.boostcamp.staffdinner.adapter.StyleRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Hong Tae Joon on 2017-08-09.
  */
 
-public class StyleSelectDialog extends DialogFragment implements DataEvent<String>{
+public class StyleSelectDialog extends DialogFragment implements DataEvent<Map.Entry<String, Boolean>>{
     private RecyclerView recyclerView;
     private StyleRecyclerAdapter adapter;
-    private ArrayList<String> selectedStyles;
+    private HashMap<String, Boolean> styles;
     private ArrayResultListener<String> resultListener;
 
-    public static StyleSelectDialog newInstance(ArrayResultListener<String> resultListener) {
+    public static StyleSelectDialog newInstance(ArrayResultListener<String> resultListener, String currentStyle) {
         StyleSelectDialog dialog = new StyleSelectDialog();
+        HashMap<String, Boolean> selectedStyles = new HashMap<>();
+        if(!currentStyle.equals("")) {
+            currentStyle = currentStyle.replaceAll(" ", "");
+            String[] strings = currentStyle.split(",");
+            for (String str : strings) {
+                selectedStyles.put(str, true);
+            }
+        }
+        dialog.setStyles(selectedStyles);
         dialog.setResultListener(resultListener);
         return dialog;
+    }
+
+    public void setStyles(HashMap<String, Boolean> styles) {
+        this.styles = styles;
     }
 
     private void setResultListener(ArrayResultListener<String> resultListener) {
@@ -52,7 +68,13 @@ public class StyleSelectDialog extends DialogFragment implements DataEvent<Strin
                 .setPositiveButton(context.getString(R.string.button_yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        resultListener.onResult(selectedStyles);
+                        ArrayList<String> result = new ArrayList<>();
+                        for(Map.Entry<String, Boolean> entry: styles.entrySet()) {
+                            if(entry.getValue()) {
+                                result.add(entry.getKey());
+                            }
+                        }
+                        resultListener.onResult(result);
                     }
                 })
                 .setNegativeButton(context.getString(R.string.button_no), new DialogInterface.OnClickListener() {
@@ -68,17 +90,20 @@ public class StyleSelectDialog extends DialogFragment implements DataEvent<Strin
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setHasFixedSize(true);
         adapter = new StyleRecyclerAdapter(getContext(), this);
-        adapter.setStyles(new ArrayList<String>(Arrays.asList(getContext().getResources().getStringArray(R.array.styles))));
+        if(styles == null) {
+            styles = new HashMap<>();
+        }
+        for(String str: new ArrayList<>(Arrays.asList(getContext().getResources().getStringArray(R.array.styles)))) {
+            if(!styles.containsKey(str)) {
+                styles.put(str, false);
+            }
+        }
+        adapter.setStyles(new ArraySet<>(styles.entrySet()));
         recyclerView.setAdapter(adapter);
-        selectedStyles = new ArrayList<>();
     }
 
     @Override
-    public void onClick(String data) {
-        if(selectedStyles.contains(data)) {
-            selectedStyles.remove(data);
-        } else {
-            selectedStyles.add(data);
-        }
+    public void onClick(Map.Entry<String, Boolean> data) {
+        styles.put(data.getKey(), data.getValue());
     }
 }

@@ -43,6 +43,7 @@ import com.project.boostcamp.publiclibrary.inter.ArrayResultListener;
 import com.project.boostcamp.publiclibrary.domain.ClientApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultStringDTO;
+import com.project.boostcamp.publiclibrary.util.LogHelper;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.publiclibrary.data.Application;
 import com.project.boostcamp.staffdinner.activity.MapDetailActivity;
@@ -89,6 +90,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
     @BindView(R.id.button_up) ImageButton btnUp;
     @BindView(R.id.button_down) ImageButton btnDown;
     @BindView(R.id.button_search) ImageButton btnSearch;
+    @BindView(R.id.button_style) Button btnStyle;
     @BindView(R.id.wheel_hour) WheelPicker wheelHour; // 선청서의 시간 선택 도구
     @BindView(R.id.wheel_minute) WheelPicker wheelMinute; // 신청서의 분 선택 도구
     @BindView(R.id.wheel_date) WheelPicker wheelDate;
@@ -149,7 +151,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
     private void setMyLocation() {
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED
-                && application.getGeo() != null) {
+                && application.getGeo() == null) {
             fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
@@ -165,7 +167,6 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.e("HTJ", "fusedLocationClient onFailure");
                     setLocation(DEFAULT_LOCATION);
                 }
             });
@@ -211,7 +212,6 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         RetrofitClient.getInstance().clientService.getApplication(id).enqueue(new Callback<ClientApplicationDTO>() {
             @Override
             public void onResponse(Call<ClientApplicationDTO> call, Response<ClientApplicationDTO> response) {
-                Log.d("HTJ", "ApplicationFragment-loadApplication-onReponse: " + response.body());
                 ClientApplicationDTO dto = response.body();
                 application = new Application();
                 if(dto.get_id() != null) {
@@ -229,7 +229,6 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
 
             @Override
             public void onFailure(Call<ClientApplicationDTO> call, Throwable t) {
-                Log.e("HTJ", "ApplicattionFragment-loadApplication-onFailuer: " + t.getMessage());
                 application = SharedPreperenceHelper.getInstance(getContext()).getApply();
                 if(application == null) {
                     application = new Application();
@@ -255,23 +254,38 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         editNumber.setText(application.getNumber() + "");
         textStyle.setText(application.getWantedStyle());
         editMenu.setText(application.getWantedMenu());
-        wheelHour.setSelectedIndex(TimeHelper.getHour(application.getWantedTime()));
-        wheelMinute.setSelectedIndex(TimeHelper.getMinute(application.getWantedTime()) / 10);
 
+        // 현재 시간 또는 신청서에 저장되어있는 시간을 가져와서
+        // 해당하는 시, 분, 날짜를 가리키도록 한다
+        // 하지만 41분이면 40분으로 설정할 수 없기 때문에 시간을 추가해서 지정해주는데
+        // 51분이었을 경우 0분으로 바꾸고 1시간을 추가해줘야 한다
+        // 마찬가지로 시간도 23시에서 24시로 변경될 경우 하루를 추가해준다
+        int hourIndex = TimeHelper.getHour(application.getWantedTime());
+        int minuteIndex = (TimeHelper.getMinute(application.getWantedTime()) + 9) / 10;
+        int dateIndex = 0;
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(application.getWantedTime());
         String str = new SimpleDateFormat("hh/mm").format(cal.getTime());
         int i=0;
         for(String date : wheelAdapterDate.getData()) {
             if(date.equals(str)) {
-                wheelDate.setSelectedIndex(i);
+                dateIndex = i;
                 break;
             }
             i++;
         }
-        if(i == wheelAdapterDate.getData().size()) {
-            wheelDate.setSelectedIndex(0);
+        if(minuteIndex == DefaultValue.DEFAULT_MAX_MINUTE / 10) {
+            minuteIndex = 0;
+            hourIndex++;
+            if(hourIndex == DefaultValue.DEFAULT_MAX_HOUR) {
+                hourIndex = 0;
+                dateIndex++;
+            }
         }
+        wheelHour.setSelectedIndex(hourIndex);
+        wheelMinute.setSelectedIndex(minuteIndex);
+        wheelDate.setSelectedIndex(dateIndex);
+
         // TODO: 2017-08-03 정확한 날짜를 가리키도록 하기
         setState(application.getState());
         // TODO: 2017-07-28 저장된 위치 맵에 출력하기
@@ -365,7 +379,6 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         } else {
             cancelApplication();
         }
-        scrollView.smoothScrollTo(0,0);
     }
 
     /**
@@ -383,7 +396,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         marker = googleMap.addMarker(MarkerBuilder.simple(latLng));
         String add = GeocoderHelper.getAddress(getContext(), latLng);
-        textLocation.setText(StringHelper.cutStart(add, 18));
+        textLocation.setText(add);
     }
 
     @Override
@@ -405,6 +418,10 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
      * 신청서를 등록하는 함수
      */
     public void submitApplication() {
+        if(!checkInvalidate()) {
+            return;
+        }
+        /*
         String appId = application.getId();
         application = getApplicationFromEditText(appId);
         // 로컬에 저장
@@ -438,6 +455,8 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
                 Log.e("HTJ", "ApplicationFragment-submitApplication-onFailure: " + t.getMessage());
             }
         });
+        */
+        scrollView.smoothScrollTo(0,0);
     }
 
     /**
@@ -469,30 +488,64 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
     }
 
     /**
+     * 입력 값의 유효성을 판단하는 함수
+     * @return
+     */
+    private boolean checkInvalidate() {
+        if(editTitle.getText().toString().length() < 8) {
+            editTitle.setError("제목은 8글자 이상입니다.");
+            editTitle.requestFocus();
+            return false;
+        }
+        int hour = Integer.parseInt(wheelAdapterHour.getData().get(wheelHour.getSelectedIndex()));
+        int minute = Integer.parseInt(wheelAdapterMinute.getData().get(wheelMinute.getSelectedIndex()));
+        String date = wheelAdapterDate.getData().get(wheelDate.getSelectedIndex());
+        int month = Integer.parseInt(date.substring(0,2));
+        int day = Integer.parseInt(date.substring(3,5));
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.MONTH, month - 1);
+        cal.set(Calendar.DAY_OF_MONTH, day);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
+        if(cal.getTimeInMillis() < System.currentTimeMillis()) {
+            Toast.makeText(getContext(), "잘못된 시간", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(textStyle.getText().length() < 1) {
+            textStyle.setError("분위기를 선택해주세요.");
+            textStyle.requestFocus();
+            return false;
+        }
+        if(editMenu.getText().toString().length() < 1) {
+            editMenu.setError("메뉴를 입력해주세요.");
+            editMenu.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * 신청서를 취소하는 함수
      */
     private void cancelApplication() {
-        Log.d("HTJ", "cancelApplication: " + application.getId());
         RetrofitClient.getInstance().clientService.cancelApplication(application.getId()).enqueue(new Callback<ResultIntDTO>() {
             @Override
             public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
                 // 취소 성공
-                Log.d("HTJ", "ApplicationFragment-cancelApplication-onResponse: " + response.body());
                 if(response.body().getResult() == 1) {
                     application = new Application();
                     setupTexts(application);
                     application.setState(ApplicationStateType.STATE_EDITING);
                     setState(ApplicationStateType.STATE_EDITING);
                     SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
+                    scrollView.smoothScrollTo(0,0);
                 } else {
-                    Log.e("HTJ", "Fail to canceling application");
                 }
             }
 
             @Override
             public void onFailure(Call<ResultIntDTO> call, Throwable t) {
                 // 취소 실패
-                Log.e("HTJ", "ApplicationFragment-cancelApplication-onFailure: " + t.getMessage());
                 Toast.makeText(getContext(), "서버 오류", Toast.LENGTH_SHORT).show();
                 application = new Application();
                 setupTexts(application);
@@ -568,12 +621,12 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         wheelHour.setEnableScroll(!block);
         wheelMinute.setEnableScroll(!block);
         wheelDate.setEnableScroll(!block);
-//        editStyle.setEnabled(!block);
         textStyle.setEnabled(!block);
         editMenu.setEnabled(!block);
         editMenu.setEnabled(!block);
         btnUp.setEnabled(!block);
         btnDown.setEnabled(!block);
         btnSearch.setEnabled(!block);
+        btnStyle.setEnabled(!block);
     }
 }

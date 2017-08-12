@@ -209,12 +209,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     /**
      * 백버튼을 눌렀을 때, 드로우어가 열려있으면 닫아준다
+     * 쇼케이스 뷰가 보여지고있으면 끝내준다
      */
     @Override
     public void onBackPressed() {
         if(drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if(showcaseView.isShowing()) {
+        } else if(showcaseView != null && showcaseView.isShowing()) {
             showcaseView.hide();
             showcaseCount = 0;
         } else {

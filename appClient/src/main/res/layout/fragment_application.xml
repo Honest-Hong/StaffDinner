@@ -209,6 +209,7 @@
                     android:layout_weight="1"
                     android:textSize="@dimen/fontNormal"
                     android:textColor="@color/black"
+                    android:focusable="true"
                     android:background="@drawable/background_edit_text_white"/>
 
                 <Button

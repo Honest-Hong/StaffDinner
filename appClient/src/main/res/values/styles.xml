@@ -52,6 +52,7 @@
 
     <style name="CustomText" parent="TextAppearance.ShowcaseView.Detail.Light">
         <item name="android:textSize">@dimen/fontLarge</item>
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>

@@ -1,10 +1,12 @@
 package com.project.boostcamp.publiclibrary.domain;
 
+import com.project.boostcamp.publiclibrary.data.ViewHolderData;
+
 /**
  * Created by Hong Tae Joon on 2017-08-11.
  */
 
-public class NearAdminDTO {
+public class NearAdminDTO extends ViewHolderData {
     private String adminId;
     private int adminType;
     private double distance;

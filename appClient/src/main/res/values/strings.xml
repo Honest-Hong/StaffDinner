@@ -96,4 +96,7 @@
     <string name="play_app_guide">회식이 사용 가이드 보러가기</string>
     <string name="hour">시</string>
     <string name="minute">분</string>
+    <string name="not_exist_near_admin">근처에 식당이 없어요!</string>
+    <string name="not_exist_estimate">아직 도착한 견적서가 없어요!</string>
+    <string name="not_exist_contact">계약하신 내역이 없습니다</string>
 </resources>

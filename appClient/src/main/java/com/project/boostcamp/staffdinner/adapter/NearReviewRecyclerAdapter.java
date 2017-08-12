@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
+import com.project.boostcamp.publiclibrary.data.ViewHolderData;
 import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
+import com.project.boostcamp.publiclibrary.object.BaseVH;
 import com.project.boostcamp.staffdinner.R;
+import com.project.boostcamp.staffdinner.adapter.viewholder.EmptyVH;
 import com.project.boostcamp.staffdinner.adapter.viewholder.NearReviewVH;
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
  * Created by Hong Tae Joon on 2017-08-11.
  */
 
-public class NearReviewRecyclerAdapter extends RecyclerView.Adapter<NearReviewVH> {
+public class NearReviewRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
     private Context context;
     private ArrayList<ReviewDTO> data;
     private DataEvent<ReviewDTO> dataEvent;
@@ -34,17 +36,31 @@ public class NearReviewRecyclerAdapter extends RecyclerView.Adapter<NearReviewVH
 
     public void setData(ArrayList<ReviewDTO> data) {
         this.data = data;
+        if(this.data.size() == 0) {
+            ReviewDTO dto = new ReviewDTO();
+            dto.setType(-1);
+            this.data.add(dto);
+        }
         notifyDataSetChanged();
     }
 
     @Override
-    public NearReviewVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new NearReviewVH(context, LayoutInflater.from(context).inflate(R.layout.item_review, parent, false), dataEvent);
+    public BaseVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        if(viewType == 0) {
+            return new NearReviewVH(context, LayoutInflater.from(context).inflate(R.layout.item_review, parent, false), dataEvent);
+        } else {
+            return EmptyVH.horizontal(parent, context.getString(R.string.not_exist_near_admin));
+        }
     }
 
     @Override
-    public void onBindViewHolder(NearReviewVH holder, int position) {
+    public void onBindViewHolder(BaseVH holder, int position) {
         holder.setupView(data.get(position));
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return data.get(position).getType();
     }
 
     @Override

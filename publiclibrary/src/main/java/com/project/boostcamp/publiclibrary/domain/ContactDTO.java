@@ -3,11 +3,13 @@ package com.project.boostcamp.publiclibrary.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.project.boostcamp.publiclibrary.data.ViewHolderData;
+
 /**
  * Created by Hong Tae Joon on 2017-08-07.
  */
 
-public class ContactDTO implements Parcelable{
+public class ContactDTO extends ViewHolderData implements Parcelable{
     private String _id;
     private String appTitle;
     private int appNumber;
@@ -27,10 +29,12 @@ public class ContactDTO implements Parcelable{
     private long contactTime;
 
     public ContactDTO() {
+        super(0);
     }
 
 
     protected ContactDTO(Parcel in) {
+        super(0);
         _id = in.readString();
         appTitle = in.readString();
         appNumber = in.readInt();

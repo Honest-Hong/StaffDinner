@@ -40,7 +40,6 @@ import static android.app.Activity.RESULT_OK;
 public class EstimateFragment extends Fragment {
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
-    @BindView(R.id.help_empty) View viewEmpty;
     private EstimateRecyclerAdapter adapter;
     private ContactEventListener contactEventListener;
 
@@ -96,13 +95,6 @@ public class EstimateFragment extends Fragment {
         @Override
         public void onReceive(ArrayList<ClientEstimateDTO> data) {
             adapter.setData(data);
-            if(data.size() == 0) {
-                viewEmpty.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
-            } else {
-                viewEmpty.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-            }
             hideRefreshing();
         }
 

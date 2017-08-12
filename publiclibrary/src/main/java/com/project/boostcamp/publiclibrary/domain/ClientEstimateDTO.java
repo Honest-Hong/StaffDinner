@@ -4,13 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
-import com.project.boostcamp.publiclibrary.data.BaseData;
+import com.project.boostcamp.publiclibrary.data.ViewHolderData;
 
 /**
  * Created by Hong Tae Joon on 2017-08-04.
  */
 
-public class ClientEstimateDTO extends BaseData implements Parcelable{
+public class ClientEstimateDTO extends ViewHolderData implements Parcelable{
     @SerializedName("_id")
     private String estimateId;
     @SerializedName("app_id")

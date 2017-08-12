@@ -35,7 +35,6 @@ import butterknife.ButterKnife;
 public class ContactFragment extends Fragment {
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
-    @BindView(R.id.help_empty) View viewEmpty;
     private ContactRecyclerAdapter adapter;
 
     public static ContactFragment newInstance() {
@@ -93,13 +92,6 @@ public class ContactFragment extends Fragment {
         @Override
         public void onReceive(ArrayList<ContactDTO> data) {
             adapter.setData(data);
-            if(data.size() == 0) {
-                viewEmpty.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
-            } else {
-                viewEmpty.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-            }
             SQLiteHelper.getInstance(getContext()).refreshContact(data);
             hideRefreshing();
         }

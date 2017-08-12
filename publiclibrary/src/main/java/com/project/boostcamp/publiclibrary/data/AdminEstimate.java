@@ -4,7 +4,7 @@ package com.project.boostcamp.publiclibrary.data;
  * Created by Hong Tae Joon on 2017-08-04.
  */
 
-public class AdminEstimate extends BaseData{
+public class AdminEstimate extends ViewHolderData {
     private String _id;
     private String clientName;
     private String message;

@@ -21,37 +21,37 @@
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:layout_marginTop="32dp"
-        android:background="@color/whiteOrange" />
+        android:background="@color/colorAccent" />
 
     <TextView
-        style="@style/OrangeTitleTextView"
+        style="@style/PrimaryTitleTextView"
         android:layout_marginTop="16dp"
         android:text="@string/text_name"/>
 
     <EditText
-        style="@style/OrangeEditText"
+        style="@style/PrimaryEditText"
         android:id="@+id/edit_name"
         android:inputType="textPersonName"
         android:maxLines="1"/>
 
     <TextView
-        style="@style/OrangeHelpTextView"
+        style="@style/PrimaryHelpTextView"
         android:id="@+id/text_name_help"
         android:text="@string/text_join_name_help"/>
 
     <TextView
-        style="@style/OrangeTitleTextView"
+        style="@style/PrimaryTitleTextView"
         android:layout_marginTop="16dp"
         android:text="@string/text_phone"/>
 
     <EditText
-        style="@style/OrangeEditText"
+        style="@style/PrimaryEditText"
         android:id="@+id/edit_phone"
         android:inputType="phone"
         android:maxLines="1"/>
 
     <TextView
-        style="@style/OrangeHelpTextView"
+        style="@style/PrimaryHelpTextView"
         android:id="@+id/text_phone_help"
         android:text="@string/text_join_phone_help"/>
 
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:layout_marginTop="32dp"
-        android:background="@color/whiteOrange" />
+        android:background="@color/colorAccent" />
 
     <TextView
         android:id="@+id/text_agree"
@@ -88,7 +88,7 @@
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:layout_marginTop="32dp"
-        android:background="@color/whiteOrange" />
+        android:background="@color/colorAccent" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/button_join"

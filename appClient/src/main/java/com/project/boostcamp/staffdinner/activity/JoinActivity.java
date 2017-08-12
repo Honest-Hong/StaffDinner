@@ -38,7 +38,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.button_join) CardView buttonJoin;
     private String id;
     private int type;
-    private String name;
+    private String name = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -99,4 +99,7 @@
     <string name="not_exist_near_admin">근처에 식당이 없어요!</string>
     <string name="not_exist_estimate">아직 도착한 견적서가 없어요!</string>
     <string name="not_exist_contact">계약하신 내역이 없습니다</string>
+    <string name="login_by_kakao">카카오 계정으로 로그인</string>
+    <string name="login_by_facebook">페이스북 계정으로 로그인</string>
+    <string name="login_by_email">일반 이메일로 로그인</string>
 </resources>

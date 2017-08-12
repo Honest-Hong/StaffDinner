@@ -38,36 +38,84 @@
             android:layout_marginRight="16dp"/>
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/text_kakao"
+    <LinearLayout
+        android:id="@+id/button_kakao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/com_kakao_button_background_press"
-        android:padding="16dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:gravity="center"
-        android:text="카카오 계정으로 로그인"
-        android:textSize="@dimen/fontNormal"
-        android:textColor="@color/com_kakao_brown"/>
+        android:background="@color/com_kakao_button_background_press">
 
-    <TextView
-        android:id="@+id/text_facebook"
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_weight="1"
+            android:src="@drawable/kakao_account_logo"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:text="@string/login_by_kakao"
+            android:textSize="@dimen/fontNormal"
+            android:textColor="@color/com_kakao_brown"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/button_facebook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/com_facebook_blue"
-        android:padding="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:gravity="center"
-        android:text="페이스북 계정으로 로그인"
-        android:textSize="@dimen/fontNormal"
-        android:textColor="@color/white"/>
+        android:background="@color/com_facebook_blue">
 
-    <TextView
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_weight="1"
+            android:src="@drawable/com_facebook_button_icon"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:text="@string/login_by_facebook"
+            android:textSize="@dimen/fontNormal"
+            android:textColor="@color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/button_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        android:padding="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
         android:gravity="center"
-        android:text="일반 이메일로 로그인"
-        android:textSize="@dimen/fontNormal"
-        android:textColor="@color/white"/>
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_email_green"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:text="@string/login_by_email"
+            android:textSize="@dimen/fontNormal"
+            android:textColor="@color/colorPrimary"/>
+    </LinearLayout>
 </LinearLayout>

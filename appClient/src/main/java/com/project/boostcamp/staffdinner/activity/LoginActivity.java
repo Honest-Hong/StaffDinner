@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
@@ -83,11 +84,11 @@ public class LoginActivity extends AppCompatActivity {
      * 카카오, 페이스북, 이메일
      * @param v
      */
-    @OnClick({R.id.text_kakao, R.id.text_facebook, R.id.button_email})
-    public void onLoginClick(TextView v) {
-        if(v.getId() == R.id.text_kakao) {
+    @OnClick({R.id.button_kakao, R.id.button_facebook, R.id.button_email})
+    public void onLoginClick(View v) {
+        if(v.getId() == R.id.button_kakao) {
             Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, this);
-        } else if(v.getId() == R.id.text_facebook) {
+        } else if(v.getId() == R.id.button_facebook) {
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
         } else if(v.getId() == R.id.button_email) {
             startActivity(new Intent(this, EmailSignUpActivity.class));

@@ -91,8 +91,8 @@ public class ContactFragment extends Fragment {
     private DataReceiver<ArrayList<ContactDTO>> dataReceiver = new DataReceiver<ArrayList<ContactDTO>>() {
         @Override
         public void onReceive(ArrayList<ContactDTO> data) {
-            adapter.setData(data);
             SQLiteHelper.getInstance(getContext()).refreshContact(data);
+            adapter.setData(data);
             hideRefreshing();
         }
 

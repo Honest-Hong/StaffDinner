@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:layout_marginTop="32dp"
-        android:background="@color/whiteOrange"/>
+        android:background="@color/colorAccent"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:text="@string/email_sign_up_email"
-        android:textColor="@color/whiteOrange"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/fontSmall"/>
 
     <EditText
@@ -49,7 +49,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/email_sign_up_email_help"
-        android:textColor="@color/whiteOrange"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/fontSmall"/>
 
     <TextView
@@ -58,7 +58,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:text="@string/email_sign_up_password"
-        android:textColor="@color/whiteOrange"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/fontSmall"/>
 
     <EditText
@@ -79,7 +79,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/email_sign_up_password_help"
-        android:textColor="@color/whiteOrange"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/fontSmall"/>
 
     <TextView
@@ -88,7 +88,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:text="@string/email_sign_up_password_confirm"
-        android:textColor="@color/whiteOrange"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/fontSmall"/>
 
     <EditText
@@ -109,14 +109,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/email_sign_up_password_confirm_help"
-        android:textColor="@color/whiteOrange"
+        android:textColor="@color/colorAccent"
         android:textSize="@dimen/fontSmall"/>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="4dp"
         android:layout_marginTop="32dp"
-        android:background="@color/whiteOrange"/>
+        android:background="@color/colorAccent"/>
 
     <LinearLayout
         android:layout_width="wrap_content"

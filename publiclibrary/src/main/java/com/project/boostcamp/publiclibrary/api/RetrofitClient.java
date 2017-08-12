@@ -3,6 +3,7 @@ package com.project.boostcamp.publiclibrary.api;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.project.boostcamp.publiclibrary.domain.ClientDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactAddDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
@@ -45,6 +46,22 @@ public class RetrofitClient {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         clientService = retrofit.create(ClientService.class);
+    }
+
+    public void getUserInformation(String id, int type, final DataReceiver<ClientDTO> dataReceiver) {
+        clientService.getUserInformation(id, type).enqueue(new Callback<ClientDTO>() {
+            @Override
+            public void onResponse(Call<ClientDTO> call, Response<ClientDTO> response) {
+                LogHelper.inform(this, "getUserInformation", new Gson().toJson(response.body()));
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ClientDTO> call, Throwable t) {
+                LogHelper.error(this, "getUserInformation", t.getMessage());
+                dataReceiver.onFail();
+            }
+        });
     }
 
     public void getEstimates(String applicationId, final DataReceiver<ArrayList<ClientEstimateDTO>> dataReceiver) {

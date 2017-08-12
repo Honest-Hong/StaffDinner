@@ -109,7 +109,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     synchronized public void refreshContact(ArrayList<ContactDTO> contacts) {
         Cursor cursor = getReadableDatabase().rawQuery(SQLData.QUERY_SELECT_CONTACT_LASTEST_ID, null);
         String topId = null;
-        while(cursor.moveToNext()) {
+        if(cursor.moveToNext()) {
             topId = cursor.getString(0);
         }
         for(int i=0; i<contacts.size(); i++) {

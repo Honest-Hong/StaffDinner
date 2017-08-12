@@ -145,7 +145,10 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         WriteReviewDialog.newInstance(contact.getAdminName(), contact.getClientName(), reviewListener)
                 .show(getSupportFragmentManager(), null);
     }
-    
+
+    /**
+     * 리뷰 다이얼로그 결과 리스너
+     */
     private ReviewListener reviewListener = new ReviewListener() {
         @Override
         public void onReview(String content, int rating) {
@@ -158,6 +161,9 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         }
     };
 
+    /**
+     * 리뷰 등록 요청 결과 리스너
+     */
     private DataReceiver<ResultIntDTO> reviewResultReceiver = new DataReceiver<ResultIntDTO>() {
         @Override
         public void onReceive(ResultIntDTO data) {

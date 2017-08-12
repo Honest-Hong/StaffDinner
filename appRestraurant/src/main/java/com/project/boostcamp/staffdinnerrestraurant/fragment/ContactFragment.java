@@ -85,18 +85,18 @@ public class ContactFragment extends Fragment {
     private DataReceiver<ArrayList<ContactDTO>> dataReceiver = new DataReceiver<ArrayList<ContactDTO>>() {
         @Override
         public void onReceive(ArrayList<ContactDTO> data) {
-            adapter.setData(data);
             if(data.size() == 0) {
                 viewEmpty.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             } else {
                 viewEmpty.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+                SQLiteHelper.getInstance(getContext()).refreshContact(data);
             }
+            adapter.setData(data);
             if(swipeRefresh.isRefreshing()) {
                 swipeRefresh.setRefreshing(false);
             }
-            SQLiteHelper.getInstance(getContext()).refreshContact(data);
             hideRefreshing();
         }
 

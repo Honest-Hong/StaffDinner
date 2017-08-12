@@ -1,6 +1,7 @@
 package com.project.boostcamp.publiclibrary.api;
 
 import com.project.boostcamp.publiclibrary.domain.ClientApplicationDTO;
+import com.project.boostcamp.publiclibrary.domain.ClientDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientJoinDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactAddDTO;
@@ -22,6 +23,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Hong Tae Joon on 2017-08-01.
@@ -44,6 +46,9 @@ public interface ClientService {
      */
     @POST("/client/join")
     Call<LoginDTO> join(@Body ClientJoinDTO clientJoinDTO);
+
+    @GET("/client/{id}/information")
+    Call<ClientDTO> getUserInformation(@Path("id") String id, @Query("type") int type);
 
     /**
      * 현재 작성된 신청서 요청

@@ -87,7 +87,7 @@
     <string name="fail_to_load_contacts">계약서 목록을 불러오는데 실패하여 기존 목록을 가져옵니다</string>
     <string name="nav_account">계정 설정</string>
     <string name="account">계정</string>
-    <string name="settings">설정</string>
+    <string name="app_settings">앱 설정</string>
     <string name="distance_km">%1$.1fkm</string>
     <string name="near_admin">근처 식당</string>
     <string name="lastest_review">최근 리뷰</string>
@@ -102,4 +102,6 @@
     <string name="login_by_kakao">카카오 계정으로 로그인</string>
     <string name="login_by_facebook">페이스북 계정으로 로그인</string>
     <string name="login_by_email">일반 이메일로 로그인</string>
+    <string name="help">도움말</string>
+    <string name="general">일반</string>
 </resources>

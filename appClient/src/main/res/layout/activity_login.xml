@@ -78,7 +78,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_weight="1"
-            android:src="@drawable/com_facebook_button_icon"/>
+            android:src="@drawable/com_facebook_button_icon_white"/>
 
         <TextView
             android:layout_width="0dp"

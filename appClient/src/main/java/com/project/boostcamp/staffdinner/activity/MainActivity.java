@@ -27,11 +27,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.project.boostcamp.publiclibrary.api.DataReceiver;
+import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.Application;
 import com.project.boostcamp.publiclibrary.data.ApplicationStateType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.NotiType;
+import com.project.boostcamp.publiclibrary.domain.ClientDTO;
 import com.project.boostcamp.publiclibrary.inter.ContactEventListener;
 import com.project.boostcamp.publiclibrary.inter.DialogResultListener;
 import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
@@ -72,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         setupToolbar();
         setupTabLayout();
         setupViewPager();
-        setupNavigation();
         setupShowcase();
+        loadUserInformation();
         handleIntent(getIntent());
 
         GoogleApiClient googleApiClient = new GoogleApiClient.Builder(this)
@@ -92,14 +95,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             SharedPreperenceHelper.getInstance(this).setShownGuide();
             showGuide(showcaseCount);
         }
-    }
-
-    private void setupNavigation() {
-        View v = navigationView.getHeaderView(0);
-        TextView textName = (TextView) v.findViewById(R.id.text_name);
-        TextView textPhone = (TextView) v.findViewById(R.id.text_phone);
-        textName.setText("홍길동");
-        textPhone.setText("01012341234");
     }
 
     /**
@@ -128,10 +123,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     /**
      * 탭 설정 메소드
-     * 신청서, 견적서, 계약 탭 3개를 추가해준다.
+     * 홈, 신청서, 견적서, 계약 탭 4개를 추가해준다.
      */
     private void setupTabLayout() {
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_home));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_home_white));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_application));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_estimate));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_contact));
@@ -348,4 +343,29 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             showGuide(showcaseCount);
         }
     };
+
+    private void loadUserInformation() {
+        String id = SharedPreperenceHelper.getInstance(this).getLoginId();
+        int type = SharedPreperenceHelper.getInstance(this).getLoginType();
+        RetrofitClient.getInstance().getUserInformation(id, type, userDataReceiver);
+    }
+
+    private DataReceiver<ClientDTO> userDataReceiver = new DataReceiver<ClientDTO>() {
+        @Override
+        public void onReceive(ClientDTO data) {
+            setupNavigation(data.getName(), data.getPhone());
+        }
+
+        @Override
+        public void onFail() {
+        }
+    };
+
+    private void setupNavigation(String name, String phone) {
+        View v = navigationView.getHeaderView(0);
+        TextView textName = (TextView) v.findViewById(R.id.text_name);
+        TextView textPhone = (TextView) v.findViewById(R.id.text_phone);
+        textName.setText(name);
+        textPhone.setText(phone);
+    }
 }

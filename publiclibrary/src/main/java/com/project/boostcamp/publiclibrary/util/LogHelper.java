@@ -16,7 +16,15 @@ public class LogHelper {
         Log.i(TAG, o.getClass().getName() + ">>" + message);
     }
 
+    public static void inform(Object o, String title, String message) {
+        Log.i(TAG, o.getClass().getName() + ">>" + title + ":" + message);
+    }
+
     public static void error(Object o, String message) {
         Log.e(TAG, o.getClass().getName() + ">>" + message);
+    }
+
+    public static void error(Object o, String title, String message) {
+        Log.e(TAG, o.getClass().getName() + ">>" + title + ":" + message);
     }
 }

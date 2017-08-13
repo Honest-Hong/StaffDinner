@@ -5,20 +5,20 @@ package com.project.boostcamp.publiclibrary.data;
  */
 
 public class ViewHolderData {
-    private int type;
+    private int viewType;
 
     public ViewHolderData() {
     }
 
-    public ViewHolderData(int type) {
-        this.type = type;
+    public ViewHolderData(int viewType) {
+        this.viewType = viewType;
     }
 
-    public int getType() {
-        return type;
+    public int getViewType() {
+        return viewType;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setViewType(int viewType) {
+        this.viewType = viewType;
     }
 }

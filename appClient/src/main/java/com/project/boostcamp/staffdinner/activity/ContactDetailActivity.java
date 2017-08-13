@@ -21,6 +21,7 @@ import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewAddDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
+import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
 import com.project.boostcamp.publiclibrary.inter.ReviewListener;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
@@ -167,7 +168,8 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
     private DataReceiver<ResultIntDTO> reviewResultReceiver = new DataReceiver<ResultIntDTO>() {
         @Override
         public void onReceive(ResultIntDTO data) {
-            Toast.makeText(ContactDetailActivity.this, "리뷰 성공!", Toast.LENGTH_SHORT).show();
+            setResult(RESULT_OK);
+            finish();
         }
 
         @Override

@@ -1,5 +1,6 @@
 package com.project.boostcamp.publiclibrary.api;
 
+import com.project.boostcamp.publiclibrary.domain.AdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
@@ -9,6 +10,7 @@ import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.EventDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
+import com.project.boostcamp.publiclibrary.domain.NewAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultStringDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewAddDTO;
@@ -132,4 +134,11 @@ public interface ClientService {
      */
     @POST("/admin/{id}/review")
     Call<ResultIntDTO> addReview(@Path("id") String adminId, @Body ReviewAddDTO reviewAddDTO);
+
+    /**
+     * 새로운 식당 목록 요청
+     */
+    @GET("/admin/new")
+    Call<ArrayList<NewAdminDTO>> getNewAdmins();
+
 }

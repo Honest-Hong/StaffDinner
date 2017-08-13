@@ -61,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:maxLength="@integer/max_length_message"
                 android:background="@drawable/background_edit_text_white"
                 android:inputType="text"
                 android:maxLines="1" />
@@ -242,6 +243,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:maxLength="@integer/max_length_menu"
                 android:background="@drawable/background_edit_text_white"
                 android:inputType="text"
                 android:maxLines="1"/>

@@ -4,12 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.project.boostcamp.publiclibrary.data.ViewHolderData;
 
 /**
  * Created by Hong Tae Joon on 2017-08-03.
  */
 
-public class AdminDTO implements Parcelable{
+public class AdminDTO implements Parcelable {
     private String id;
     private String name;
     private String phone;

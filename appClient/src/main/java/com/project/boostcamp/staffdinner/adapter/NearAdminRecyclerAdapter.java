@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.project.boostcamp.publiclibrary.data.ViewHolderData;
 import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.object.BaseVH;
@@ -38,7 +37,7 @@ public class NearAdminRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
         this.data = data;
         if(this.data.size() == 0) {
             NearAdminDTO dto = new NearAdminDTO();
-            dto.setType(-1);
+            dto.setViewType(-1);
             this.data.add(dto);
         }
         notifyDataSetChanged();
@@ -60,7 +59,7 @@ public class NearAdminRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
 
     @Override
     public int getItemViewType(int position) {
-        return data.get(position).getType();
+        return data.get(position).getViewType();
     }
 
     @Override

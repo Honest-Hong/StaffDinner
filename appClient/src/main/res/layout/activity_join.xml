@@ -31,6 +31,7 @@
     <EditText
         style="@style/PrimaryEditText"
         android:id="@+id/edit_name"
+        android:maxLength="@integer/max_length_name"
         android:inputType="textPersonName"
         android:maxLines="1"/>
 
@@ -47,6 +48,7 @@
     <EditText
         style="@style/PrimaryEditText"
         android:id="@+id/edit_phone"
+        android:maxLength="@integer/max_length_phone"
         android:inputType="phone"
         android:maxLines="1"/>
 

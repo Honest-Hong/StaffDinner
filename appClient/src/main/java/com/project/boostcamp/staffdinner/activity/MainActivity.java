@@ -40,12 +40,14 @@ import com.project.boostcamp.publiclibrary.inter.DialogResultListener;
 import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.inter.GuidePlayer;
+import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.MainViewPagerAdapter;
 import com.project.boostcamp.staffdinner.fragment.ApplicationFragment;
 import com.project.boostcamp.staffdinner.fragment.ContactFragment;
 import com.project.boostcamp.staffdinner.fragment.EstimateFragment;
+import com.project.boostcamp.staffdinner.fragment.HomeFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +56,7 @@ import butterknife.ButterKnife;
  * 메인 액티비티.
  * 신청서, 견적서, 계약서 탭 3가지가 존재한다.
  */
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener, ContactEventListener, GuidePlayer{
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener, ContactEventListener, GuidePlayer, ReviewEventListener{
     @BindView(R.id.drawer) DrawerLayout drawer;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.view_pager) ViewPager viewPager;
@@ -361,11 +363,26 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         }
     };
 
+    /**
+     * 네비게이션 텍스트 설정 메소드
+     * @param name 사용자 이름
+     * @param phone 사용자 전화번호
+     */
     private void setupNavigation(String name, String phone) {
         View v = navigationView.getHeaderView(0);
         TextView textName = (TextView) v.findViewById(R.id.text_name);
         TextView textPhone = (TextView) v.findViewById(R.id.text_phone);
         textName.setText(name);
         textPhone.setText(phone);
+    }
+
+    /**
+     * 새로운 리뷰 추가 발생시 처리
+     */
+    @Override
+    public void onNewReview() {
+        viewPager.setCurrentItem(0);
+        HomeFragment fragment = (HomeFragment) getSupportFragmentManager().getFragments().get(1);
+        fragment.onNewReview();
     }
 }

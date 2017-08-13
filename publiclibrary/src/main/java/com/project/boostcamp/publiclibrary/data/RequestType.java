@@ -12,4 +12,5 @@ public class RequestType {
     public static final int REQUEST_READ_PERMISSION = 0x103;
     public static final int REQUEST_LOCATION_PERMISSION = 0x104;
     public static final int REQUEST_CONTACT = 0x105;
+    public static final int REQUEST_REVIEW = 0x106;
 }

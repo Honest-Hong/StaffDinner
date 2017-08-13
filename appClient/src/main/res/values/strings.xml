@@ -104,4 +104,8 @@
     <string name="login_by_email">일반 이메일로 로그인</string>
     <string name="help">도움말</string>
     <string name="general">일반</string>
+    <string name="new_admin">새로운 식당</string>
+    <string name="to">To.</string>
+    <string name="from">From.</string>
+    <string name="not_exist_new_admin">새로 생긴 식당이 없네요</string>
 </resources>

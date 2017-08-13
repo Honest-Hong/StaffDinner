@@ -3,12 +3,14 @@ package com.project.boostcamp.publiclibrary.api;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.project.boostcamp.publiclibrary.domain.AdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactAddDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.EventDTO;
 import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
+import com.project.boostcamp.publiclibrary.domain.NewAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewAddDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
@@ -160,6 +162,12 @@ public class RetrofitClient {
         });
     }
 
+    /**
+     * 근처 리뷰 목록 요청
+     * @param lat 위도
+     * @param lng 경도
+     * @param dataReceiver 데이터 반환 리스너
+     */
     public void getNearReviews(double lat, double lng, final DataReceiver<ArrayList<ReviewDTO>> dataReceiver) {
         clientService.getNearReviews(lat, lng).enqueue(new Callback<ArrayList<ReviewDTO>>() {
             @Override
@@ -176,6 +184,12 @@ public class RetrofitClient {
         });
     }
 
+    /**
+     * 리뷰 추가 요청
+     * @param adminId 식당 아이디
+     * @param dto 리뷰 데이터
+     * @param dataReceiver 성공 반환 리스너
+     */
     public void addReview(String adminId, ReviewAddDTO dto, final DataReceiver<ResultIntDTO> dataReceiver) {
         clientService.addReview(adminId, dto).enqueue(new Callback<ResultIntDTO>() {
             @Override
@@ -187,6 +201,22 @@ public class RetrofitClient {
             @Override
             public void onFailure(Call<ResultIntDTO> call, Throwable t) {
                 LogHelper.error(this, t.getMessage());
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    public void getNewAdmins(final DataReceiver<ArrayList<NewAdminDTO>> dataReceiver) {
+        clientService.getNewAdmins().enqueue(new Callback<ArrayList<NewAdminDTO>>() {
+            @Override
+            public void onResponse(Call<ArrayList<NewAdminDTO>> call, Response<ArrayList<NewAdminDTO>> response) {
+                LogHelper.inform(this, "getNewAdmins", new Gson().toJson(response.body()));
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<NewAdminDTO>> call, Throwable t) {
+                LogHelper.error(this, "getNewAdmins", t.getMessage());
                 dataReceiver.onFail();
             }
         });

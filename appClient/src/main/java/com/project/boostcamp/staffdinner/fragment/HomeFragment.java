@@ -11,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,15 +25,19 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.DefaultValue;
+import com.project.boostcamp.publiclibrary.domain.AdminDTO;
 import com.project.boostcamp.publiclibrary.domain.EventDTO;
 import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
+import com.project.boostcamp.publiclibrary.domain.NewAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.inter.GuidePlayer;
+import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.EventPagerAdapter;
 import com.project.boostcamp.staffdinner.adapter.NearAdminRecyclerAdapter;
 import com.project.boostcamp.staffdinner.adapter.NearReviewRecyclerAdapter;
+import com.project.boostcamp.staffdinner.adapter.NewAdminRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -47,17 +52,23 @@ import me.relex.circleindicator.CircleIndicator;
  * Created by Hong Tae Joon on 2017-08-10.
  */
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements ReviewEventListener {
+    @BindView(R.id.scroll_view) NestedScrollView scrollView;
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.indicator) CircleIndicator circleIndicator;
     @BindView(R.id.recycler_view_near) RecyclerView recyclerNearAdmin;
     @BindView(R.id.recycler_view_review) RecyclerView recyclerReview;
+    @BindView(R.id.recycler_view_new_admin) RecyclerView recyclerNewAdmin;
     private EventPagerAdapter eventPagerAdapter;
     private NearAdminRecyclerAdapter nearAdminRecyclerAdapter;
     private NearReviewRecyclerAdapter nearReviewRecyclerAdapter;
+    private NewAdminRecyclerAdapter newAdminRecyclerAdapter;
     private Handler scrollHandler;
     private FusedLocationProviderClient fusedLocationClient; // 현재 위치를 가져오는 서비스
     private GuidePlayer guidePlayer;
+    private Timer timer;
+    private double latitude = DefaultValue.DEFAULT_LATITUDE;
+    private double longitude = DefaultValue.DEFAULT_LONGITUDE;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -87,27 +98,41 @@ public class HomeFragment extends Fragment {
         RetrofitClient.getInstance().getEvents(eventDataReceiver);
         setupNearAdmin();
         setupNearReview();
+        setupNewAdmin();
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
                     if(location != null) {
-                        final double latitude = location.getLatitude();
-                        final double longitude = location.getLongitude();
-                        RetrofitClient.getInstance().getNearAdmins(latitude, longitude, nearAdminReceiver);
-                        RetrofitClient.getInstance().getNearReviews(latitude, longitude, nearReviewReceiver);
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                        loadNearAdmin();
+                        loadNearReview();
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    RetrofitClient.getInstance().getNearAdmins(DefaultValue.DEFAULT_LATITUDE, DefaultValue.DEFAULT_LONGITUDE, nearAdminReceiver);
-                    RetrofitClient.getInstance().getNearReviews(DefaultValue.DEFAULT_LATITUDE, DefaultValue.DEFAULT_LONGITUDE, nearReviewReceiver);
+                    loadNearAdmin();
+                    loadNearReview();
                 }
             });
         }
+        loadNewAdmin();
         return v;
+    }
+
+    private void loadNearAdmin() {
+        RetrofitClient.getInstance().getNearAdmins(latitude, longitude, nearAdminReceiver);
+    }
+
+    private void loadNearReview() {
+        RetrofitClient.getInstance().getNearReviews(latitude, longitude, nearReviewReceiver);
+    }
+
+    private void loadNewAdmin() {
+        RetrofitClient.getInstance().getNewAdmins(newAdminReceiver);
     }
 
     private void setupNearReview() {
@@ -122,6 +147,13 @@ public class HomeFragment extends Fragment {
         recyclerNearAdmin.setHasFixedSize(true);
         recyclerNearAdmin.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerNearAdmin.setAdapter(nearAdminRecyclerAdapter);
+    }
+
+    private void setupNewAdmin() {
+        newAdminRecyclerAdapter = new NewAdminRecyclerAdapter(getContext(), newAdminEvent);
+        recyclerNewAdmin.setHasFixedSize(true);
+        recyclerNewAdmin.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recyclerNewAdmin.setAdapter(newAdminRecyclerAdapter);
     }
 
     private void setupViewPager(ArrayList<EventDTO> data) {
@@ -145,6 +177,30 @@ public class HomeFragment extends Fragment {
         }
     };
 
+    private DataReceiver<ArrayList<NearAdminDTO>> nearAdminReceiver = new DataReceiver<ArrayList<NearAdminDTO>>() {
+        @Override
+        public void onReceive(ArrayList<NearAdminDTO> data) {
+            nearAdminRecyclerAdapter.setData(data);
+        }
+
+        @Override
+        public void onFail() {
+
+        }
+    };
+
+    private DataReceiver<ArrayList<NewAdminDTO>> newAdminReceiver = new DataReceiver<ArrayList<NewAdminDTO>>() {
+        @Override
+        public void onReceive(ArrayList<NewAdminDTO> data) {
+            newAdminRecyclerAdapter.setData(data);
+        }
+
+        @Override
+        public void onFail() {
+
+        }
+    };
+
     private DataEvent<NearAdminDTO> nearAdminEvent = new DataEvent<NearAdminDTO>() {
         @Override
         public void onClick(NearAdminDTO data) {
@@ -157,14 +213,21 @@ public class HomeFragment extends Fragment {
         }
     };
 
+    private DataEvent<NewAdminDTO> newAdminEvent = new DataEvent<NewAdminDTO>() {
+        @Override
+        public void onClick(NewAdminDTO data) {
+
+        }
+    };
+
     private void startAutoScroll() {
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 scrollHandler.post(runScrollPager);
             }
-        }, 2000, 5000);
+        }, DefaultValue.DEFAULT_SCROLL_DELAY, DefaultValue.DEFAULT_SCROLL_TIME);
     }
 
     private Runnable runScrollPager = new Runnable() {
@@ -176,18 +239,6 @@ public class HomeFragment extends Fragment {
             } else {
                 viewPager.setCurrentItem(0);
             }
-        }
-    };
-
-    private DataReceiver<ArrayList<NearAdminDTO>> nearAdminReceiver = new DataReceiver<ArrayList<NearAdminDTO>>() {
-        @Override
-        public void onReceive(ArrayList<NearAdminDTO> data) {
-            nearAdminRecyclerAdapter.setData(data);
-        }
-
-        @Override
-        public void onFail() {
-
         }
     };
 
@@ -206,5 +257,11 @@ public class HomeFragment extends Fragment {
     @OnClick(R.id.button_guide)
     public void playGuide() {
         guidePlayer.showGuide(0);
+    }
+
+    @Override
+    public void onNewReview() {
+        RetrofitClient.getInstance().getNearReviews(latitude, longitude, nearReviewReceiver);
+        scrollView.smoothScrollTo(0, recyclerReview.getTop());
     }
 }

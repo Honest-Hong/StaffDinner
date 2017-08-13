@@ -1,5 +1,6 @@
 package com.project.boostcamp.staffdinner.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,8 +16,10 @@ import android.widget.Toast;
 
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
+import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
+import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
 import com.project.boostcamp.publiclibrary.util.SQLiteHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.R;
@@ -36,6 +39,7 @@ public class ContactFragment extends Fragment {
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
     private ContactRecyclerAdapter adapter;
+    private ReviewEventListener reviewEventListener;
 
     public static ContactFragment newInstance() {
         ContactFragment fragment = new ContactFragment();
@@ -45,6 +49,11 @@ public class ContactFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        try {
+            reviewEventListener = (ReviewEventListener)context;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Nullable
@@ -76,7 +85,7 @@ public class ContactFragment extends Fragment {
         public void onClick(ContactDTO data) {
             Intent intent = new Intent(getContext(), ContactDetailActivity.class);
             intent.putExtra(ContactDTO.class.getName(), data);
-            startActivity(intent);
+            startActivityForResult(intent, RequestType.REQUEST_REVIEW);
         }
     };
 
@@ -120,6 +129,15 @@ public class ContactFragment extends Fragment {
     private void hideRefreshing() {
         if(swipeRefresh.isRefreshing()) {
             swipeRefresh.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == RequestType.REQUEST_REVIEW) {
+            if(resultCode == Activity.RESULT_OK) {
+                reviewEventListener.onNewReview();
+            }
         }
     }
 }

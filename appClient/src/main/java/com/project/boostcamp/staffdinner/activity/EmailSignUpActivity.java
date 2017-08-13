@@ -19,6 +19,7 @@ import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
+import com.project.boostcamp.publiclibrary.util.LogHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.staffdinner.R;
@@ -75,28 +76,18 @@ public class EmailSignUpActivity extends AppCompatActivity {
     @OnClick(R.id.button_next)
     public void doEmailSignUp() {
         if(checkValidate()) {
-            progressDialog = ProgressDialog.show(this, "", "잠시만 기다려주세요");
+            progressDialog = ProgressDialog.show(this, "", getString(R.string.waiting_please));
             final String email = editEmail.getText().toString();
             final String password = editPassword.getText().toString();
-            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                    LogHelper.inform(this, "createUserWithEmailAndPassword", "complete");
                     if(task.isSuccessful()) {
                         id = task.getResult().getUser().getUid();
-                        checkAlreadyJoined();
+                        moveJoinActivity();
                     } else {
-                        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Log.d("HTJ", "doEmailSignUp-onComplete!");
-                                if(task.isSuccessful()) {
-                                    id = task.getResult().getUser().getUid();
-                                    moveJoinActivity();
-                                } else {
-                                    Log.d("HTJ", "doEmailSignUp warning: " + task.getException());
-                                }
-                            }
-                        });
+                        LogHelper.inform(this, "createUserWithEmailAndPassword", task.getException().getMessage());
                     }
                 }
             });

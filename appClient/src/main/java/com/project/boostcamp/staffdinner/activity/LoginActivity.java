@@ -1,16 +1,20 @@
 package com.project.boostcamp.staffdinner.activity;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -20,6 +24,10 @@ import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ISessionCallback;
@@ -29,11 +37,13 @@ import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
+import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
+import com.project.boostcamp.publiclibrary.util.LogHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.R;
 
@@ -44,6 +54,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
@@ -57,10 +68,14 @@ import retrofit2.Response;
  * 이메일 로그인
  */
 public class LoginActivity extends AppCompatActivity {
+    @BindView(R.id.edit_email) EditText editEmail;
+    @BindView(R.id.edit_password) EditText editPassword;
+    private FirebaseAuth auth;
     private CallbackManager callbackManager;
     private String id;
     private int type;
     private String name;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,15 +83,11 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
+        auth = FirebaseAuth.getInstance();
         Session.getCurrentSession().addCallback(callbackKaKao);
         Session.getCurrentSession().checkAndImplicitOpen();
         callbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(callbackManager, callbackFacebook);
-
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_DENIED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, RequestType.REQUEST_LOCATION_PERMISSION);
-        }
     }
 
     /**
@@ -110,16 +121,6 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-
-    /**
-     * 권한 요청이 허가 되면 맵을 현재 위치로 지정한다
-     */
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode == RequestType.REQUEST_LOCATION_PERMISSION && grantResults[0] == PackageManager.PERMISSION_DENIED) {
-            finish();
-        }
-    }
     /**
      * 액티비티가 파괴될 때 카카오 로그인 콜백 제거
      */
@@ -222,29 +223,31 @@ public class LoginActivity extends AppCompatActivity {
      * 등록되어있지 않으면 회원가입 화면으로 넘어간다
      */
     private void checkAlreadyJoined() {
-        LoginDTO dto = new LoginDTO();
-        dto.setId(id);
-        dto.setType(type);
-        RetrofitClient.getInstance().clientService.login(dto).enqueue(new Callback<LoginDTO>() {
+        RetrofitClient.getInstance().requestLogin(id, type, new DataReceiver<LoginDTO>() {
             @Override
-            public void onResponse(Call<LoginDTO> call, Response<LoginDTO> response) {
-                Log.d("HTJ", "login onResponse: " + response.body());
-                LoginDTO dto = response.body();
-                if(dto.getId() == null) {
-                    Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
-                    intent.putExtra(ExtraType.EXTRA_LOGIN_ID, id);
-                    intent.putExtra(ExtraType.EXTRA_LOGIN_TYPE, type);
-                    intent.putExtra(ExtraType.EXTRA_NAME, name);
-                    startActivity(intent);
-                    finish();
+            public void onReceive(LoginDTO data) {
+                if(data.getId() == null) {
+                    if(data.getType() == AccountType.TYPE_EMAIL) {
+                        Snackbar.make(getWindow().getDecorView().getRootView(), R.string.not_exist_email_or_password, Snackbar.LENGTH_LONG).show();
+                        progressDialog.dismiss();
+                    } else {
+                        Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
+                        intent.putExtra(ExtraType.EXTRA_LOGIN_ID, id);
+                        intent.putExtra(ExtraType.EXTRA_LOGIN_TYPE, type);
+                        intent.putExtra(ExtraType.EXTRA_NAME, name);
+                        startActivity(intent);
+                        finish();
+                    }
                 } else {
-                    redirectMainActivity(dto);
+                    if(progressDialog != null) {
+                        progressDialog.dismiss();
+                    }
+                    redirectMainActivity(data);
                 }
             }
 
             @Override
-            public void onFailure(Call<LoginDTO> call, Throwable t) {
-                Log.e("HTJ", "login onFailure: " + t.getMessage());
+            public void onFail() {
             }
         });
     }
@@ -258,4 +261,30 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(LoginActivity.this, MainActivity.class));
         finish();
     }
+
+    @OnClick(R.id.button_login)
+    public void doLogin() {
+        progressDialog = ProgressDialog.show(this, null, getString(R.string.waiting_please), true, false);
+        final String email = editEmail.getText().toString();
+        final String password = editPassword.getText().toString();
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(onSignInComplete);
+    }
+
+    private OnCompleteListener<AuthResult> onSignInComplete = new OnCompleteListener<AuthResult>() {
+        @Override
+        public void onComplete(@NonNull Task<AuthResult> task) {
+            LogHelper.inform(this, "onComplete", "");
+            if(task.isSuccessful()) {
+                LogHelper.inform(this, "onComplete", "isSuccessful");
+                id = task.getResult().getUser().getUid();
+                type = AccountType.TYPE_EMAIL;
+                checkAlreadyJoined();
+            } else {
+                LogHelper.inform(this, "onComplete", "isNotSuccessful");
+                Snackbar.make(getWindow().getDecorView().getRootView(), R.string.not_exist_email_or_password, Snackbar.LENGTH_LONG).show();
+                progressDialog.dismiss();
+            }
+        }
+    };
 }

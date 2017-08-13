@@ -9,6 +9,7 @@ import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactAddDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.EventDTO;
+import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.NewAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
@@ -48,6 +49,25 @@ public class RetrofitClient {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         clientService = retrofit.create(ClientService.class);
+    }
+
+    public void requestLogin(String id, int type, final DataReceiver<LoginDTO> dataReceiver) {
+        LoginDTO dto = new LoginDTO();
+        dto.setId(id);
+        dto.setType(type);
+        clientService.login(dto).enqueue(new Callback<LoginDTO>() {
+            @Override
+            public void onResponse(Call<LoginDTO> call, Response<LoginDTO> response) {
+                LogHelper.inform(this, "requestLogin onResponse", new Gson().toJson(response.body()));
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<LoginDTO> call, Throwable t) {
+                LogHelper.error(this, "requestLogin onFailure", t.getMessage());
+                dataReceiver.onFail();
+            }
+        });
     }
 
     public void getUserInformation(String id, int type, final DataReceiver<ClientDTO> dataReceiver) {

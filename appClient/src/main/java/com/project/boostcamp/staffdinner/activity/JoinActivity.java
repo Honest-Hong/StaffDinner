@@ -5,6 +5,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -57,13 +58,21 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
     /**
      * 스낵바 사용의 편의를 위해 루트뷰를 저장한다.
      * 이전의 액티비티에서 전달받은 이름을 입력창에 표시한다.
-     *
      */
     private void setupView() {
         rootView = getWindow().getDecorView().getRootView();
         CheckBox checkBox = (CheckBox)findViewById(R.id.check_box);
         checkBox.setOnCheckedChangeListener(this);
         editName.setText(name);
+
+        TelephonyManager manager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
+        String phone = manager.getLine1Number();
+        if(phone != null) {
+            if(phone.startsWith("+82")) {
+                phone = "010" + phone.substring(5);
+            }
+            editPhone.setText(phone);
+        }
     }
 
     /**
@@ -94,12 +103,12 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         String name = editName.getText().toString();
         String phone = editPhone.getText().toString();
 
-        if(name.equals("")) {
+        if(name.isEmpty()) {
             Snackbar.make(rootView, R.string.snack_need_name, Snackbar.LENGTH_SHORT).show();
             return false;
         }
 
-        if(phone.equals("")) {
+        if(phone.isEmpty()) {
             Snackbar.make(rootView, R.string.snack_need_phone, Snackbar.LENGTH_SHORT).show();
             return false;
         }

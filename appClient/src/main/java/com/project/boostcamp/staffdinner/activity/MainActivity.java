@@ -302,6 +302,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         } else {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
         }
     }

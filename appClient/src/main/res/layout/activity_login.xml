@@ -2,48 +2,101 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="24dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     android:background="@color/colorPrimary">
 
-    <LinearLayout
+    <View
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_weight="1" />
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/ic_launcher"/>
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_launcher"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/login_activity_text"
+        android:textColor="@color/white"
+        android:textSize="@dimen/fontNormal"
+        android:gravity="center"/>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/text_email"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/fontSmall"/>
+
+    <EditText
+        android:id="@+id/edit_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:textSize="@dimen/fontNormal"
+        android:textColor="@color/white"
+        android:background="@drawable/background_edit_text_primary"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/password"
+        android:textColor="@color/colorAccent"
+        android:textSize="@dimen/fontSmall"/>
+
+    <EditText
+        android:id="@+id/edit_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:textSize="@dimen/fontNormal"
+        android:textColor="@color/white"
+        android:background="@drawable/background_edit_text_primary"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/button_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontGraphic"/>
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
+            android:text="@string/login"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/fontNormal"/>
+    </android.support.v7.widget.CardView>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:text="@string/login_activity_text"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontLargest"
-            android:gravity="center"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
-    </LinearLayout>
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <LinearLayout
         android:id="@+id/button_kakao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="16dp"
         android:gravity="center"
         android:background="@color/com_kakao_button_background_press">
 
@@ -54,14 +107,15 @@
             android:src="@drawable/kakao_account_logo"/>
 
         <TextView
+            android:id="@+id/textView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:padding="16dp"
             android:gravity="center_vertical"
+            android:padding="8dp"
             android:text="@string/login_by_kakao"
-            android:textSize="@dimen/fontNormal"
-            android:textColor="@color/com_kakao_brown"/>
+            android:textColor="@color/com_kakao_brown"
+            android:textSize="@dimen/fontNormal" />
     </LinearLayout>
 
     <LinearLayout
@@ -69,8 +123,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
         android:gravity="center"
         android:background="@color/com_facebook_blue">
 
@@ -84,7 +136,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:padding="16dp"
+            android:padding="8dp"
             android:gravity="center_vertical"
             android:text="@string/login_by_facebook"
             android:textSize="@dimen/fontNormal"
@@ -97,8 +149,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
         android:gravity="center"
         android:background="@color/white">
 
@@ -112,7 +162,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
-            android:padding="16dp"
+            android:padding="8dp"
             android:gravity="center_vertical"
             android:text="@string/login_by_email"
             android:textSize="@dimen/fontNormal"

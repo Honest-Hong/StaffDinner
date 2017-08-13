@@ -509,12 +509,12 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
             Toast.makeText(getContext(), "잘못된 시간", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(textStyle.getText().length() < 1) {
+        if(textStyle.getText().toString().isEmpty()) {
             textStyle.setError("분위기를 선택해주세요.");
             textStyle.requestFocus();
             return false;
         }
-        if(editMenu.getText().toString().length() < 1) {
+        if(editMenu.getText().toString().isEmpty()) {
             editMenu.setError("메뉴를 입력해주세요.");
             editMenu.requestFocus();
             return false;

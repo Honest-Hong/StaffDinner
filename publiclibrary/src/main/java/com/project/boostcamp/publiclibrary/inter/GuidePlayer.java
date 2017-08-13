@@ -5,5 +5,5 @@ package com.project.boostcamp.publiclibrary.inter;
  */
 
 public interface GuidePlayer {
-    void showGuide(int index);
+    void showGuide();
 }

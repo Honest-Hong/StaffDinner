@@ -11,14 +11,4 @@
         app:titleTextColor="@color/white">
 
     </android.support.v7.widget.Toolbar>
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabBackground="@color/colorPrimary"
-        app:tabTextColor="@color/whiteHalf"
-        app:tabSelectedTextColor="@color/white"
-        app:tabIndicatorColor="@color/colorAccent"
-        app:tabIndicatorHeight="3dp"/>
 </android.support.design.widget.AppBarLayout>

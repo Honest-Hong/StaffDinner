@@ -54,6 +54,7 @@
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -61,8 +62,8 @@
         <activity android:name=".activity.JoinActivity" />
         <activity
             android:name=".activity.MainActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.EstimateDetailActivity" />
         <activity android:name=".activity.ContactDetailActivity" />
         <activity android:name=".activity.MapDetailActivity" />
@@ -78,7 +79,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activity.EmailSignUpActivity"></activity>
+        <activity android:name=".activity.EmailSignUpActivity" />
+        <activity android:name=".activity.AdminDetailActivity"></activity>
     </application>
 
 </manifest>

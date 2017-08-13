@@ -206,6 +206,10 @@ public class RetrofitClient {
         });
     }
 
+    /**
+     * 새로생긴 식당 목록 요청
+     * @param dataReceiver
+     */
     public void getNewAdmins(final DataReceiver<ArrayList<NewAdminDTO>> dataReceiver) {
         clientService.getNewAdmins().enqueue(new Callback<ArrayList<NewAdminDTO>>() {
             @Override
@@ -217,6 +221,22 @@ public class RetrofitClient {
             @Override
             public void onFailure(Call<ArrayList<NewAdminDTO>> call, Throwable t) {
                 LogHelper.error(this, "getNewAdmins", t.getMessage());
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    public void getAdminInformation(String adminId, int adminType, final DataReceiver<AdminDTO> dataReceiver) {
+        clientService.getAdminInformation(adminId, adminType).enqueue(new Callback<AdminDTO>() {
+            @Override
+            public void onResponse(Call<AdminDTO> call, Response<AdminDTO> response) {
+                LogHelper.inform(this, "getAdminInformation", new Gson().toJson(response.body()));
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<AdminDTO> call, Throwable t) {
+                LogHelper.error(this, "getAdminInformation", t.getMessage());
                 dataReceiver.onFail();
             }
         });

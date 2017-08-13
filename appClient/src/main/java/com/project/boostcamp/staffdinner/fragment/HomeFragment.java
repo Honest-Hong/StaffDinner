@@ -2,6 +2,7 @@ package com.project.boostcamp.staffdinner.fragment;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.DefaultValue;
+import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.domain.AdminDTO;
 import com.project.boostcamp.publiclibrary.domain.EventDTO;
 import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
@@ -34,6 +36,7 @@ import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.inter.GuidePlayer;
 import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
 import com.project.boostcamp.staffdinner.R;
+import com.project.boostcamp.staffdinner.activity.AdminDetailActivity;
 import com.project.boostcamp.staffdinner.adapter.EventPagerAdapter;
 import com.project.boostcamp.staffdinner.adapter.NearAdminRecyclerAdapter;
 import com.project.boostcamp.staffdinner.adapter.NearReviewRecyclerAdapter;
@@ -204,21 +207,30 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
     private DataEvent<NearAdminDTO> nearAdminEvent = new DataEvent<NearAdminDTO>() {
         @Override
         public void onClick(NearAdminDTO data) {
+            redirectAdminDetailActivity(data.getAdminId(), data.getAdminType());
         }
     };
 
     private DataEvent<ReviewDTO> nearReviewEvent = new DataEvent<ReviewDTO>() {
         @Override
         public void onClick(ReviewDTO data) {
+            redirectAdminDetailActivity(data.getReceiverId(), data.getReceiverType());
         }
     };
 
     private DataEvent<NewAdminDTO> newAdminEvent = new DataEvent<NewAdminDTO>() {
         @Override
         public void onClick(NewAdminDTO data) {
-
+            redirectAdminDetailActivity(data.getId(), data.getType());
         }
     };
+
+    private void redirectAdminDetailActivity(String id, int type) {
+        Intent intent = new Intent(getContext(), AdminDetailActivity.class);
+        intent.putExtra(ExtraType.EXTRA_LOGIN_ID, id);
+        intent.putExtra(ExtraType.EXTRA_LOGIN_TYPE, type);
+        startActivity(intent);
+    }
 
     private void startAutoScroll() {
         timer = new Timer();

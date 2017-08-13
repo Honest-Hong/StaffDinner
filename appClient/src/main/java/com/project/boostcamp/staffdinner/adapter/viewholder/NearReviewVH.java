@@ -25,10 +25,16 @@ public class NearReviewVH extends BaseVH<ReviewDTO> {
     @BindView(R.id.text_content) TextView textContent;
     @BindView(R.id.text_time) TextView textTime;
     @BindView(R.id.rating_bar) MaterialRatingBar ratingBar;
-    public NearReviewVH(Context context, View itemView, DataEvent<ReviewDTO> dataEvent) {
+    public NearReviewVH(Context context, View itemView, final DataEvent<ReviewDTO> dataEvent) {
         super(itemView, dataEvent);
         this.context = context;
         ButterKnife.bind(this, itemView);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dataEvent.onClick(data);
+            }
+        });
     }
 
     @Override

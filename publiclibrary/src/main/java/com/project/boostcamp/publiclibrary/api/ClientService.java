@@ -141,4 +141,6 @@ public interface ClientService {
     @GET("/admin/new")
     Call<ArrayList<NewAdminDTO>> getNewAdmins();
 
+    @GET("/admin/{id}/information")
+    Call<AdminDTO> getAdminInformation(@Path("id") String id, @Query("type") int type);
 }

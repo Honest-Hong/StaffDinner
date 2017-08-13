@@ -23,10 +23,16 @@ public class NearAdminVH extends BaseVH<NearAdminDTO> {
     private Context context;
     @BindView(R.id.image_view) ImageView imageView;
     @BindView(R.id.text_distance) TextView textDistnace;
-    public NearAdminVH(Context context, View itemView, DataEvent<NearAdminDTO> dataEvent) {
+    public NearAdminVH(Context context, View itemView, final DataEvent<NearAdminDTO> dataEvent) {
         super(itemView, dataEvent);
         this.context = context;
         ButterKnife.bind(this, itemView);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dataEvent.onClick(data);
+            }
+        });
     }
 
     @Override

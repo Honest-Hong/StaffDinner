@@ -9,6 +9,8 @@ import com.project.boostcamp.publiclibrary.data.ViewHolderData;
 public class ReviewDTO extends ViewHolderData {
     private String writer;
     private String receiver;
+    private String receiverId;
+    private int receiverType;
     private String content;
     private float rating;
     private long writedTime;
@@ -27,6 +29,22 @@ public class ReviewDTO extends ViewHolderData {
 
     public void setReceiver(String receiver) {
         this.receiver = receiver;
+    }
+
+    public String getReceiverId() {
+        return receiverId;
+    }
+
+    public void setReceiverId(String receiverId) {
+        this.receiverId = receiverId;
+    }
+
+    public int getReceiverType() {
+        return receiverType;
+    }
+
+    public void setReceiverType(int receiverType) {
+        this.receiverType = receiverType;
     }
 
     public String getContent() {

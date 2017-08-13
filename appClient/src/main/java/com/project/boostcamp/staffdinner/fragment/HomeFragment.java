@@ -268,7 +268,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
 
     @OnClick(R.id.button_guide)
     public void playGuide() {
-        guidePlayer.showGuide(0);
+        guidePlayer.showGuide();
     }
 
     @Override

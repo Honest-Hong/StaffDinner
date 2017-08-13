@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_home"
+        android:title="@string/tab_title_home"
+        android:icon="@drawable/ic_home_white"/>
+    <item
+        android:id="@+id/menu_application"
+        android:title="@string/tab_title_application"
+        android:icon="@drawable/ic_application_grey"/>
+    <item
+        android:id="@+id/menu_estimate"
+        android:title="@string/tab_title_estimate"
+        android:icon="@drawable/ic_estimate_grey"/>
+    <item
+        android:id="@+id/menu_contact"
+        android:title="@string/tab_title_contact"
+        android:icon="@drawable/ic_contact_orange_24dp"/>
+</menu>

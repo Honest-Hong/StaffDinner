@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenu;
+import android.support.design.internal.BottomNavigationMenuView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -57,8 +61,9 @@ import butterknife.ButterKnife;
  * 신청서, 견적서, 계약서 탭 3가지가 존재한다.
  */
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener, ContactEventListener, GuidePlayer, ReviewEventListener{
+    public static final int SHOWCASE_DELAY_MILLIS = 150;
     @BindView(R.id.drawer) DrawerLayout drawer;
-    @BindView(R.id.tab_layout) TabLayout tabLayout;
+    @BindView(R.id.bottom_nav) BottomNavigationView bottomNav;
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.navigation) NavigationView navigationView;
     private MainViewPagerAdapter pagerAdapter;
@@ -95,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         showcaseCount = 0;
         if(!SharedPreperenceHelper.getInstance(this).getShownGuide()) {
             SharedPreperenceHelper.getInstance(this).setShownGuide();
-            showGuide(showcaseCount);
+            showGuide();
         }
     }
 
@@ -128,10 +133,33 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
      * 홈, 신청서, 견적서, 계약 탭 4개를 추가해준다.
      */
     private void setupTabLayout() {
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_home_white));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_application));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_estimate));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_contact));
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNav.getChildAt(0);
+        for(int i=0; i<menuView.getChildCount(); i++) {
+            BottomNavigationItemView menu = (BottomNavigationItemView) menuView.getChildAt(i);
+            menu.setShiftingMode(false);
+            menu.setChecked(false);
+        }
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()) {
+                    case R.id.menu_home:
+                        viewPager.setCurrentItem(0);
+                        break;
+                    case R.id.menu_application:
+                        viewPager.setCurrentItem(1);
+                        break;
+                    case R.id.menu_estimate:
+                        viewPager.setCurrentItem(2);
+                        break;
+                    case R.id.menu_contact:
+                        viewPager.setCurrentItem(3);
+                        break;
+
+                }
+                return true;
+            }
+        });
     }
 
     /**
@@ -143,19 +171,31 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         pagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(4);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+            public void onPageSelected(int position) {
+                switch(position) {
+                    case 0:
+                        bottomNav.setSelectedItemId(R.id.menu_home);
+                        break;
+                    case 1:
+                        bottomNav.setSelectedItemId(R.id.menu_application);
+                        break;
+                    case 2:
+                        bottomNav.setSelectedItemId(R.id.menu_estimate);
+                        break;
+                    case 3:
+                        bottomNav.setSelectedItemId(R.id.menu_contact);
+                        break;
+                }
             }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+            public void onPageScrollStateChanged(int state) {
             }
         });
     }
@@ -316,23 +356,37 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
      * 탭의 0번째 부터 3번째 까지 모두 설명해준다.
      */
     @Override
-    public void showGuide(int index) {
+    public void showGuide() {
         if(showcaseCount < 4) {
-            viewPager.setCurrentItem(index);
-            View target = ((ViewGroup) tabLayout.getChildAt(0)).getChildAt(index);
-            showcaseView = new ShowcaseView.Builder(this)
-                    .setTarget(new ViewTarget(target))
-                    .setContentTitle(showcaseTitles[index])
-                    .setContentText(showcaseTexts[index])
-                    .setOnClickListener(showcaseClick)
-                    .setStyle(R.style.CustomShowcaseTheme)
-                    .build();
-            showcaseView.show();
+            viewPager.setCurrentItem(showcaseCount);
+            // 탭의 위치를 올바르게 가르키기 위한 딜레이
+            viewPager.postDelayed(showcaseTask, SHOWCASE_DELAY_MILLIS);
         } else {
             viewPager.setCurrentItem(0);
             showcaseCount = 0;
         }
     }
+
+    /**
+     * 쇼케이스를 띄워주는 행동
+     */
+    private Runnable showcaseTask = new Runnable() {
+        @Override
+        public void run() {
+            if(showcaseView != null && showcaseView.isShowing()) {
+                showcaseView.hide();
+            }
+            View target = ((ViewGroup)bottomNav.getChildAt(0)).getChildAt(showcaseCount);
+            showcaseView = new ShowcaseView.Builder(MainActivity.this)
+                    .setTarget(new ViewTarget(target))
+                    .setContentTitle(showcaseTitles[showcaseCount])
+                    .setContentText(showcaseTexts[showcaseCount])
+                    .setOnClickListener(showcaseClick)
+                    .setStyle(R.style.CustomShowcaseTheme)
+                    .build();
+            showcaseView.show();
+        }
+    };
 
     /**
      * 쇼케이스 내부의 버튼 클릭 리스너
@@ -342,7 +396,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         public void onClick(View view) {
             showcaseView.hide();
             showcaseCount++;
-            showGuide(showcaseCount);
+            showGuide();
         }
     };
 

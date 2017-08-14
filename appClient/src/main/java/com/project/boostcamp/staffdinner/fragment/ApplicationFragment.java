@@ -43,7 +43,6 @@ import com.project.boostcamp.publiclibrary.inter.ArrayResultListener;
 import com.project.boostcamp.publiclibrary.domain.ClientApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultStringDTO;
-import com.project.boostcamp.publiclibrary.util.LogHelper;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.publiclibrary.data.Application;
 import com.project.boostcamp.staffdinner.activity.MapDetailActivity;

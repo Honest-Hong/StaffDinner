@@ -45,6 +45,7 @@ dependencies {
     // 파이어베이스
     compile 'com.google.firebase:firebase-messaging:11.0.2'
     compile 'com.google.firebase:firebase-auth:11.0.2'
+    compile 'com.google.firebase:firebase-crash:11.0.2'
     // 지슨 https://github.com/google/gson
     compile 'com.google.code.gson:gson:2.2.4'
     // 버터나이프 http://jakewharton.github.io/butterknife/

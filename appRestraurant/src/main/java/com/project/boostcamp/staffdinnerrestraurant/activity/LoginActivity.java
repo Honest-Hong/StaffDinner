@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -31,12 +30,11 @@ import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
-import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.dialog.MyProgressDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
-import com.project.boostcamp.publiclibrary.util.LogHelper;
+import com.project.boostcamp.publiclibrary.util.Logger;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 
@@ -47,9 +45,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.edit_email) EditText editEmail;
@@ -200,12 +195,12 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
             if(task.isSuccessful()) {
-                LogHelper.inform(this, "onComplete", "isSuccessful");
+                Logger.i(this, "onComplete", "isSuccessful");
                 id = task.getResult().getUser().getUid();
                 type = AccountType.TYPE_EMAIL;
                 checkAlreadyJoined();
             } else {
-                LogHelper.inform(this, "onComplete", task.getException().getMessage());
+                Logger.i(this, "onComplete", task.getException().getMessage());
                 Snackbar.make(getWindow().getDecorView().getRootView(), R.string.not_exist_email_or_password, Snackbar.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }

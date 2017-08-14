@@ -2,6 +2,7 @@ package com.project.boostcamp.publiclibrary.api;
 
 import android.util.Log;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.project.boostcamp.publiclibrary.domain.AdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientDTO;
@@ -16,10 +17,12 @@ import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewAddDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
-import com.project.boostcamp.publiclibrary.util.LogHelper;
+import com.project.boostcamp.publiclibrary.util.Logger;
 
 import java.util.ArrayList;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -45,6 +48,9 @@ public class RetrofitClient {
 
     public RetrofitClient() {
         retrofit = new Retrofit.Builder()
+                .client(new OkHttpClient().newBuilder()
+                        .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                        .addNetworkInterceptor(new StethoInterceptor()).build())
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -58,13 +64,11 @@ public class RetrofitClient {
         clientService.login(dto).enqueue(new Callback<LoginDTO>() {
             @Override
             public void onResponse(Call<LoginDTO> call, Response<LoginDTO> response) {
-                LogHelper.inform(this, "requestLogin onResponse", new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<LoginDTO> call, Throwable t) {
-                LogHelper.error(this, "requestLogin onFailure", t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -74,13 +78,11 @@ public class RetrofitClient {
         clientService.getUserInformation(id, type).enqueue(new Callback<ClientDTO>() {
             @Override
             public void onResponse(Call<ClientDTO> call, Response<ClientDTO> response) {
-                LogHelper.inform(this, "getUserInformation", new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<ClientDTO> call, Throwable t) {
-                LogHelper.error(this, "getUserInformation", t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -90,13 +92,11 @@ public class RetrofitClient {
         clientService.getEstimateList(applicationId).enqueue(new Callback<ArrayList<ClientEstimateDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<ClientEstimateDTO>> call, Response<ArrayList<ClientEstimateDTO>> response) {
-                Log.d("HTJ", "getEstimates: " + new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<ClientEstimateDTO>> call, Throwable t) {
-                Log.e("HTJ", "Fail to client getApplications estimate list: " + t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -125,13 +125,11 @@ public class RetrofitClient {
         clientService.getContacts(id).enqueue(new Callback<ArrayList<ContactDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<ContactDTO>> call, Response<ArrayList<ContactDTO>> response) {
-                Log.d("HTJ", "getContacts onResponse: " + new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<ContactDTO>> call, Throwable t) {
-                Log.e("HTJ", "getContacts onFailure: " + t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -170,13 +168,11 @@ public class RetrofitClient {
         clientService.getNearAdmins(lat, lng).enqueue(new Callback<ArrayList<NearAdminDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<NearAdminDTO>> call, Response<ArrayList<NearAdminDTO>> response) {
-                LogHelper.inform(this, new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<NearAdminDTO>> call, Throwable t) {
-                LogHelper.error(this, t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -192,13 +188,11 @@ public class RetrofitClient {
         clientService.getNearReviews(lat, lng).enqueue(new Callback<ArrayList<ReviewDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<ReviewDTO>> call, Response<ArrayList<ReviewDTO>> response) {
-                LogHelper.inform(this, new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<ReviewDTO>> call, Throwable t) {
-                LogHelper.error(this, t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -214,13 +208,11 @@ public class RetrofitClient {
         clientService.addReview(adminId, dto).enqueue(new Callback<ResultIntDTO>() {
             @Override
             public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
-                LogHelper.inform(this, new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<ResultIntDTO> call, Throwable t) {
-                LogHelper.error(this, t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -234,13 +226,11 @@ public class RetrofitClient {
         clientService.getNewAdmins().enqueue(new Callback<ArrayList<NewAdminDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<NewAdminDTO>> call, Response<ArrayList<NewAdminDTO>> response) {
-                LogHelper.inform(this, "getNewAdmins", new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<NewAdminDTO>> call, Throwable t) {
-                LogHelper.error(this, "getNewAdmins", t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -256,13 +246,11 @@ public class RetrofitClient {
         clientService.getAdminInformation(adminId, adminType).enqueue(new Callback<AdminDTO>() {
             @Override
             public void onResponse(Call<AdminDTO> call, Response<AdminDTO> response) {
-                LogHelper.inform(this, "getAdminInformation", new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<AdminDTO> call, Throwable t) {
-                LogHelper.error(this, "getAdminInformation", t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -272,13 +260,11 @@ public class RetrofitClient {
         clientService.getAdminReviews(adminId, adminType).enqueue(new Callback<ArrayList<ReviewDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<ReviewDTO>> call, Response<ArrayList<ReviewDTO>> response) {
-                LogHelper.inform(this, "getAdminReviews", new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<ReviewDTO>> call, Throwable t) {
-                LogHelper.error(this, "getAdminReviews", t.getMessage());
                 dataReceiver.onFail();
             }
         });

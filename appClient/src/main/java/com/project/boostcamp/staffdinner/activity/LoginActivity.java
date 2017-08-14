@@ -1,20 +1,13 @@
 package com.project.boostcamp.staffdinner.activity;
 
-import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -41,10 +34,9 @@ import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
-import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.dialog.MyProgressDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
-import com.project.boostcamp.publiclibrary.util.LogHelper;
+import com.project.boostcamp.publiclibrary.util.Logger;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.R;
 
@@ -58,9 +50,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * 로그인을 하는 액티비티입니다
@@ -275,14 +264,14 @@ public class LoginActivity extends AppCompatActivity {
     private OnCompleteListener<AuthResult> onSignInComplete = new OnCompleteListener<AuthResult>() {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
-            LogHelper.inform(this, "onComplete", "");
+            Logger.i(this, "onComplete", "");
             if(task.isSuccessful()) {
-                LogHelper.inform(this, "onComplete", "isSuccessful");
+                Logger.i(this, "onComplete", "isSuccessful");
                 id = task.getResult().getUser().getUid();
                 type = AccountType.TYPE_EMAIL;
                 checkAlreadyJoined();
             } else {
-                LogHelper.inform(this, "onComplete", "isNotSuccessful");
+                Logger.i(this, "onComplete", "isNotSuccessful");
                 Snackbar.make(getWindow().getDecorView().getRootView(), R.string.not_exist_email_or_password, Snackbar.LENGTH_LONG).show();
                 progressDialog.dismiss();
             }

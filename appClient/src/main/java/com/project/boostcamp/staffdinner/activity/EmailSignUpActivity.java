@@ -1,11 +1,9 @@
 package com.project.boostcamp.staffdinner.activity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,23 +12,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.dialog.MyProgressDialog;
-import com.project.boostcamp.publiclibrary.domain.LoginDTO;
-import com.project.boostcamp.publiclibrary.util.LogHelper;
-import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
+import com.project.boostcamp.publiclibrary.util.Logger;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.staffdinner.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * 이메일로 회원가입을 시작하기 위해서 이메일과 비밀번호를 입력받는 액티비티
@@ -83,12 +74,12 @@ public class EmailSignUpActivity extends AppCompatActivity {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
-                    LogHelper.inform(this, "createUserWithEmailAndPassword", "complete");
+                    Logger.i(this, "createUserWithEmailAndPassword", "complete");
                     if(task.isSuccessful()) {
                         id = task.getResult().getUser().getUid();
                         moveJoinActivity();
                     } else {
-                        LogHelper.inform(this, "createUserWithEmailAndPassword", task.getException().getMessage());
+                        Logger.i(this, "createUserWithEmailAndPassword", task.getException().getMessage());
                     }
                 }
             });

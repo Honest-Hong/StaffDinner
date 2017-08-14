@@ -2,6 +2,7 @@ package com.project.boostcamp.publiclibrary.api;
 
 import android.util.Log;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.project.boostcamp.publiclibrary.domain.AdminApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.AdminEstimateDTO;
@@ -10,16 +11,16 @@ import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
-import com.project.boostcamp.publiclibrary.util.LogHelper;
-import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
+import com.project.boostcamp.publiclibrary.util.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,6 +45,9 @@ public class RetrofitAdmin {
 
     public RetrofitAdmin() {
         retrofit = new Retrofit.Builder()
+                .client(new OkHttpClient().newBuilder()
+                        .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                        .addNetworkInterceptor(new StethoInterceptor()).build())
                 .baseUrl("http://52.78.76.86:3000/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -57,13 +61,11 @@ public class RetrofitAdmin {
         adminService.login(dto).enqueue(new Callback<LoginDTO>() {
             @Override
             public void onResponse(Call<LoginDTO> call, Response<LoginDTO> response) {
-                LogHelper.inform(this, "admin login", new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<LoginDTO> call, Throwable t) {
-                LogHelper.error(this, "admin login", t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -73,13 +75,11 @@ public class RetrofitAdmin {
         adminService.join(dto).enqueue(new Callback<LoginDTO>() {
             @Override
             public void onResponse(Call<LoginDTO> call, Response<LoginDTO> response) {
-                Log.d("HTJ", "join onResponse: " + response.body());
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<LoginDTO> call, Throwable t) {
-                Log.e("HTJ", "join onFailure: " + t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -103,13 +103,11 @@ public class RetrofitAdmin {
         adminService.getEstimate(id).enqueue(new Callback<ArrayList<AdminEstimateDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<AdminEstimateDTO>> call, Response<ArrayList<AdminEstimateDTO>> response) {
-                Log.d("HTJ", "admin getApplications estimate list on response: " + new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<AdminEstimateDTO>> call, Throwable t) {
-                Log.e("HTJ", "RetrofitAdmin-getEstimates-onFailure: " + t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -119,13 +117,11 @@ public class RetrofitAdmin {
         adminService.getContacts(id).enqueue(new Callback<ArrayList<ContactDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<ContactDTO>> call, Response<ArrayList<ContactDTO>> response) {
-                Log.d("HTJ", "getContacts onResponse: " + new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<ArrayList<ContactDTO>> call, Throwable t) {
-                Log.e("HTJ", "getContacts onFailure: " + t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -138,13 +134,11 @@ public class RetrofitAdmin {
         adminService.setImage(id, type, body).enqueue(new Callback<ResultIntDTO>() {
             @Override
             public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
-                Log.d("HTJ", "[Admin] setImage onResponse: " + new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 
             @Override
             public void onFailure(Call<ResultIntDTO> call, Throwable t) {
-                Log.d("HTJ", "[Admin] setImage onFailure: " + t.getMessage());
                 dataReceiver.onFail();
             }
         });
@@ -154,7 +148,6 @@ public class RetrofitAdmin {
         adminService.existEstimate(id, appId).enqueue(new Callback<ResultIntDTO>() {
             @Override
             public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
-                Log.d("HTJ", "[Admin] existEstimate onResponse: " + new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 

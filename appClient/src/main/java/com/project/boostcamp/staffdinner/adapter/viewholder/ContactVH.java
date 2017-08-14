@@ -2,6 +2,7 @@ package com.project.boostcamp.staffdinner.adapter.viewholder;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
@@ -19,6 +20,7 @@ import butterknife.ButterKnife;
 
 public class ContactVH extends BaseVH<ContactDTO> implements View.OnClickListener {
     private Context context;
+    @BindView(R.id.frame_cloud) FrameLayout frameCloud;
     @BindView(R.id.text_client) TextView textClient;
     @BindView(R.id.text_admin) TextView textAdmin;
     @BindView(R.id.text_application_time) TextView textApplicationTime;
@@ -44,6 +46,13 @@ public class ContactVH extends BaseVH<ContactDTO> implements View.OnClickListene
         textEstimateTime.setText(estimateTime);
         String contactTime = TimeHelper.getTimeString(data.getContactTime(), context.getString(R.string.default_time_pattern));
         textContactTime.setText(contactTime);
+
+        final long oneDay = 24 * 60 * 60 * 1000;
+        if(System.currentTimeMillis() - data.getContactTime() < oneDay) {
+            frameCloud.setVisibility(View.GONE);
+        } else {
+            frameCloud.setVisibility(View.VISIBLE);
+        }
     }
 
     public void onClick(View view) {

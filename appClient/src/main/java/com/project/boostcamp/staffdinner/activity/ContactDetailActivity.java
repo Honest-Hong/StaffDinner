@@ -1,6 +1,7 @@
 package com.project.boostcamp.staffdinner.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -177,4 +178,11 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
             Toast.makeText(ContactDetailActivity.this, "리뷰 실패!", Toast.LENGTH_SHORT).show();
         }
     };
+
+    @OnClick(R.id.text_admin_phone)
+    public void redirectDial() {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + contact.getAdminPhone()));
+        startActivity(intent);
+    }
 }

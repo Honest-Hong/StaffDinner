@@ -1,6 +1,7 @@
 package com.project.boostcamp.staffdinner.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +27,12 @@ import com.project.boostcamp.staffdinner.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+/**
+ * 식당의 자세한 정보를 보여주는 액티비티
+ * 식당에 달린 리뷰도 확인이 가능하다
+ */
 
 public class AdminDetailActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
     @BindView(R.id.image_view) ImageView imageView;
@@ -117,5 +124,12 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
         intentMap.putExtra(ExtraType.EXTRA_LONGITUDE, latLng.longitude);
         intentMap.putExtra(ExtraType.EXTRA_READ_ONLY, true);
         startActivity(intentMap);
+    }
+
+    @OnClick(R.id.text_phone)
+    public void redirectDial() {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + data.getPhone()));
+        startActivity(intent);
     }
 }

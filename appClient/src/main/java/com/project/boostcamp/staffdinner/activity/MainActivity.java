@@ -46,6 +46,7 @@ import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.inter.GuidePlayer;
 import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
+import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.MainViewPagerAdapter;
 import com.project.boostcamp.staffdinner.fragment.ApplicationFragment;
@@ -428,7 +429,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         TextView textName = (TextView) v.findViewById(R.id.text_name);
         TextView textPhone = (TextView) v.findViewById(R.id.text_phone);
         textName.setText(name);
-        textPhone.setText(phone);
+        textPhone.setText(StringHelper.toPhoneNumber(phone));
     }
 
     /**

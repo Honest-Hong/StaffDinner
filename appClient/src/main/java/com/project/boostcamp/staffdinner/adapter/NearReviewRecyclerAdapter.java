@@ -10,7 +10,7 @@ import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.object.BaseVH;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.viewholder.EmptyVH;
-import com.project.boostcamp.staffdinner.adapter.viewholder.NearReviewVH;
+import com.project.boostcamp.staffdinner.adapter.viewholder.ReviewVH;
 
 import java.util.ArrayList;
 
@@ -35,6 +35,9 @@ public class NearReviewRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
 
     public void setData(ArrayList<ReviewDTO> data) {
         this.data = data;
+        if(this.data == null) {
+            this.data = new ArrayList<>();
+        }
         if(this.data.size() == 0) {
             ReviewDTO dto = new ReviewDTO();
             dto.setViewType(-1);
@@ -46,9 +49,9 @@ public class NearReviewRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
     @Override
     public BaseVH onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == 0) {
-            return new NearReviewVH(context, LayoutInflater.from(context).inflate(R.layout.item_review, parent, false), dataEvent);
+            return new ReviewVH(context, LayoutInflater.from(context).inflate(R.layout.item_review, parent, false), dataEvent);
         } else {
-            return EmptyVH.horizontal(parent, context.getString(R.string.not_exist_near_review));
+            return EmptyVH.horizontal(parent, context.getString(R.string.not_exist_review));
         }
     }
 

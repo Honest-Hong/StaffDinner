@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
 import com.project.boostcamp.publiclibrary.inter.ReviewListener;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
+import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.publiclibrary.util.TimeHelper;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.dialog.WriteReviewDialog;
@@ -79,12 +81,12 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         textAdmin.setText(contact.getAdminName());
         textClient.setText(getString(R.string.user_name, contact.getClientName()));
         textContactTime.setText(TimeHelper.getTimeString(contact.getContactTime(), getString(R.string.default_time_pattern)));
-        textClientPhone.setText(contact.getClientPhone());
+        textClientPhone.setText(StringHelper.toPhoneNumber(contact.getClientPhone()));
         textApplicationNumber.setText(getString(R.string.person_number, contact.getAppNumber()));
         textApplicationLocation.setText(GeocoderHelper.getAddress(this, contact.getAppGeo().toLatLng()));
         textApplicationTime.setText(TimeHelper.getTimeString(contact.getAppTime(), getString(R.string.default_time_pattern)));
         textAdminLocation.setText(GeocoderHelper.getAddress(this, contact.getAdminGeo().toLatLng()));
-        textAdminPhone.setText(contact.getAdminPhone());
+        textAdminPhone.setText(StringHelper.toPhoneNumber(contact.getAdminPhone()));
         textEstimateTime.setText(TimeHelper.getTimeString(contact.getEstimateTime(), getString(R.string.default_time_pattern)));
         textEstimateMessage.setText(contact.getEstimateMessage());
 
@@ -179,10 +181,14 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         }
     };
 
-    @OnClick(R.id.text_admin_phone)
-    public void redirectDial() {
+    @OnClick({R.id.text_admin_phone, R.id.text_client_phone})
+    public void redirectDial(View v) {
         Intent intent = new Intent(Intent.ACTION_DIAL);
-        intent.setData(Uri.parse("tel:" + contact.getAdminPhone()));
+        if(v.getId() == R.id.text_client_phone) {
+            intent.setData(Uri.parse("tel:" + contact.getClientPhone()));
+        } else {
+            intent.setData(Uri.parse("tel:" + contact.getAdminPhone()));
+        }
         startActivity(intent);
     }
 }

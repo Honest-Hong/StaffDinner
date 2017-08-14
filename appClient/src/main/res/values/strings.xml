@@ -98,7 +98,7 @@
     <string name="hour">시</string>
     <string name="minute">분</string>
     <string name="not_exist_near_admin">근처에 식당이 없어요!</string>
-    <string name="not_exist_near_review">근처에 리뷰가 없네요!</string>
+    <string name="not_exist_review">리뷰가 아직 없네요!</string>
     <string name="not_exist_estimate">아직 도착한 견적서가 없어요!</string>
     <string name="not_exist_contact">계약하신 내역이 없습니다</string>
     <string name="login_by_kakao">카카오 계정으로 로그인</string>
@@ -115,4 +115,5 @@
     <string name="login">로그인</string>
     <string name="not_exist_email_or_password">일치하는 이메일이 존재하지 않거나 비밀번호가 틀렸습니다</string>
     <string name="waiting_please">잠시만 기다려주세요</string>
+    <string name="review">리뷰</string>
 </resources>

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -20,10 +22,16 @@ import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.domain.AdminDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
+import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
+import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.staffdinner.GlideApp;
 import com.project.boostcamp.staffdinner.R;
+import com.project.boostcamp.staffdinner.adapter.NearReviewRecyclerAdapter;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +50,8 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
     @BindView(R.id.text_menu) TextView textMenu;
     @BindView(R.id.text_cost) TextView textCost;
     @BindView(R.id.text_location) TextView textLocation;
+    @BindView(R.id.recycler_view_review) RecyclerView recyclerReview;
+    private NearReviewRecyclerAdapter reviewRecyclerAdapter;
     private String adminId;
     private int adminType;
     private AdminDTO data;
@@ -61,32 +71,63 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
         adminId = getIntent().getStringExtra(ExtraType.EXTRA_LOGIN_ID);
         adminType = getIntent().getIntExtra(ExtraType.EXTRA_LOGIN_TYPE, -1);
 
-        RetrofitClient.getInstance().getAdminInformation(adminId, adminType, dataReceiver);
+        RetrofitClient.getInstance().getAdminInformation(adminId, adminType, detailDataReceiver);
+        RetrofitClient.getInstance().getAdminReviews(adminId, adminType, reviewDataReceiver);
     }
 
-    private DataReceiver<AdminDTO> dataReceiver = new DataReceiver<AdminDTO>() {
+    private DataReceiver<AdminDTO> detailDataReceiver = new DataReceiver<AdminDTO>() {
         @Override
         public void onReceive(AdminDTO data) {
             AdminDetailActivity.this.data = data;
-            GlideApp.with(AdminDetailActivity.this)
-                    .load(RetrofitClient.getInstance().getAdminImageUrl(adminId, adminType))
-                    .centerCrop()
-                    .into(imageView);
-            textName.setText(data.getName());
-            textPhone.setText(data.getPhone());
-            textStyle.setText(data.getStyle());
-            textMenu.setText(data.getMenu());
-            textCost.setText(getString(R.string.won, data.getCost()));
-            textLocation.setText(GeocoderHelper.getAddress(AdminDetailActivity.this, data.getGeo().toLatLng()));
-
-            SupportMapFragment map = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-            map.getMapAsync(AdminDetailActivity.this);
+            setupView(data);
         }
 
         @Override
         public void onFail() {
             Toast.makeText(AdminDetailActivity.this, "Data loading error", Toast.LENGTH_SHORT).show();
             finish();
+        }
+    };
+
+    private DataReceiver<ArrayList<ReviewDTO>> reviewDataReceiver = new DataReceiver<ArrayList<ReviewDTO>>() {
+        @Override
+        public void onReceive(ArrayList<ReviewDTO> data) {
+            setupReview(data);
+        }
+
+        @Override
+        public void onFail() {
+            setupReview(new ArrayList<ReviewDTO>());
+        }
+    };
+
+    private void setupView(AdminDTO data) {
+        GlideApp.with(AdminDetailActivity.this)
+                .load(RetrofitClient.getInstance().getAdminImageUrl(adminId, adminType))
+                .centerCrop()
+                .into(imageView);
+        textName.setText(data.getName());
+        textPhone.setText(StringHelper.toPhoneNumber(data.getPhone()));
+        textStyle.setText(data.getStyle());
+        textMenu.setText(data.getMenu());
+        textCost.setText(getString(R.string.won, data.getCost()));
+        textLocation.setText(GeocoderHelper.getAddress(AdminDetailActivity.this, data.getGeo().toLatLng()));
+
+        SupportMapFragment map = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        map.getMapAsync(AdminDetailActivity.this);
+    }
+
+    private void setupReview(ArrayList<ReviewDTO> data) {
+        reviewRecyclerAdapter = new NearReviewRecyclerAdapter(this, reviewEvent);
+        reviewRecyclerAdapter.setData(data);
+        recyclerReview.setHasFixedSize(true);
+        recyclerReview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerReview.setAdapter(reviewRecyclerAdapter);
+    }
+
+    private DataEvent<ReviewDTO> reviewEvent = new DataEvent<ReviewDTO>() {
+        @Override
+        public void onClick(ReviewDTO data) {
         }
     };
 

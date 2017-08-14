@@ -246,6 +246,12 @@ public class RetrofitClient {
         });
     }
 
+    /**
+     * 식당 정보 요청
+     * @param adminId 식당 아이디
+     * @param adminType 식당 아이디 타입
+     * @param dataReceiver 데이터 결과 리스너
+     */
     public void getAdminInformation(String adminId, int adminType, final DataReceiver<AdminDTO> dataReceiver) {
         clientService.getAdminInformation(adminId, adminType).enqueue(new Callback<AdminDTO>() {
             @Override
@@ -257,6 +263,22 @@ public class RetrofitClient {
             @Override
             public void onFailure(Call<AdminDTO> call, Throwable t) {
                 LogHelper.error(this, "getAdminInformation", t.getMessage());
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    public void getAdminReviews(String adminId, int adminType, final DataReceiver<ArrayList<ReviewDTO>> dataReceiver) {
+        clientService.getAdminReviews(adminId, adminType).enqueue(new Callback<ArrayList<ReviewDTO>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ReviewDTO>> call, Response<ArrayList<ReviewDTO>> response) {
+                LogHelper.inform(this, "getAdminReviews", new Gson().toJson(response.body()));
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ReviewDTO>> call, Throwable t) {
+                LogHelper.error(this, "getAdminReviews", t.getMessage());
                 dataReceiver.onFail();
             }
         });

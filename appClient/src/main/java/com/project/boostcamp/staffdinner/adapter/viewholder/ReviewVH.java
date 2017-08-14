@@ -18,14 +18,14 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
  * Created by Hong Tae Joon on 2017-08-11.
  */
 
-public class NearReviewVH extends BaseVH<ReviewDTO> {
+public class ReviewVH extends BaseVH<ReviewDTO> {
     private Context context;
     @BindView(R.id.text_writer) TextView textWriter;
     @BindView(R.id.text_receiver) TextView textReceiver;
     @BindView(R.id.text_content) TextView textContent;
     @BindView(R.id.text_time) TextView textTime;
     @BindView(R.id.rating_bar) MaterialRatingBar ratingBar;
-    public NearReviewVH(Context context, View itemView, final DataEvent<ReviewDTO> dataEvent) {
+    public ReviewVH(Context context, View itemView, final DataEvent<ReviewDTO> dataEvent) {
         super(itemView, dataEvent);
         this.context = context;
         ButterKnife.bind(this, itemView);

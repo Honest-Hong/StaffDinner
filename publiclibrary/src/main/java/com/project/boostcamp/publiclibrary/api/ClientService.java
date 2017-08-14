@@ -1,6 +1,7 @@
 package com.project.boostcamp.publiclibrary.api;
 
 import com.project.boostcamp.publiclibrary.domain.AdminDTO;
+import com.project.boostcamp.publiclibrary.domain.AdminDetailDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
@@ -141,6 +142,18 @@ public interface ClientService {
     @GET("/admin/new")
     Call<ArrayList<NewAdminDTO>> getNewAdmins();
 
+    /**
+     * 식당 정보 요청
+     * @param id 식당 아이디
+     * @param type 식당 아이디 타입
+     * @return 식당 정보
+     */
     @GET("/admin/{id}/information")
     Call<AdminDTO> getAdminInformation(@Path("id") String id, @Query("type") int type);
+
+    /**
+     *
+     */
+    @GET("/admin/{id}/review")
+    Call<ArrayList<ReviewDTO>> getAdminReviews(@Path("id") String id, @Query("type") int type);
 }

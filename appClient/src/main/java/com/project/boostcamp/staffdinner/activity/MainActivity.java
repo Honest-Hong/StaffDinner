@@ -437,7 +437,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
      */
     @Override
     public void onNewReview() {
-        viewPager.setCurrentItem(0);
         HomeFragment fragment = (HomeFragment) getSupportFragmentManager().getFragments().get(1);
         fragment.onNewReview();
     }

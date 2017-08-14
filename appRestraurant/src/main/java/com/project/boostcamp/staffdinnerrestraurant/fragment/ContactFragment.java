@@ -85,6 +85,9 @@ public class ContactFragment extends Fragment {
     private DataReceiver<ArrayList<ContactDTO>> dataReceiver = new DataReceiver<ArrayList<ContactDTO>>() {
         @Override
         public void onReceive(ArrayList<ContactDTO> data) {
+            if(data == null) {
+                data = new ArrayList<>();
+            }
             if(data.size() == 0) {
                 viewEmpty.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);

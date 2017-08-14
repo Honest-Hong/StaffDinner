@@ -49,13 +49,12 @@ public interface AdminService {
 
     /**
      * 위치기반 근처 신청서 요청
-     * @param latitude 위도
-     * @param longitude 경도
+     * @param id 로그인 아이디
      * @param distance 최대 거리
      * @return 근접 신청서 배열
      */
-    @GET("/application/location")
-    Call<List<AdminApplicationDTO>> get(@Query("latitude") double latitude, @Query("longitude") double longitude, @Query("distance") float distance);
+    @GET("/admin/{id}/application")
+    Call<ArrayList<AdminApplicationDTO>> getApplications(@Path("id") String id, @Query("distance") float distance);
 
     /**
      * 토큰 최신화 요청

@@ -18,6 +18,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
+import com.project.boostcamp.publiclibrary.dialog.MyProgressDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
@@ -40,7 +41,7 @@ public class EmailSignUpActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private String id;
     private final int type = AccountType.TYPE_EMAIL;
-    private ProgressDialog progressDialog;
+    private MyProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,35 +62,23 @@ public class EmailSignUpActivity extends AppCompatActivity {
 
     /**
      * 다음 버튼을 클릭했을 때 이메일로 가입하기를 진행한다.
-     * 이메일과 패스워드가 유효한 값인지를 먼저 판단한다.
-     * 파이어베이스에 이미 가입이 되어있으면 서버에 회원정보가 있는지 확인한 후에 다음으로 진행한다
-     * 가입이 되어있지 않으면 파이어베이스에 가입을 시킨후 회원가입으로 넘어간다
+     * 파이어베이스에 가입을 시킨후 회원가입으로 넘어간다
      */
     @OnClick(R.id.button_next)
     public void doEmailSignUp() {
         if(checkValidate()) {
-            progressDialog = ProgressDialog.show(this, "", "잠시만 기다려주세요");
+            progressDialog = MyProgressDialog.show(getSupportFragmentManager());
             final String email = editEmail.getText().toString();
             final String password = editPassword.getText().toString();
-            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                    Log.d("HTJ", "doEmailSignUp-onComplete!");
                     if(task.isSuccessful()) {
                         id = task.getResult().getUser().getUid();
-                        checkAlreadyJoined();
+                        moveJoinActivity();
                     } else {
-                        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Log.d("HTJ", "doEmailSignUp-onComplete!");
-                                if(task.isSuccessful()) {
-                                    id = task.getResult().getUser().getUid();
-                                    moveJoinActivity();
-                                } else {
-                                    Log.d("HTJ", "doEmailSignUp warning: " + task.getException());
-                                }
-                            }
-                        });
+                        Log.d("HTJ", "doEmailSignUp warning: " + task.getException());
                     }
                 }
             });
@@ -110,39 +99,6 @@ public class EmailSignUpActivity extends AppCompatActivity {
             return false;
         }
         return true;
-    }
-
-    /**
-     * 서버에 회원정보가 등록되어있는지 확인하는 함수
-     * 등록되어있으면 로그인 정보를 로컬에 저장하고 메인으로 넘어간다
-     * 그렇지 않으면 회원가입 화면으로 넘어간다
-     */
-    private void checkAlreadyJoined() {
-        LoginDTO dto = new LoginDTO();
-        dto.setId(id);
-        dto.setType(type);
-        RetrofitAdmin.getInstance().adminService.login(dto).enqueue(new Callback<LoginDTO>() {
-            @Override
-            public void onResponse(Call<LoginDTO> call, Response<LoginDTO> response) {
-                Log.d("HTJ", "login onResponse: " + response.body());
-                LoginDTO dto = response.body();
-                if(dto.getId() == null) {
-                    moveJoinActivity();
-                } else {
-                    RetrofitAdmin.getInstance().refreshToken(dto.getId(), dto.getType(), FirebaseInstanceId.getInstance().getToken());
-                    SharedPreperenceHelper.getInstance(EmailSignUpActivity.this).saveLogin(dto);
-                    Intent intent = new Intent(EmailSignUpActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginDTO> call, Throwable t) {
-                Log.e("HTJ", "login onFailure: " + t.getMessage());
-            }
-        });
     }
 
     /**

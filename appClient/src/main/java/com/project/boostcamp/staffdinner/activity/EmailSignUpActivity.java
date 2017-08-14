@@ -112,39 +112,6 @@ public class EmailSignUpActivity extends AppCompatActivity {
     }
 
     /**
-     * 서버에 회원정보가 등록되어있는지 확인하는 함수
-     * 등록되어있으면 로그인 정보를 로컬에 저장하고 메인으로 넘어간다
-     * 그렇지 않으면 회원가입 화면으로 넘어간다
-     */
-    private void checkAlreadyJoined() {
-        LoginDTO dto = new LoginDTO();
-        dto.setId(id);
-        dto.setType(type);
-        RetrofitClient.getInstance().clientService.login(dto).enqueue(new Callback<LoginDTO>() {
-            @Override
-            public void onResponse(Call<LoginDTO> call, Response<LoginDTO> response) {
-                Log.d("HTJ", "login onResponse: " + response.body());
-                LoginDTO dto = response.body();
-                if(dto.getId() == null) {
-                    moveJoinActivity();
-                } else {
-                    RetrofitClient.getInstance().refreshToken(dto.getId(), dto.getType(), FirebaseInstanceId.getInstance().getToken());
-                    SharedPreperenceHelper.getInstance(EmailSignUpActivity.this).saveLogin(dto);
-                    Intent intent = new Intent(EmailSignUpActivity.this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    finish();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginDTO> call, Throwable t) {
-                Log.e("HTJ", "login onFailure: " + t.getMessage());
-            }
-        });
-    }
-
-    /**
      * 회원가입 화면으로 이동하는 함수
      */
     private void moveJoinActivity() {

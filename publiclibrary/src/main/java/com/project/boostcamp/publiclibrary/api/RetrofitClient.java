@@ -96,7 +96,7 @@ public class RetrofitClient {
 
             @Override
             public void onFailure(Call<ArrayList<ClientEstimateDTO>> call, Throwable t) {
-                Log.e("HTJ", "Fail to client get estimate list: " + t.getMessage());
+                Log.e("HTJ", "Fail to client getApplications estimate list: " + t.getMessage());
                 dataReceiver.onFail();
             }
         });

@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.AdminApplication;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
@@ -75,45 +76,48 @@ public class ApplicationFragment extends Fragment {
 
     public void loadData() {
         showRefreshing();
-        GeoDTO geo = SharedPreperenceHelper.getInstance(getContext()).getGeo();
-        RetrofitAdmin.getInstance().adminService.get(geo.getCoordinates()[1], geo.getCoordinates()[0], MAX_DISTANCE).enqueue(new Callback<List<AdminApplicationDTO>>() {
-            @Override
-            public void onResponse(Call<List<AdminApplicationDTO>> call, Response<List<AdminApplicationDTO>> response) {
-                Log.d("HTJ", "ApplicationFragment-loadData-onResponse: " + response.body());
-                ArrayList<AdminApplication> arr = new ArrayList<AdminApplication>();
-                for(AdminApplicationDTO dto : response.body()) {
-                    AdminApplication app = new AdminApplication();
-                    app.setId(dto.get_id());
-                    app.setWriterName(dto.getClient().getName());
-                    app.setTitle(dto.getTitle());
-                    app.setNumber(dto.getNumber());
-                    app.setTime(dto.getTime());
-                    app.setDistance(dto.getDistance());
-                    app.setGeo(dto.getGeo().toGeo());
-                    app.setStyle(dto.getStyle());
-                    app.setMenu(dto.getMenu());
-                    app.setWritedTime(dto.getWritedTime());
-                    arr.add(app);
-                }
-                // 데이터가 존재하면 보여주고 존재하지 않으면 데이터가 없다는 것을 표시해줌
-                if(arr.size() > 0) {
-                    viewEmpty.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                } else {
-                    viewEmpty.setVisibility(View.VISIBLE);
-                    recyclerView.setVisibility(View.GONE);
-                }
-                hideRefreshing();
-                adapter.setData(arr);
-            }
-
-            @Override
-            public void onFailure(Call<List<AdminApplicationDTO>> call, Throwable t) {
-                hideRefreshing();
-                Log.e("HTJ", "ApplicationFragment-loadData-onFailure: " + t.getMessage());
-            }
-        });
+        String id = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
+        RetrofitAdmin.getInstance().getApplicationList(id, 3, appDataReceiver);
     }
+
+    private DataReceiver<ArrayList<AdminApplicationDTO>> appDataReceiver = new DataReceiver<ArrayList<AdminApplicationDTO>>() {
+        @Override
+        public void onReceive(ArrayList<AdminApplicationDTO> data) {
+            if(data == null) {
+                data = new ArrayList<>();
+            }
+            ArrayList<AdminApplication> arr = new ArrayList<AdminApplication>();
+            for(AdminApplicationDTO dto : data) {
+                AdminApplication app = new AdminApplication();
+                app.setId(dto.get_id());
+                app.setWriterName(dto.getClient().getName());
+                app.setTitle(dto.getTitle());
+                app.setNumber(dto.getNumber());
+                app.setTime(dto.getTime());
+                app.setDistance(dto.getDistance());
+                app.setGeo(dto.getGeo().toGeo());
+                app.setStyle(dto.getStyle());
+                app.setMenu(dto.getMenu());
+                app.setWritedTime(dto.getWritedTime());
+                arr.add(app);
+            }
+            // 데이터가 존재하면 보여주고 존재하지 않으면 데이터가 없다는 것을 표시해줌
+            if(arr.size() > 0) {
+                viewEmpty.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            } else {
+                viewEmpty.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            }
+            hideRefreshing();
+            adapter.setData(arr);
+        }
+
+        @Override
+        public void onFail() {
+            hideRefreshing();
+        }
+    };
 
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override

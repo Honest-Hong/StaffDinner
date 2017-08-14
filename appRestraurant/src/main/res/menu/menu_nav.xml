@@ -1,9 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/nav_account"
-        android:title="@string/nav_account" />
-    <item
-        android:id="@+id/nav_logout"
-        android:title="@string/nav_logout" />
+    <group>
+        <item
+            android:title="@string/account">
+            <menu>
+                <item
+                    android:id="@+id/nav_account"
+                    android:title="@string/nav_account"
+                    android:icon="@drawable/ic_account_grey"/>
+                <item
+                    android:id="@+id/nav_logout"
+                    android:title="@string/nav_logout"
+                    android:icon="@drawable/ic_arrow_back_grey"/>
+            </menu>
+        </item>
+    </group>
+
+    <group>
+        <item
+            android:title="@string/general">
+            <menu>
+                <item
+                    android:id="@+id/nav_settings"
+                    android:title="@string/app_settings"
+                    android:icon="@drawable/ic_settings_grey"/>
+                <item
+                    android:id="@+id/nav_help"
+                    android:title="@string/help"
+                    android:icon="@drawable/ic_help_grey"/>
+            </menu>
+        </item>
+    </group>
 </menu>

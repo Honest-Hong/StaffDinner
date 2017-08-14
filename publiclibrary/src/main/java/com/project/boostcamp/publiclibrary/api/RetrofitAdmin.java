@@ -3,12 +3,14 @@ package com.project.boostcamp.publiclibrary.api;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.project.boostcamp.publiclibrary.domain.AdminApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.AdminEstimateDTO;
 import com.project.boostcamp.publiclibrary.domain.AdminJoinDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
+import com.project.boostcamp.publiclibrary.util.LogHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 
 import java.io.File;
@@ -48,6 +50,25 @@ public class RetrofitAdmin {
         adminService = retrofit.create(AdminService.class);
     }
 
+    public void login(String id, int type, final DataReceiver<LoginDTO> dataReceiver) {
+        LoginDTO dto = new LoginDTO();
+        dto.setId(id);
+        dto.setType(type);
+        adminService.login(dto).enqueue(new Callback<LoginDTO>() {
+            @Override
+            public void onResponse(Call<LoginDTO> call, Response<LoginDTO> response) {
+                LogHelper.inform(this, "admin login", new Gson().toJson(response.body()));
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<LoginDTO> call, Throwable t) {
+                LogHelper.error(this, "admin login", t.getMessage());
+                dataReceiver.onFail();
+            }
+        });
+    }
+
     public void join(AdminJoinDTO dto, final DataReceiver<LoginDTO> dataReceiver) {
         adminService.join(dto).enqueue(new Callback<LoginDTO>() {
             @Override
@@ -64,11 +85,25 @@ public class RetrofitAdmin {
         });
     }
 
+    public void getApplicationList(String id, int distance, final DataReceiver<ArrayList<AdminApplicationDTO>> dataReceiver) {
+        adminService.getApplications(id, distance).enqueue(new Callback<ArrayList<AdminApplicationDTO>>() {
+            @Override
+            public void onResponse(Call<ArrayList<AdminApplicationDTO>> call, Response<ArrayList<AdminApplicationDTO>> response) {
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<AdminApplicationDTO>> call, Throwable t) {
+                dataReceiver.onFail();
+            }
+        });
+    }
+
     public void getEstimateList(String id, final DataReceiver<ArrayList<AdminEstimateDTO>> dataReceiver) {
         adminService.getEstimate(id).enqueue(new Callback<ArrayList<AdminEstimateDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<AdminEstimateDTO>> call, Response<ArrayList<AdminEstimateDTO>> response) {
-                Log.d("HTJ", "admin get estimate list on response: " + new Gson().toJson(response.body()));
+                Log.d("HTJ", "admin getApplications estimate list on response: " + new Gson().toJson(response.body()));
                 dataReceiver.onReceive(response.body());
             }
 

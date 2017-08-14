@@ -54,7 +54,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:text="@string/email_sign_up_password"
-        android:textColor="@color/whiteOrange"
+        android:textColor="@color/white"
         android:textSize="@dimen/fontSmall"/>
 
     <EditText
@@ -84,7 +84,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:text="@string/email_sign_up_password_confirm"
-        android:textColor="@color/whiteOrange"
+        android:textColor="@color/white"
         android:textSize="@dimen/fontSmall"/>
 
     <EditText

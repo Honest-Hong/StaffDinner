@@ -179,8 +179,17 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             });
         } else if(loginType == AccountType.TYPE_FACEBOOK) {
             LoginManager.getInstance().logOut();
-            finish();
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        }
+        finish();
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
         }
     }
 }

@@ -160,6 +160,6 @@
         android:layout_gravity="end"
         android:textSize="@dimen/fontNormal"
         android:textColor="@color/colorPrimary"
-        android:background="@color/white"
+        android:background="@drawable/background_bottom_button"
         android:text="@string/text_start_contact"/>
 </LinearLayout>

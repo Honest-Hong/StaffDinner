@@ -2,6 +2,7 @@ package com.project.boostcamp.staffdinner.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -172,7 +173,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         @Override
         public void onReceive(ResultIntDTO data) {
             setResult(RESULT_OK);
-            finish();
+            Snackbar.make(getWindow().getDecorView().getRootView(), R.string.thanks_to_review, Snackbar.LENGTH_LONG).show();
         }
 
         @Override

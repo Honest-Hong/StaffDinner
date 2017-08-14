@@ -96,4 +96,15 @@
     <string name="fail_to_load_estimates">견적서 목록을 불러오는데 실패하였습니다</string>
     <string name="fail_to_load_contacts">계약서 목록을 불러오는데 실패하여 기존 목록을 가져옵니다</string>
     <string name="nav_account">계정 설정</string>
+    <string name="email">이메일</string>
+    <string name="password">비밀번호</string>
+    <string name="login">로그인</string>
+    <string name="login_email">일반 이메일로 로그인</string>
+    <string name="login_by_facebook">페이스북으로 로그인</string>
+    <string name="login_by_kakao">카카오 계정으로 로그인</string>
+    <string name="not_exist_email_or_password">일치하는 이메일이 존재하지 않거나 비밀번호가 틀렸습니다</string>
+    <string name="account">계정</string>
+    <string name="general">일반</string>
+    <string name="app_settings">앱 설정</string>
+    <string name="help">도움말</string>
 </resources>

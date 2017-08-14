@@ -18,6 +18,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
+import com.project.boostcamp.publiclibrary.dialog.MyProgressDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.util.LogHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
@@ -41,7 +42,7 @@ public class EmailSignUpActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private String id;
     private final int type = AccountType.TYPE_EMAIL;
-    private ProgressDialog progressDialog;
+    private MyProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +77,7 @@ public class EmailSignUpActivity extends AppCompatActivity {
     @OnClick(R.id.button_next)
     public void doEmailSignUp() {
         if(checkValidate()) {
-            progressDialog = ProgressDialog.show(this, "", getString(R.string.waiting_please));
+            progressDialog = MyProgressDialog.show(getSupportFragmentManager());
             final String email = editEmail.getText().toString();
             final String password = editPassword.getText().toString();
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {

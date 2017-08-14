@@ -42,6 +42,7 @@ import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.RequestType;
+import com.project.boostcamp.publiclibrary.dialog.MyProgressDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.util.LogHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
     private String id;
     private int type;
     private String name;
-    ProgressDialog progressDialog;
+    private MyProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -264,7 +265,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_login)
     public void doLogin() {
-        progressDialog = ProgressDialog.show(this, null, getString(R.string.waiting_please), true, false);
+        progressDialog = MyProgressDialog.show(getSupportFragmentManager());
         final String email = editEmail.getText().toString();
         final String password = editPassword.getText().toString();
         auth.signInWithEmailAndPassword(email, password)

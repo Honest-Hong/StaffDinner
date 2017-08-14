@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
@@ -20,6 +21,7 @@ import com.project.boostcamp.publiclibrary.domain.ClientJoinDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
+import com.project.boostcamp.staffdinner.GlideApp;
 import com.project.boostcamp.staffdinner.R;
 
 import butterknife.BindView;
@@ -37,6 +39,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.edit_name) EditText editName;
     @BindView(R.id.edit_phone) EditText editPhone;
     @BindView(R.id.button_join) CardView buttonJoin;
+    @BindView(R.id.image_view) ImageView imageView;
     private String id;
     private int type;
     private String name = "";
@@ -60,6 +63,10 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
      * 이전의 액티비티에서 전달받은 이름을 입력창에 표시한다.
      */
     private void setupView() {
+        GlideApp.with(this)
+                .load(R.drawable.green_background)
+                .centerCrop()
+                .into(imageView);
         rootView = getWindow().getDecorView().getRootView();
         CheckBox checkBox = (CheckBox)findViewById(R.id.check_box);
         checkBox.setOnCheckedChangeListener(this);

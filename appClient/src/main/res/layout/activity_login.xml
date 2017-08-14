@@ -1,171 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="24dp"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:background="@color/colorPrimary">
-
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+    android:background="@color/grey">
 
     <ImageView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_launcher"/>
+        android:id="@+id/image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="24dp"
-        android:text="@string/login_activity_text"
-        android:textColor="@color/white"
-        android:textSize="@dimen/fontNormal"
-        android:gravity="center"/>
-
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <TextView
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_email"
-        android:textColor="@color/white"
-        android:textSize="@dimen/fontSmall"/>
+        android:layout_gravity="center">
 
-    <EditText
-        android:id="@+id/edit_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:maxLines="1"
-        android:textSize="@dimen/fontNormal"
-        android:textColor="@color/white"
-        android:background="@drawable/background_edit_text_primary"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/password"
-        android:textColor="@color/white"
-        android:textSize="@dimen/fontSmall"/>
-
-    <EditText
-        android:id="@+id/edit_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:maxLines="1"
-        android:textSize="@dimen/fontNormal"
-        android:textColor="@color/white"
-        android:background="@drawable/background_edit_text_primary"/>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/button_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        <ImageView
+            android:id="@+id/image_logo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_launcher"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <TextView
+            android:id="@+id/text_help"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/login_activity_text"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fontNormal"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/image_logo"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingBottom="16dp"
-            android:paddingStart="32dp"
-            android:paddingEnd="32dp"
-            android:text="@string/login"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/fontNormal"/>
-    </android.support.v7.widget.CardView>
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/text_email"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fontSmall"
+            app:layout_constraintTop_toBottomOf="@id/text_help"
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <LinearLayout
-        android:id="@+id/button_kakao"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:background="@color/com_kakao_button_background_press">
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:src="@drawable/kakao_account_logo"/>
-
-        <TextView
-            android:id="@+id/textView"
+        <EditText
+            android:id="@+id/edit_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:gravity="center_vertical"
-            android:padding="8dp"
-            android:text="@string/login_by_kakao"
-            android:textColor="@color/com_kakao_brown"
-            android:textSize="@dimen/fontNormal" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/button_facebook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:background="@color/com_facebook_blue">
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:src="@drawable/com_facebook_button_icon_white"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:padding="8dp"
-            android:gravity="center_vertical"
-            android:text="@string/login_by_facebook"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
             android:textSize="@dimen/fontNormal"
-            android:textColor="@color/white"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/button_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:gravity="center"
-        android:background="@color/white">
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:src="@drawable/ic_email_green"/>
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/text_email"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
         <TextView
+            android:id="@+id/text_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/password"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fontSmall"
+            app:layout_constraintTop_toBottomOf="@id/edit_email"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <EditText
+            android:id="@+id/edit_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:padding="8dp"
-            android:gravity="center_vertical"
-            android:text="@string/login_by_email"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="textPassword"
+            android:maxLines="1"
             android:textSize="@dimen/fontNormal"
-            android:textColor="@color/colorPrimary"/>
-    </LinearLayout>
-</LinearLayout>
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/text_password"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/button_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/edit_password"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                android:text="@string/login"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/fontNormal"/>
+        </android.support.v7.widget.CardView>
+
+        <LinearLayout
+            android:id="@+id/button_kakao"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:background="@color/com_kakao_button_background_press"
+            app:layout_constraintTop_toBottomOf="@id/button_login"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:src="@drawable/kakao_account_logo"/>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:gravity="center_vertical"
+                android:padding="8dp"
+                android:text="@string/login_by_kakao"
+                android:textColor="@color/com_kakao_brown"
+                android:textSize="@dimen/fontNormal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_facebook"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:background="@color/com_facebook_blue"
+            app:layout_constraintTop_toBottomOf="@id/button_kakao"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:src="@drawable/com_facebook_button_icon_white"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:padding="8dp"
+                android:gravity="center_vertical"
+                android:text="@string/login_by_facebook"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/button_facebook"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:src="@drawable/ic_email_green"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:padding="8dp"
+                android:gravity="center_vertical"
+                android:text="@string/login_by_email"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/colorPrimary"/>
+        </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
+</FrameLayout>

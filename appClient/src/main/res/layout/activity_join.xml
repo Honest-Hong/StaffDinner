@@ -1,115 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/colorPrimary">
+    android:background="@color/grey">
 
-    <TextView
-        android:id="@+id/text_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/join_activity_title"
-        android:textColor="@color/white"
-        android:textSize="@dimen/fontLargest"/>
-
-    <View
+    <ImageView
+        android:id="@+id/image_view"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_marginTop="32dp"
-        android:background="@color/colorAccent" />
+        android:layout_height="match_parent"
+        android:alpha="0.5"/>
 
-    <TextView
-        style="@style/PrimaryTitleTextView"
-        android:layout_marginTop="16dp"
-        android:text="@string/text_name"/>
-
-    <EditText
-        style="@style/PrimaryEditText"
-        android:id="@+id/edit_name"
-        android:maxLength="@integer/max_length_name"
-        android:inputType="textPersonName"
-        android:maxLines="1"/>
-
-    <TextView
-        style="@style/PrimaryHelpTextView"
-        android:id="@+id/text_name_help"
-        android:text="@string/text_join_name_help"/>
-
-    <TextView
-        style="@style/PrimaryTitleTextView"
-        android:layout_marginTop="16dp"
-        android:text="@string/text_phone"/>
-
-    <EditText
-        style="@style/PrimaryEditText"
-        android:id="@+id/edit_phone"
-        android:maxLength="@integer/max_length_phone"
-        android:inputType="phone"
-        android:maxLines="1"/>
-
-    <TextView
-        style="@style/PrimaryHelpTextView"
-        android:id="@+id/text_phone_help"
-        android:text="@string/text_join_phone_help"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_marginTop="32dp"
-        android:background="@color/colorAccent" />
-
-    <TextView
-        android:id="@+id/text_agree"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/text_join_agree"
-        android:textColor="@color/white"
-        android:textSize="@dimen/fontNormal"
-        android:gravity="center"/>
-
-    <CheckBox
-        android:id="@+id/check_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        android:text="@string/text_i_agree"
-        android:textColor="@color/white"
-        android:textSize="@dimen/fontNormal"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:layout_marginTop="32dp"
-        android:background="@color/colorAccent" />
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/button_join"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginEnd="12dp"
-        android:visibility="invisible">
+        android:layout_gravity="center"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/text_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:text="@string/join_activity_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fontLargest"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_name_title"
+            android:text="@string/text_name"
+            android:textSize="@dimen/fontSmall"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+        <EditText
+            android:id="@+id/edit_name"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="@dimen/fontNormal"
+            android:textColor="@color/white"
+            android:maxLength="@integer/max_length_name"
+            android:inputType="textPersonName"
+            android:maxLines="1"
+            app:layout_constraintTop_toBottomOf="@id/text_name_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_name_help"
+            android:text="@string/text_join_name_help"
+            android:textSize="@dimen/fontSmall"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toBottomOf="@id/edit_name"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_phone_title"
+            android:text="@string/text_phone"
+            android:textSize="@dimen/fontSmall"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/text_name_help"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <EditText
+            android:id="@+id/edit_phone"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="@dimen/fontNormal"
+            android:textColor="@color/white"
+            android:maxLength="@integer/max_length_phone"
+            android:inputType="phone"
+            android:maxLines="1"
+            app:layout_constraintTop_toBottomOf="@id/text_phone_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_phone_help"
+            android:text="@string/text_join_phone_help"
+            android:textSize="@dimen/fontSmall"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toBottomOf="@id/edit_phone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:padding="16dp"
+            android:background="@drawable/background_rectangle_stroke"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/text_phone_help"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:id="@+id/text_agree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:text="@string/text_join_agree"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/fontNormal"
+                android:gravity="center"/>
+
+            <CheckBox
+                android:id="@+id/check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:text="@string/text_i_agree"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/fontNormal"
+                android:buttonTint="@color/colorPrimary"/>
+        </LinearLayout>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/button_join"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginEnd="24dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/text_join"
-            android:textColor="@color/colorPrimary" />
-    </android.support.v7.widget.CardView>
-</LinearLayout>
+            android:layout_marginEnd="16dp"
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@id/linear"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="@string/text_join"
+                android:textColor="@color/colorPrimary" />
+        </android.support.v7.widget.CardView>
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

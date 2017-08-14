@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -38,6 +40,7 @@ import com.project.boostcamp.publiclibrary.dialog.MyProgressDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.util.Logger;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
+import com.project.boostcamp.staffdinner.GlideApp;
 import com.project.boostcamp.staffdinner.R;
 
 import org.json.JSONException;
@@ -58,6 +61,7 @@ import butterknife.OnClick;
  * 이메일 로그인
  */
 public class LoginActivity extends AppCompatActivity {
+    @BindView(R.id.image_view) ImageView imageView;
     @BindView(R.id.edit_email) EditText editEmail;
     @BindView(R.id.edit_password) EditText editPassword;
     private FirebaseAuth auth;
@@ -73,6 +77,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
+        GlideApp.with(this)
+                .load(R.drawable.green_background)
+                .centerCrop()
+                .into(imageView);
         auth = FirebaseAuth.getInstance();
         Session.getCurrentSession().addCallback(callbackKaKao);
         Session.getCurrentSession().checkAndImplicitOpen();
@@ -259,6 +267,8 @@ public class LoginActivity extends AppCompatActivity {
         final String password = editPassword.getText().toString();
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(onSignInComplete);
+        Intent intent = new Intent(this, JoinActivity.class);
+        startActivity(intent);
     }
 
     private OnCompleteListener<AuthResult> onSignInComplete = new OnCompleteListener<AuthResult>() {

@@ -51,7 +51,7 @@ public class AccountActivity extends AppCompatActivity {
         images = new ArraySet<>();
         imageRecyclerAdapter = new ImageRecyclerAdapter(this, uriDataEvent);
         recyclerImage.setHasFixedSize(true);
-        recyclerImage.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerImage.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false));
         recyclerImage.setAdapter(imageRecyclerAdapter);
     }
 

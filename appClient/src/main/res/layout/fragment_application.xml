@@ -83,7 +83,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="center_vertical"
-                android:background="@drawable/background_bottom_button">
+                android:background="@drawable/background_rectangle_button_primary">
 
                 <ImageButton
                     android:id="@+id/button_up"
@@ -148,7 +148,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/background_bottom_button"
+                android:background="@drawable/background_rectangle_button_primary"
                 android:gravity="center"
                 android:padding="8dp">
 
@@ -222,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:background="@drawable/background_bottom_button"
+                    android:background="@drawable/background_rectangle_button_primary"
                     android:text="@string/select"
                     android:textSize="@dimen/fontNormal"
                     android:textColor="@color/colorPrimary"/>
@@ -282,7 +282,7 @@
                     android:layout_marginStart="8dp"
                     android:padding="8dp"
                     android:src="@drawable/ic_search_green_24dp"
-                    android:background="@drawable/background_bottom_button"/>
+                    android:background="@drawable/background_rectangle_button_primary"/>
             </LinearLayout>
 
             <fragment
@@ -298,7 +298,7 @@
         android:id="@+id/button_apply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_bottom_button"
+        android:background="@drawable/background_rectangle_button_primary"
         android:text="@string/text_apply"
         android:textSize="@dimen/fontNormal"
         android:textColor="@color/colorPrimary"/>

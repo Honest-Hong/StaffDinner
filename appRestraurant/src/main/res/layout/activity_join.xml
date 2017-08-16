@@ -39,7 +39,7 @@
 
         <TextView
             style="@style/OrangeHelpTextView"
-            android:text="@string/text_join_restraurant_name_help"/>
+            android:text="@string/admin_name_help"/>
 
         <TextView
             style="@style/OrangeTitleTextView"
@@ -74,7 +74,7 @@
 
         <TextView
             style="@style/OrangeHelpTextView"
-            android:text="@string/text_join_phone_help"/>
+            android:text="@string/phone_help"/>
 
         <TextView
             style="@style/OrangeTitleTextView"
@@ -117,7 +117,7 @@
 
         <TextView
             style="@style/OrangeHelpTextView"
-            android:text="@string/text_style_help"/>
+            android:text="@string/admin_style_help"/>
 
         <TextView
             style="@style/OrangeTitleTextView"

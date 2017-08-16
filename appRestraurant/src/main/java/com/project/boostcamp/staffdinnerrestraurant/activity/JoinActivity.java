@@ -44,6 +44,7 @@ import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.Geo;
 import com.project.boostcamp.publiclibrary.data.RequestType;
+import com.project.boostcamp.publiclibrary.dialog.MyProgressDialog;
 import com.project.boostcamp.publiclibrary.inter.ArrayResultListener;
 import com.project.boostcamp.publiclibrary.inter.DialogResultListener;
 import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
@@ -52,6 +53,7 @@ import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.util.BitmapHelper;
 import com.project.boostcamp.publiclibrary.util.EditTextHelper;
+import com.project.boostcamp.publiclibrary.util.FileHelper;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
@@ -90,7 +92,7 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     private String loginId;
     private int loginType;
     private String imageFilePath = "";
-    private ProgressDialog progressDialog;
+    private MyProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,16 +130,12 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     @OnClick(R.id.button_join)
     public void onJoinClick() {
         if(checkInvalidate()) {
-            if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-                ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.READ_EXTERNAL_STORAGE }, RequestType.REQUEST_READ_PERMISSION);
-            } else {
-                doJoin();
-            }
+            doJoin();
         }
     }
 
     private void doJoin() {
-        progressDialog = ProgressDialog.show(this, "", "잠시만 기다려주세요...", true, false);
+        progressDialog = MyProgressDialog.show(getSupportFragmentManager());
         final AdminJoinDTO dto = getAdminFromText();
         SharedPreperenceHelper.getInstance(JoinActivity.this).saveGeo(dto.getGeo());
         RetrofitAdmin.getInstance().join(dto, joinDataReceiver);
@@ -342,34 +340,20 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
             if(resultCode == RESULT_OK) {
                 Bitmap photo = (Bitmap)data.getExtras().get("data");
                 imageTitle.setImageBitmap(photo);
-                imageFilePath = getFilePathFromUri(data.getData());
+                imageFilePath = FileHelper.getPath(this, data.getData());
             }
         } else if(requestCode == RequestType.REQUEST_PICUTRE) {
             if(resultCode == RESULT_OK) {
                 try {
                     Bitmap photo = MediaStore.Images.Media.getBitmap(getContentResolver(), data.getData());
                     imageTitle.setImageBitmap(photo);
-                    imageFilePath = getFilePathFromUri(data.getData());
+                    imageFilePath = FileHelper.getPath(this, data.getData());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
-        } else if(requestCode == RequestType.REQUEST_READ_PERMISSION) {
-            if(resultCode == RESULT_OK) {
-                doJoin();
-            }
         }
         Log.d("HTJ", "imageFilePath: " + imageFilePath);
-    }
-
-    private String getFilePathFromUri(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA};
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-        int column_index_data = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        String filePath = cursor.getString(column_index_data);
-        cursor.close();
-        return filePath;
     }
 
     @Override

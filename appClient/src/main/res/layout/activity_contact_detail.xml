@@ -361,7 +361,7 @@
         android:id="@+id/button_review"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_bottom_button"
+        android:background="@drawable/background_rectangle_button_primary"
         android:text="@string/send_review"
         android:textSize="@dimen/fontNormal"
         android:textColor="@color/colorPrimary"/>

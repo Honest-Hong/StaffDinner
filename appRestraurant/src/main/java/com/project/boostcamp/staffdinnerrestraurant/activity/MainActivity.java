@@ -160,6 +160,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case R.id.nav_logout:
                 logout();
                 break;
+            case R.id.nav_account:
+                Intent intentAccount = new Intent(this, AccountActivity.class);
+                startActivity(intentAccount);
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);

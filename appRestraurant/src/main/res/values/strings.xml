@@ -4,9 +4,9 @@
     <string name="login_activity_button">구글 계정으로 시작하기</string>
     <string name="join_activity_title">식당 정보 입력</string>
     <string name="text_restraurant_name">식당 이름</string>
-    <string name="text_join_restraurant_name_help">고객님들에게 보여지는 식당의 이름을 입력해주세요.</string>
+    <string name="admin_name_help">고객님들에게 보여지는 식당의 이름을 입력해주세요.</string>
     <string name="text_phone">전화번호</string>
-    <string name="text_join_phone_help">고객님과 연락이 가능한 전화번호를 입력해주세요.</string>
+    <string name="phone_help">고객님과 연락이 가능한 전화번호를 입력해주세요.</string>
     <string name="text_join_agree">입력하신 정보는 견적서에 함께 등록되며 고객에게 제공됩니다.</string>
     <string name="text_i_agree">동의합니다</string>
     <string name="text_join">회원가입</string>
@@ -17,7 +17,7 @@
     <string name="text_image_title">대표사진</string>
     <string name="text_image_title_help">사진을 선택하려면 클릭하세요.</string>
     <string name="text_style">분위기</string>
-    <string name="text_style_help">식당의 분위기를 나타낼 수 있는 선택해주세요.</string>
+    <string name="admin_style_help">식당의 분위기를 나타낼 수 있는 선택해주세요.</string>
     <string name="text_menu">대표메뉴</string>
     <string name="text_menu_help">식당에서 대표로하는 메뉴와 가격을 입력해주세요.</string>
     <string name="text_cost">가격</string>
@@ -111,4 +111,13 @@
     <string name="show_waiting">대기중 목록</string>
     <string name="show_contacted">계약된 목록</string>
     <string name="show_canceled">취소된 목록</string>
+    <string name="admin_name">식당 이름</string>
+    <string name="admin_image">식당 사진</string>
+    <string name="admin_image_help">식당을 대표하는 이미지를 지정합니다. 클릭하면 선택할 수 있습니다.</string>
+    <string name="main_menu">대표 메뉴</string>
+    <string name="add_image">이미지 추가</string>
+    <string name="image">이미지</string>
+    <string name="do_save">저장하기</string>
+    <string name="account_activity_title">계정 설정</string>
+    <string name="image_select_tool">이미지 선택 도구</string>
 </resources>

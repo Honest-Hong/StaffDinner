@@ -8,7 +8,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,7 @@ import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
+import com.project.boostcamp.publiclibrary.util.TimeHelper;
 import com.project.boostcamp.staffdinner.GlideApp;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.NearReviewRecyclerAdapter;
@@ -45,6 +49,7 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
  */
 
 public class AdminDetailActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
+    @BindView(R.id.linear) LinearLayout linear;
     @BindView(R.id.image_view) ImageView imageView;
     @BindView(R.id.text_name) TextView textName;
     @BindView(R.id.text_phone) TextView textPhone;
@@ -55,8 +60,6 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
     @BindView(R.id.text_review_average) TextView textReviewAverage;
     @BindView(R.id.text_review_number) TextView textReviewNumber;
     @BindView(R.id.rating_review_average) MaterialRatingBar ratingReviewAverage;
-    @BindView(R.id.recycler_view_review) RecyclerView recyclerReview;
-    private NearReviewRecyclerAdapter reviewRecyclerAdapter;
     private String adminId;
     private int adminType;
     private AdminDTO data;
@@ -138,18 +141,24 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
     }
 
     private void setupReview(ArrayList<ReviewDTO> data) {
-        reviewRecyclerAdapter = new NearReviewRecyclerAdapter(this, reviewEvent);
-        reviewRecyclerAdapter.setData(data);
-        recyclerReview.setHasFixedSize(true);
-        recyclerReview.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerReview.setAdapter(reviewRecyclerAdapter);
-    }
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        for(ReviewDTO review: data) {
+            View v = getLayoutInflater().inflate(R.layout.item_review, linear, false);
+            v.setLayoutParams(layoutParams);
+            TextView textTo = (TextView)v.findViewById(R.id.text_receiver);
+            TextView textFrom = (TextView)v.findViewById(R.id.text_writer);
+            TextView textContent = (TextView) v.findViewById(R.id.text_content);
+            TextView textTime = (TextView) v.findViewById(R.id.text_time);
+            MaterialRatingBar ratingBar = (MaterialRatingBar) v.findViewById(R.id.rating_bar);
 
-    private DataEvent<ReviewDTO> reviewEvent = new DataEvent<ReviewDTO>() {
-        @Override
-        public void onClick(ReviewDTO data) {
+            textTo.setText(review.getReceiver());
+            textFrom.setText(review.getWriter());
+            textContent.setText(review.getContent());
+            textTime.setText(TimeHelper.getTimeString(review.getWritedTime(), "MM/dd"));
+            ratingBar.setProgress((int)(review.getRating()*2));
+            linear.addView(v);
         }
-    };
+    }
 
     /**
      * 홈 버튼 클릭 처리

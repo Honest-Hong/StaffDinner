@@ -80,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:mrb_progressBackgroundTint="@color/colorPrimary"
+        app:mrb_progressBackgroundTint="@color/grey"
         style="@style/Widget.MaterialRatingBar.RatingBar"/>
 
     <TextView

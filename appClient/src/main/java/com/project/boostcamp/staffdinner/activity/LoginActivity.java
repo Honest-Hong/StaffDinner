@@ -80,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
     private int type;
     private String name;
     private MyProgressDialog progressDialog;
+    private boolean showLoginView = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,8 +107,10 @@ public class LoginActivity extends AppCompatActivity {
     @OnClick({R.id.button_kakao, R.id.button_facebook, R.id.button_email})
     public void onLoginClick(View v) {
         if(v.getId() == R.id.button_kakao) {
+            progressDialog = MyProgressDialog.show(getSupportFragmentManager());
             Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, this);
         } else if(v.getId() == R.id.button_facebook) {
+            progressDialog = MyProgressDialog.show(getSupportFragmentManager());
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
         } else if(v.getId() == R.id.button_email) {
             showEmailInput();
@@ -118,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
      * 로그인 입력창을 보여주는 과정
      */
     private void showEmailInput() {
+        showLoginView = true;
         appearView(editEmail);
         appearView(editPassword);
         appearView(btnLogin);
@@ -131,6 +135,7 @@ public class LoginActivity extends AppCompatActivity {
      * 로그인 입력창을 보여주는 과정
      */
     private void hideEmailInput() {
+         showLoginView = false;
         disappearView(editEmail);
         disappearView(editPassword);
         disappearView(btnLogin);
@@ -287,10 +292,12 @@ public class LoginActivity extends AppCompatActivity {
         RetrofitClient.getInstance().requestLogin(id, type, new DataReceiver<LoginDTO>() {
             @Override
             public void onReceive(LoginDTO data) {
+                if(progressDialog != null) {
+                    progressDialog.dismiss();
+                }
                 if(data.getId() == null) {
                     if(data.getType() == AccountType.TYPE_EMAIL) {
                         Snackbar.make(getWindow().getDecorView().getRootView(), R.string.not_exist_email_or_password, Snackbar.LENGTH_LONG).show();
-                        progressDialog.dismiss();
                     } else {
                         Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
                         intent.putExtra(ExtraType.EXTRA_LOGIN_ID, id);
@@ -300,15 +307,15 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                     }
                 } else {
-                    if(progressDialog != null) {
-                        progressDialog.dismiss();
-                    }
                     redirectMainActivity(data);
                 }
             }
 
             @Override
             public void onFail() {
+                if(progressDialog != null) {
+                    progressDialog.dismiss();
+                }
             }
         });
     }
@@ -358,7 +365,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(btnLogin.getVisibility() == View.VISIBLE) {
+        if(showLoginView) {
             hideEmailInput();
         } else {
             super.onBackPressed();

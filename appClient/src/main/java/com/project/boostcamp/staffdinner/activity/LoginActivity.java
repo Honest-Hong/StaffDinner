@@ -7,9 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -64,6 +68,12 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.image_view) ImageView imageView;
     @BindView(R.id.edit_email) EditText editEmail;
     @BindView(R.id.edit_password) EditText editPassword;
+    @BindView(R.id.button_kakao) View btnKaKao;
+    @BindView(R.id.button_facebook) View btnFacebook;
+    @BindView(R.id.button_email) View btnEmail;
+    @BindView(R.id.button_login) View btnLogin;
+    @BindView(R.id.button_email_sign_up) View btnEmailSignUp;
+    @BindView(R.id.text_email_login) TextView textEmailLogin;
     private FirebaseAuth auth;
     private CallbackManager callbackManager;
     private String id;
@@ -100,8 +110,61 @@ public class LoginActivity extends AppCompatActivity {
         } else if(v.getId() == R.id.button_facebook) {
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
         } else if(v.getId() == R.id.button_email) {
-            startActivity(new Intent(this, EmailSignUpActivity.class));
+            showEmailInput();
         }
+    }
+
+    /**
+     * 로그인 입력창을 보여주는 과정
+     */
+    private void showEmailInput() {
+        appearView(editEmail);
+        appearView(editPassword);
+        appearView(btnLogin);
+        appearView(btnEmailSignUp);
+        disappearView(btnEmail);
+        disappearView(btnKaKao);
+        disappearView(btnFacebook);
+    }
+
+    /**
+     * 로그인 입력창을 보여주는 과정
+     */
+    private void hideEmailInput() {
+        disappearView(editEmail);
+        disappearView(editPassword);
+        disappearView(btnLogin);
+        disappearView(btnEmailSignUp);
+        appearView(btnEmail);
+        appearView(btnKaKao);
+        appearView(btnFacebook);
+    }
+
+    private void appearView(View v) {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.appear);
+        animation.setInterpolator(new DecelerateInterpolator());
+        v.startAnimation(animation);
+        v.setVisibility(View.VISIBLE);
+    }
+
+    private void disappearView(final View v) {
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.disappear);
+        animation.setInterpolator(new DecelerateInterpolator());
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                v.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+        v.startAnimation(animation);
     }
 
     /**
@@ -271,6 +334,11 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @OnClick(R.id.button_email_sign_up)
+    public void doEmailSignUp() {
+        startActivity(new Intent(this, EmailSignUpActivity.class));
+    }
+
     private OnCompleteListener<AuthResult> onSignInComplete = new OnCompleteListener<AuthResult>() {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -287,4 +355,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        if(btnLogin.getVisibility() == View.VISIBLE) {
+            hideEmailInput();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

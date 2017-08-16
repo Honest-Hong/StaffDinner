@@ -22,6 +22,7 @@ import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.domain.AdminDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewAverageDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 /**
  * 식당의 자세한 정보를 보여주는 액티비티
@@ -50,6 +52,9 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
     @BindView(R.id.text_menu) TextView textMenu;
     @BindView(R.id.text_cost) TextView textCost;
     @BindView(R.id.text_location) TextView textLocation;
+    @BindView(R.id.text_review_average) TextView textReviewAverage;
+    @BindView(R.id.text_review_number) TextView textReviewNumber;
+    @BindView(R.id.rating_review_average) MaterialRatingBar ratingReviewAverage;
     @BindView(R.id.recycler_view_review) RecyclerView recyclerReview;
     private NearReviewRecyclerAdapter reviewRecyclerAdapter;
     private String adminId;
@@ -73,6 +78,7 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
 
         RetrofitClient.getInstance().getAdminInformation(adminId, adminType, detailDataReceiver);
         RetrofitClient.getInstance().getAdminReviews(adminId, adminType, reviewDataReceiver);
+        RetrofitClient.getInstance().getAdminReviewAverage(adminId, adminType, reviewAverageDataReceiver);
     }
 
     private DataReceiver<AdminDTO> detailDataReceiver = new DataReceiver<AdminDTO>() {
@@ -98,6 +104,20 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
         @Override
         public void onFail() {
             setupReview(new ArrayList<ReviewDTO>());
+        }
+    };
+
+    private DataReceiver<ReviewAverageDTO> reviewAverageDataReceiver = new DataReceiver<ReviewAverageDTO>() {
+        @Override
+        public void onReceive(ReviewAverageDTO data) {
+            textReviewAverage.setText(String.format("%1$.1f", data.getAverage()));
+            textReviewNumber.setText(getString(R.string.person_number, data.getCount()));
+            ratingReviewAverage.setProgress((int)(data.getAverage() * 2));
+        }
+
+        @Override
+        public void onFail() {
+
         }
     };
 

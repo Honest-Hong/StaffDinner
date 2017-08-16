@@ -15,6 +15,7 @@ import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.NewAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewAddDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewAverageDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
 import com.project.boostcamp.publiclibrary.util.Logger;
@@ -256,6 +257,12 @@ public class RetrofitClient {
         });
     }
 
+    /**
+     * 식당 리뷰 목록 요청
+     * @param adminId
+     * @param adminType
+     * @param dataReceiver
+     */
     public void getAdminReviews(String adminId, int adminType, final DataReceiver<ArrayList<ReviewDTO>> dataReceiver) {
         clientService.getAdminReviews(adminId, adminType).enqueue(new Callback<ArrayList<ReviewDTO>>() {
             @Override
@@ -265,6 +272,20 @@ public class RetrofitClient {
 
             @Override
             public void onFailure(Call<ArrayList<ReviewDTO>> call, Throwable t) {
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    public void getAdminReviewAverage(String adminId, int adminType, final DataReceiver<ReviewAverageDTO> dataReceiver) {
+        clientService.getReviewAverage(adminId, adminType).enqueue(new Callback<ReviewAverageDTO>() {
+            @Override
+            public void onResponse(Call<ReviewAverageDTO> call, Response<ReviewAverageDTO> response) {
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ReviewAverageDTO> call, Throwable t) {
                 dataReceiver.onFail();
             }
         });

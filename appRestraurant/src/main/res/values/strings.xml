@@ -25,7 +25,7 @@
     <string name="text_apply_content">인원: %1$d명\n시간: %2$s\n위치: %3$skm</string>
     <string name="text_contacted">계약됨</string>
     <string name="text_waiting">대기중</string>
-    <string name="text_canceled">취초됨</string>
+    <string name="text_canceled">취소됨</string>
     <string name="text_failed">실패함</string>
     <string name="text_estimate_list_title">%1$s님께 보낸 견적서</string>
     <string name="text_estimate_list_writed_time">작성 시간: %1$s</string>
@@ -107,4 +107,8 @@
     <string name="general">일반</string>
     <string name="app_settings">앱 설정</string>
     <string name="help">도움말</string>
+    <string name="show_all">전체보기</string>
+    <string name="show_waiting">대기중 목록</string>
+    <string name="show_contacted">계약된 목록</string>
+    <string name="show_canceled">취소된 목록</string>
 </resources>

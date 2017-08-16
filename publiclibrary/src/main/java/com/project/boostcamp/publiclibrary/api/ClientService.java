@@ -15,6 +15,7 @@ import com.project.boostcamp.publiclibrary.domain.NewAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultStringDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewAddDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewAverageDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
 
@@ -152,8 +153,17 @@ public interface ClientService {
     Call<AdminDTO> getAdminInformation(@Path("id") String id, @Query("type") int type);
 
     /**
-     *
+     *  식당에 달려있는 모든 리뷰 요청
      */
     @GET("/admin/{id}/review")
     Call<ArrayList<ReviewDTO>> getAdminReviews(@Path("id") String id, @Query("type") int type);
+
+    /**
+     * 리뷰 평균 정보 요청
+     * @param id 식당 아이디
+     * @param type 식당 아이디 타입
+     * @return 리뷰 평균 정보
+     */
+    @GET("/admin/{id}/review/average")
+    Call<ReviewAverageDTO> getReviewAverage(@Path("id") String id, @Query("type") int type);
 }

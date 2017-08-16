@@ -7,6 +7,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -14,6 +17,7 @@ import android.widget.Toast;
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.AdminEstimate;
+import com.project.boostcamp.publiclibrary.data.EstimateStateType;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.AdminEstimateDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
@@ -34,9 +38,20 @@ public class EstimateFragment extends Fragment {
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
     @BindView(R.id.help_empty) View viewEmpty;
     private EstimateAdapter recyclerAdapter;
+    private ArrayList<AdminEstimate> dataAll;
+    private ArrayList<AdminEstimate> dataWating;
+    private ArrayList<AdminEstimate> dataContacted;
+    private ArrayList<AdminEstimate> dataCanceled;
+    private int showMode = -1;
 
     public static EstimateFragment newInstance() {
         return new EstimateFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -76,7 +91,10 @@ public class EstimateFragment extends Fragment {
             if(data == null) {
                 data = new ArrayList<>();
             }
-            ArrayList<AdminEstimate> arr = new ArrayList<>();
+            dataAll = new ArrayList<>();
+            dataWating = new ArrayList<>();
+            dataContacted = new ArrayList<>();
+            dataCanceled = new ArrayList<>();
             for(int i=0; i<data.size();i ++) {
                 AdminEstimate item = new AdminEstimate();
                 item.set_id(data.get(i).get_id());
@@ -84,9 +102,20 @@ public class EstimateFragment extends Fragment {
                 item.setMessage(data.get(i).getMessage());
                 item.setWritedTime(data.get(i).getWritedTime());
                 item.setState(data.get(i).getState());
-                arr.add(item);
+                dataAll.add(item);
+                switch(item.getState()) {
+                    case EstimateStateType.STATE_WATING:
+                        dataWating.add(item);
+                        break;
+                    case EstimateStateType.STATE_CONTACTED:
+                        dataContacted.add(item);
+                        break;
+                    case EstimateStateType.STATE_CANCELED:
+                        dataCanceled.add(item);
+                        break;
+                }
             }
-            if(arr.size() > 0) {
+            if(dataAll.size() > 0) {
                 viewEmpty.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
             } else {
@@ -94,7 +123,20 @@ public class EstimateFragment extends Fragment {
                 recyclerView.setVisibility(View.GONE);
             }
             hideRefreshing();
-            recyclerAdapter.setData(arr);
+            switch(showMode) {
+                case EstimateStateType.STATE_WATING:
+                    recyclerAdapter.setData(dataWating);
+                    break;
+                case EstimateStateType.STATE_CONTACTED:
+                    recyclerAdapter.setData(dataContacted);
+                    break;
+                case EstimateStateType.STATE_CANCELED:
+                    recyclerAdapter.setData(dataCanceled);
+                    break;
+                default:
+                    recyclerAdapter.setData(dataAll);
+                    break;
+            }
         }
 
         @Override
@@ -121,5 +163,33 @@ public class EstimateFragment extends Fragment {
         if(swipeRefresh.isRefreshing()) {
             swipeRefresh.setRefreshing(false);
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_estimate, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.menu_show_all:
+                recyclerAdapter.setData(dataAll);
+                showMode = -1;
+                break;
+            case R.id.menu_show_waiting:
+                recyclerAdapter.setData(dataWating);
+                showMode = EstimateStateType.STATE_WATING;
+                break;
+            case R.id.menu_show_contacted:
+                recyclerAdapter.setData(dataContacted);
+                showMode = EstimateStateType.STATE_CONTACTED;
+                break;
+            case R.id.menu_show_canceled:
+                recyclerAdapter.setData(dataCanceled);
+                showMode = EstimateStateType.STATE_CANCELED;
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

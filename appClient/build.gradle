@@ -63,6 +63,8 @@ dependencies {
     compile 'me.zhanghai.android.materialratingbar:library:1.0.2'
     // 쇼케이스뷰 https://github.com/amlcurran/ShowcaseView
     compile 'com.github.amlcurran.showcaseview:library:5.4.3'
+    // https://github.com/rengwuxian/MaterialEditText
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
 
     compile project(':publiclibrary')
     testCompile 'junit:junit:4.12'

@@ -1,15 +1,21 @@
 package com.project.boostcamp.staffdinner.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -18,6 +24,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
+import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.staffdinner.R;
 
@@ -40,6 +47,7 @@ public class MapDetailActivity extends AppCompatActivity implements OnMapReadyCa
     @BindView(R.id.text_location) TextView textLocation;
     @BindView(R.id.image_marker) ImageView imageMarker;
     @BindView(R.id.button_select) Button btnSelect;
+    @BindView(R.id.button_search) ImageButton btnSearch;
     private GoogleMap googleMap;
 
     @Override
@@ -60,6 +68,9 @@ public class MapDetailActivity extends AppCompatActivity implements OnMapReadyCa
                 ? View.GONE
                 : View.VISIBLE);
         btnSelect.setVisibility(readOnly
+                ? View.GONE
+                : View.VISIBLE);
+        btnSearch.setVisibility(readOnly
                 ? View.GONE
                 : View.VISIBLE);
     }
@@ -110,5 +121,30 @@ public class MapDetailActivity extends AppCompatActivity implements OnMapReadyCa
         getIntent().putExtra(ExtraType.EXTRA_LONGITUDE, longitude);
         setResult(RESULT_OK, getIntent());
         finish();
+    }
+
+    @OnClick(R.id.button_search)
+    public void onSearch() {
+        try {
+            Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                    .build(this);
+            startActivityForResult(intent, RequestType.REQUEST_LOCATION);
+        } catch (GooglePlayServicesRepairableException e) {
+            e.printStackTrace();
+        } catch (GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == RequestType.REQUEST_LOCATION) {
+            if(resultCode == RESULT_OK) {
+                // 주소 검색 결과 표시
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                textLocation.setText(place.getAddress());
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(place.getLatLng()));
+            }
+        }
     }
 }

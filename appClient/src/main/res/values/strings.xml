@@ -46,7 +46,8 @@
     <string name="text_no_address">주소 없음</string>
     <string name="dialog_alert_title">알림</string>
     <string name="dialog_apply_message">신청하면 취소는 가능하지만 수정이 불가능합니다. 이대로 신청하시겠습니까?</string>
-    <string name="dialog_contact_message">계약시 1인당 1,000￦ 의 계약금이 발생합니다. 현재 견적서로 계약을 하시겠습니까?</string>
+    <!--<string name="dialog_contact_message">계약시 1인당 1,000￦ 의 계약금이 발생합니다. 현재 견적서로 계약을 하시겠습니까?</string>-->
+    <string name="dialog_contact_message">계약을 하면 식당 사장님에게 알림이 갑니다. 또한 계약은 취소할 수 없습니다. 견적서를 계약 하시겠습니까?</string>
     <string name="dialog_cancel_message">신청서를 취소하면 내용이 모두 삭제 됩니다. 정말로 취소하시겠습니까?</string>
     <string name="drawer_open">메뉴 열림</string>
     <string name="drawer_close">메뉴 닫힘</string>
@@ -103,7 +104,7 @@
     <string name="not_exist_contact">계약하신 내역이 없습니다</string>
     <string name="login_by_kakao">카카오 계정으로 로그인</string>
     <string name="login_by_facebook">페이스북 계정으로 로그인</string>
-    <string name="login_by_email">일반 이메일로 가입하기</string>
+    <string name="login_by_email">일반 이메일로 시작하기</string>
     <string name="help">도움말</string>
     <string name="general">일반</string>
     <string name="new_admin">새로운 식당</string>
@@ -117,4 +118,5 @@
     <string name="waiting_please">잠시만 기다려주세요</string>
     <string name="review">리뷰</string>
     <string name="thanks_to_review">리뷰를 등록해주셔서 감사합니다.</string>
+    <string name="sign_up_email">이메일로 가입하기</string>
 </resources>

@@ -18,14 +18,14 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:padding="32dp">
 
         <TextView
             android:id="@+id/text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="32dp"
             android:text="@string/email_sign_up"
             android:textSize="@dimen/fontLarge"
             android:textColor="@color/white"
@@ -34,118 +34,39 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
-        <TextView
-            android:id="@+id/text_email_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginStart="16dp"
-            android:text="@string/email_sign_up_email"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontSmall"
-            app:layout_constraintTop_toBottomOf="@id/text_title"
-            app:layout_constraintLeft_toLeftOf="parent"/>
-
-        <EditText
+        <com.rengwuxian.materialedittext.MaterialEditText
+            style="@style/MaterialEditText"
             android:id="@+id/edit_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:textSize="@dimen/fontNormal"
-            android:textColor="@color/white"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            app:layout_constraintTop_toBottomOf="@id/text_email_title"
+            android:layout_marginTop="32dp"
+            android:hint="@string/text_email"
+            app:met_helperText="@string/email_sign_up_email_help"
+            app:layout_constraintTop_toBottomOf="@id/text_title"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
-        <TextView
-            android:id="@+id/text_email_help"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="@string/email_sign_up_email_help"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontSmall"
-            app:layout_constraintTop_toBottomOf="@id/edit_email"
-            app:layout_constraintLeft_toLeftOf="parent"/>
-
-        <TextView
-            android:id="@+id/text_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:text="@string/email_sign_up_password"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontSmall"
-            app:layout_constraintTop_toBottomOf="@id/text_email_help"
-            app:layout_constraintLeft_toLeftOf="parent"/>
-
-        <EditText
+        <com.rengwuxian.materialedittext.MaterialEditText
+            style="@style/MaterialEditText"
             android:id="@+id/edit_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:textSize="@dimen/fontNormal"
-            android:textColor="@color/white"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            app:layout_constraintTop_toBottomOf="@id/text_password"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <TextView
-            android:id="@+id/text_password_help"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/email_sign_up_password_help"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontSmall"
-            app:layout_constraintTop_toBottomOf="@id/edit_password"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <TextView
-            android:id="@+id/text_password_confirm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:text="@string/email_sign_up_password_confirm"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontSmall"
-            app:layout_constraintTop_toBottomOf="@id/text_password_help"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            android:hint="@string/password"
+            app:met_helperText="@string/email_sign_up_password_help"
+            app:layout_constraintTop_toBottomOf="@id/edit_email"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
-        <EditText
+        <com.rengwuxian.materialedittext.MaterialEditText
+            style="@style/MaterialEditText"
             android:id="@+id/edit_password2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:textSize="@dimen/fontNormal"
-            android:textColor="@color/white"
-            android:inputType="textPassword"
-            android:maxLines="1"
-            app:layout_constraintTop_toBottomOf="@id/text_password_confirm"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
-
-        <TextView
-            android:id="@+id/text_password_confirm_help"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/email_sign_up_password_confirm_help"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontSmall"
-            app:layout_constraintTop_toBottomOf="@id/edit_password2"
+            android:layout_marginTop="16dp"
+            android:hint="@string/password_confirm"
+            app:met_helperText="@string/email_sign_up_password_confirm_help"
+            app:layout_constraintTop_toBottomOf="@id/edit_password"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
@@ -153,16 +74,16 @@
             android:id="@+id/button_prev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/text_password_confirm_help"
+            android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@id/edit_password2"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:paddingStart="32dp"
                 android:paddingEnd="32dp"
                 android:text="@string/text_prev"
@@ -174,16 +95,15 @@
             android:id="@+id/button_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@id/text_password_confirm_help"
+            android:layout_marginTop="32dp"
+            app:layout_constraintTop_toBottomOf="@id/edit_password2"
             app:layout_constraintRight_toRightOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:paddingStart="32dp"
                 android:paddingEnd="32dp"
                 android:text="@string/text_next"

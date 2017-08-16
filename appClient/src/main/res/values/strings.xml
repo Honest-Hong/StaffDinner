@@ -119,4 +119,5 @@
     <string name="review">리뷰</string>
     <string name="thanks_to_review">리뷰를 등록해주셔서 감사합니다.</string>
     <string name="sign_up_email">이메일로 가입하기</string>
+    <string name="password_confirm">비밀번호 확인</string>
 </resources>

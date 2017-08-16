@@ -57,10 +57,15 @@
     </style>
 
     <style name="MaterialEditText" parent="AppTheme">
+        <item name="android:textSize">@dimen/fontNormal</item>
         <item name="met_textColor">@color/white</item>
         <item name="met_textColorHint">@color/white</item>
         <item name="met_floatingLabel">normal</item>
         <item name="met_baseColor">@color/white</item>
         <item name="met_primaryColor">@color/white</item>
+        <item name="met_helperTextAlwaysShown">true</item>
+        <item name="met_helperTextColor">@color/white</item>
+        <item name="met_bottomTextSize">@dimen/fontSmall</item>
+        <item name="met_floatingLabelTextSize">@dimen/fontSmall</item>
     </style>
 </resources>

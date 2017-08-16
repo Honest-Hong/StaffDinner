@@ -22,7 +22,9 @@ import butterknife.ButterKnife;
 public class NearAdminVH extends BaseVH<NearAdminDTO> {
     private Context context;
     @BindView(R.id.image_view) ImageView imageView;
+    @BindView(R.id.text_name) TextView textName;
     @BindView(R.id.text_distance) TextView textDistnace;
+    @BindView(R.id.text_style) TextView textStyle;
     public NearAdminVH(Context context, View itemView, final DataEvent<NearAdminDTO> dataEvent) {
         super(itemView, dataEvent);
         this.context = context;
@@ -42,6 +44,8 @@ public class NearAdminVH extends BaseVH<NearAdminDTO> {
                 .load(RetrofitClient.getInstance().getAdminImageUrl(data.getAdminId(), data.getAdminType()))
                 .centerCrop()
                 .into(imageView);
+        textName.setText(data.getName());
         textDistnace.setText(context.getString(R.string.distance_km, data.getDistance()));
+        textStyle.setText(data.getStyle());
     }
 }

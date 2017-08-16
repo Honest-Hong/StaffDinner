@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
 public class NewAdminVH extends BaseVH<NewAdminDTO> {
     @BindView(R.id.image_view) ImageView imageView;
     @BindView(R.id.text_name) TextView textName;
+    @BindView(R.id.text_style) TextView textStyle;
     private Context context;
 
     public NewAdminVH(View itemView, final DataEvent<NewAdminDTO> dataEvent) {
@@ -46,5 +47,6 @@ public class NewAdminVH extends BaseVH<NewAdminDTO> {
                 .centerCrop()
                 .into(imageView);
         textName.setText(data.getName());
+        textStyle.setText(data.getStyle());
     }
 }

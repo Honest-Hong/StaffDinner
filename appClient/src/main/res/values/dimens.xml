@@ -7,7 +7,7 @@
     <dimen name="fontSmall">17sp</dimen>
     <dimen name="fontSmallest">14sp</dimen>
 
-    <dimen name="home_recycler_view_size">100dp</dimen>
+    <dimen name="home_image">128dp</dimen>
     <dimen name="event_height">250dp</dimen>
     <dimen name="review_width">200dp</dimen>
 </resources>

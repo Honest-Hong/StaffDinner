@@ -18,9 +18,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
@@ -35,6 +37,7 @@ import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.inter.GuidePlayer;
 import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
+import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.activity.AdminDetailActivity;
 import com.project.boostcamp.staffdinner.adapter.EventPagerAdapter;
@@ -60,6 +63,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.indicator) CircleIndicator circleIndicator;
     @BindView(R.id.recycler_view_near) RecyclerView recyclerNearAdmin;
+    @BindView(R.id.text_current_location) TextView textCurrentLocation;
     @BindView(R.id.recycler_view_review) RecyclerView recyclerReview;
     @BindView(R.id.recycler_view_new_admin) RecyclerView recyclerNewAdmin;
     private EventPagerAdapter eventPagerAdapter;
@@ -112,6 +116,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
                         longitude = location.getLongitude();
                         loadNearAdmin();
                         loadNearReview();
+                        textCurrentLocation.setText(GeocoderHelper.getAddress(getContext(), new LatLng(latitude, longitude)));
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -119,6 +124,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
                 public void onFailure(@NonNull Exception e) {
                     loadNearAdmin();
                     loadNearReview();
+                    textCurrentLocation.setText(GeocoderHelper.getAddress(getContext(), new LatLng(latitude, longitude)));
                 }
             });
         }

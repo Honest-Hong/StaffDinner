@@ -9,7 +9,9 @@ import com.project.boostcamp.publiclibrary.data.ViewHolderData;
 public class NearAdminDTO extends ViewHolderData {
     private String adminId;
     private int adminType;
+    private String name;
     private double distance;
+    private String style;
 
     public String getAdminId() {
         return adminId;
@@ -27,11 +29,27 @@ public class NearAdminDTO extends ViewHolderData {
         this.adminType = adminType;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public double getDistance() {
         return distance;
     }
 
     public void setDistance(double distance) {
         this.distance = distance;
+    }
+
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
     }
 }

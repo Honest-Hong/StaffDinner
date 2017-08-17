@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white">
 
@@ -12,62 +13,56 @@
         android:layout_weight="1"
         android:overScrollMode="never">
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/image_state"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:id="@+id/image_state"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp" />
-
-                <TextView
-                    android:id="@+id/text_state"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    android:textSize="@dimen/fontLargest"
-                    android:textColor="@color/orange"
-                    android:textStyle="bold"/>
-
-                <Button
-                    android:id="@+id/button_helper"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/helper"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/fontNormal"
-                    android:background="@drawable/background_rectangle_button_primary"/>
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/whiteGrey" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
+                android:id="@+id/text_state"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:textSize="@dimen/fontLargest"
+                android:textColor="@color/orange"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toRightOf="@id/image_state"
+                app:layout_constraintTop_toTopOf="@id/image_state"
+                app:layout_constraintBottom_toBottomOf="@id/image_state"/>
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="0dp"
+                android:layout_height="4dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/whiteGrey"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_state"/>
+
+            <TextView
+                android:id="@+id/text_message_title"
                 style="@style/ApplicationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
-                android:text="@string/message"/>
+                android:text="@string/message"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line1"/>
 
             <EditText
                 android:id="@+id/edit_title"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
@@ -75,82 +70,107 @@
                 android:maxLength="@integer/max_length_message"
                 android:background="@drawable/background_edit_text_white"
                 android:inputType="text"
-                android:maxLines="1" />
+                android:maxLines="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_message_title"/>
 
             <TextView
+                android:id="@+id/text_number_title"
                 style="@style/ApplicationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
-                android:text="@string/text_number"/>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="8dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:gravity="center_vertical"
-                android:background="@drawable/background_rectangle_button_primary">
-
-                <ImageButton
-                    android:id="@+id/button_up"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_add_green_24dp"
-                    android:background="?attr/selectableItemBackground"/>
-
-                <EditText
-                    android:id="@+id/edit_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="4dp"
-                    android:gravity="center_horizontal"
-                    android:maxLength="2"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:minWidth="50dp"
-                    android:background="@drawable/background_edit_text_white"/>
-
-                <TextView
-                    style="@style/ApplicationTextView"
-                    android:id="@+id/text_number"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="@string/text_count_person"/>
-
-                <ImageButton
-                    android:id="@+id/button_down"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_remove_green_24dp"
-                    android:background="?attr/selectableItemBackground"/>
-            </LinearLayout>
+                android:text="@string/text_number"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_title"/>
 
             <View
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/background_rectangle_button_primary"
+                app:layout_constraintLeft_toLeftOf="@+id/button_up"
+                app:layout_constraintRight_toRightOf="@+id/button_down"
+                app:layout_constraintTop_toTopOf="@+id/button_up"
+                app:layout_constraintBottom_toBottomOf="@+id/button_up"/>
+
+            <ImageButton
+                android:id="@+id/button_up"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_add_green_24dp"
+                android:background="?attr/selectableItemBackground"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_number_title"/>
+
+            <EditText
+                android:id="@+id/edit_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:gravity="center_horizontal"
+                android:maxLength="2"
+                android:inputType="number"
+                android:maxLines="1"
+                android:minWidth="50dp"
+                android:background="@drawable/background_edit_text_white"
+                app:layout_constraintLeft_toRightOf="@id/button_up"
+                app:layout_constraintTop_toTopOf="@id/button_up"
+                app:layout_constraintBottom_toBottomOf="@id/button_up"/>
+
+            <TextView
+                style="@style/ApplicationTextView"
+                android:id="@+id/text_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@string/text_count_person"
+                app:layout_constraintLeft_toRightOf="@id/edit_number"
+                app:layout_constraintTop_toTopOf="@id/button_up"
+                app:layout_constraintBottom_toBottomOf="@id/button_up"/>
+
+            <ImageButton
+                android:id="@+id/button_down"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_remove_green_24dp"
+                android:background="?attr/selectableItemBackground"
+                app:layout_constraintLeft_toRightOf="@id/text_number"
+                app:layout_constraintTop_toTopOf="@id/button_up"
+                app:layout_constraintBottom_toBottomOf="@id/button_up"/>
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@color/whiteGrey" />
+                android:background="@color/whiteGrey"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_up"/>
 
             <TextView
+                android:id="@+id/text_time_title"
                 style="@style/ApplicationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_time"/>
+                android:text="@string/text_time"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line2"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:id="@+id/linear"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="8dp"
@@ -158,7 +178,10 @@
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/background_rectangle_button_primary"
                 android:gravity="center"
-                android:padding="8dp">
+                android:padding="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_time_title">
 
                 <com.project.boostcamp.publiclibrary.view.WheelPicker
                     android:id="@+id/wheel_hour"
@@ -191,62 +214,71 @@
             </LinearLayout>
 
             <View
-                android:layout_width="match_parent"
+                android:id="@+id/line3"
+                android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:background="@color/whiteGrey" />
+                android:background="@color/whiteGrey"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linear"/>
 
             <TextView
+                android:id="@+id/text_style_title"
                 style="@style/ApplicationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
-                android:text="@string/text_style"/>
+                android:text="@string/text_style"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line3"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/text_style"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:hint="@string/style_hint"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/black"
+                android:focusable="true"
+                android:background="@drawable/background_edit_text_white"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/button_style"
+                app:layout_constraintTop_toTopOf="@+id/button_style"
+                app:layout_constraintBottom_toBottomOf="@+id/button_style"/>
+
+            <Button
+                android:id="@+id/button_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginEnd="16dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/text_style"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/style_hint"
-                    android:textSize="@dimen/fontNormal"
-                    android:textColor="@color/black"
-                    android:focusable="true"
-                    android:background="@drawable/background_edit_text_white"/>
-
-                <Button
-                    android:id="@+id/button_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/background_rectangle_button_primary"
-                    android:text="@string/select"
-                    android:textSize="@dimen/fontNormal"
-                    android:textColor="@color/colorPrimary"/>
-            </LinearLayout>
+                android:background="@drawable/background_rectangle_button_primary"
+                android:text="@string/select"
+                android:textSize="@dimen/fontNormal"
+                android:textColor="@color/colorPrimary"
+                app:layout_constraintLeft_toRightOf="@id/text_style"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_style_title"/>
 
             <TextView
+                android:id="@+id/text_menu_title"
                 style="@style/ApplicationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_menu"/>
+                android:text="@string/text_menu"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_style"/>
 
             <EditText
                 android:id="@+id/edit_menu"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
@@ -254,51 +286,59 @@
                 android:maxLength="@integer/max_length_menu"
                 android:background="@drawable/background_edit_text_white"
                 android:inputType="text"
-                android:maxLines="1"/>
-
+                android:maxLines="1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_menu_title"/>
 
             <TextView
+                android:id="@+id/text_location_title"
                 style="@style/ApplicationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_location"/>
+                android:text="@string/text_location"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_menu"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/text_location"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:textColor="@color/black"
+                android:textSize="@dimen/fontSmall"
+                android:background="@drawable/background_edit_text_white"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/button_search"
+                app:layout_constraintTop_toTopOf="@+id/button_search"
+                app:layout_constraintBottom_toBottomOf="@+id/button_search"/>
 
-                <TextView
-                    android:id="@+id/text_location"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fontSmall"
-                    android:background="@drawable/background_edit_text_white"/>
-
-                <ImageButton
-                    android:id="@+id/button_search"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:padding="8dp"
-                    android:src="@drawable/ic_search_green_24dp"
-                    android:background="@drawable/background_rectangle_button_primary"/>
-            </LinearLayout>
+            <ImageButton
+                android:id="@+id/button_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp"
+                android:padding="8dp"
+                android:src="@drawable/ic_search_green_24dp"
+                android:background="@drawable/background_rectangle_button_primary"
+                app:layout_constraintLeft_toRightOf="@id/text_location"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_location_title"/>
 
             <fragment
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:layout_marginTop="8dp"/>
-        </LinearLayout>
+                android:layout_marginTop="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/button_search"/>
+        </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 
     <Button

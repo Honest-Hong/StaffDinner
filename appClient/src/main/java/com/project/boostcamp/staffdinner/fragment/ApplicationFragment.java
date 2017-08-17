@@ -642,7 +642,6 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         btnStyle.setEnabled(!block);
     }
 
-    @OnClick(R.id.button_helper)
     public void getTemplete() {
         ArrayList<String> data = new ArrayList<>();
         data.add("1번 예시입니다.");

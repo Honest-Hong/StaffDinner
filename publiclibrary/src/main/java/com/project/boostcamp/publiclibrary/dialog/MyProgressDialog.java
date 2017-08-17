@@ -3,6 +3,7 @@ package com.project.boostcamp.publiclibrary.dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -18,8 +19,25 @@ import android.widget.ProgressBar;
 public class MyProgressDialog extends DialogFragment {
 
     public static MyProgressDialog show(FragmentManager fragmentManager) {
-        MyProgressDialog dialog = new MyProgressDialog();
+        MyProgressDialog dialog = init();
         dialog.show(fragmentManager, null);
+        return dialog;
+    }
+
+    public static void show(FragmentManager fragmentManager, long delay) {
+        final MyProgressDialog dialog = init();
+        dialog.show(fragmentManager, null);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dialog.dismiss();
+            }
+        }, delay);
+    }
+
+    private static MyProgressDialog init() {
+        MyProgressDialog dialog = new MyProgressDialog();
+        dialog.setCancelable(false);
         return dialog;
     }
 

@@ -2,6 +2,7 @@ package com.project.boostcamp.staffdinner.activity;
 
 import android.content.Intent;
 import android.location.LocationManager;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.github.amlcurran.showcaseview.ShowcaseView;
@@ -38,6 +40,7 @@ import com.project.boostcamp.publiclibrary.data.Application;
 import com.project.boostcamp.publiclibrary.data.ApplicationStateType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.NotiType;
+import com.project.boostcamp.publiclibrary.dialog.MyProgressDialog;
 import com.project.boostcamp.publiclibrary.domain.ClientDTO;
 import com.project.boostcamp.publiclibrary.inter.ContactEventListener;
 import com.project.boostcamp.publiclibrary.inter.DialogResultListener;
@@ -48,6 +51,7 @@ import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
 import com.project.boostcamp.publiclibrary.util.Logger;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
+import com.project.boostcamp.staffdinner.GlideApp;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.MainViewPagerAdapter;
 import com.project.boostcamp.staffdinner.fragment.ApplicationFragment;
@@ -94,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addApi(LocationServices.API)
                 .build();
         googleApiClient.connect();
+
+        MyProgressDialog.show(getSupportFragmentManager(), 1500);
     }
 
     private void setupShowcase() {
@@ -251,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
      * 백버튼을 눌렀을 때, 드로우어가 열려있으면 닫아준다
      * 쇼케이스 뷰가 보여지고있으면 끝내준다
      */
+    private long backPressedTime = 0;
     @Override
     public void onBackPressed() {
         if(drawer.isDrawerOpen(GravityCompat.START)) {
@@ -258,6 +265,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         } else if(showcaseView != null && showcaseView.isShowing()) {
             showcaseView.hide();
             showcaseCount = 0;
+        } else if(System.currentTimeMillis() - backPressedTime < 2000){
+            Toast.makeText(this, R.string.one_more_click_for_exit, Toast.LENGTH_SHORT).show();
+            backPressedTime = System.currentTimeMillis();
         } else {
             super.onBackPressed();
         }

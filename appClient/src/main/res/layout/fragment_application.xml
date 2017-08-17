@@ -18,9 +18,10 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="16dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
@@ -32,12 +33,22 @@
 
                 <TextView
                     android:id="@+id/text_state"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_weight="1"
                     android:textSize="@dimen/fontLargest"
                     android:textColor="@color/orange"
                     android:textStyle="bold"/>
+
+                <Button
+                    android:id="@+id/button_helper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/helper"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/fontNormal"
+                    android:background="@drawable/background_rectangle_button_primary"/>
             </LinearLayout>
 
             <View
@@ -47,13 +58,12 @@
                 android:background="@color/whiteGrey" />
 
             <TextView
+                style="@style/ApplicationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
-                android:text="@string/text_title"
-                android:textSize="@dimen/fontSmall"
-                android:textColor="@color/grey"/>
+                android:text="@string/message"/>
 
             <EditText
                 android:id="@+id/edit_title"
@@ -61,19 +71,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:hint="@string/message_hint"
                 android:maxLength="@integer/max_length_message"
                 android:background="@drawable/background_edit_text_white"
                 android:inputType="text"
                 android:maxLines="1" />
 
             <TextView
+                style="@style/ApplicationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
-                android:text="@string/text_number"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/fontSmall"/>
+                android:text="@string/text_number"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -107,13 +117,12 @@
                     android:background="@drawable/background_edit_text_white"/>
 
                 <TextView
+                    style="@style/ApplicationTextView"
                     android:id="@+id/text_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@string/text_count_person"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/fontNormal"/>
+                    android:text="@string/text_count_person"/>
 
                 <ImageButton
                     android:id="@+id/button_down"
@@ -133,13 +142,12 @@
                 android:background="@color/whiteGrey" />
 
             <TextView
+                style="@style/ApplicationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_time"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/fontSmall"/>
+                android:text="@string/text_time"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -158,10 +166,10 @@
                     android:layout_height="wrap_content"/>
 
                 <TextView
+                    style="@style/ApplicationTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/hour"
-                    android:textSize="@dimen/fontLarge"/>
+                    android:text="@string/hour"/>
 
                 <com.project.boostcamp.publiclibrary.view.WheelPicker
                     android:id="@+id/wheel_minute"
@@ -170,10 +178,10 @@
                     android:layout_marginStart="16dp"/>
 
                 <TextView
+                    style="@style/ApplicationTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/minute"
-                    android:textSize="@dimen/fontLarge"/>
+                    android:text="@string/minute"/>
 
                 <com.project.boostcamp.publiclibrary.view.WheelPicker
                     android:id="@+id/wheel_date"
@@ -191,13 +199,12 @@
                 android:background="@color/whiteGrey" />
 
             <TextView
+                style="@style/ApplicationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
-                android:text="@string/text_style"
-                android:textSize="@dimen/fontSmall"
-                android:textColor="@color/grey"/>
+                android:text="@string/text_style"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -212,6 +219,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:hint="@string/style_hint"
                     android:textSize="@dimen/fontNormal"
                     android:textColor="@color/black"
                     android:focusable="true"
@@ -229,13 +237,12 @@
             </LinearLayout>
 
             <TextView
+                style="@style/ApplicationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_menu"
-                android:textSize="@dimen/fontSmall"
-                android:textColor="@color/grey"/>
+                android:text="@string/text_menu"/>
 
             <EditText
                 android:id="@+id/edit_menu"
@@ -243,6 +250,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
+                android:hint="@string/menu_help"
                 android:maxLength="@integer/max_length_menu"
                 android:background="@drawable/background_edit_text_white"
                 android:inputType="text"
@@ -250,13 +258,12 @@
 
 
             <TextView
+                style="@style/ApplicationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/text_location"
-                android:textSize="@dimen/fontSmall"
-                android:textColor="@color/grey"/>
+                android:text="@string/text_location"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

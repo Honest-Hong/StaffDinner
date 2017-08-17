@@ -68,4 +68,9 @@
         <item name="met_bottomTextSize">@dimen/fontSmall</item>
         <item name="met_floatingLabelTextSize">@dimen/fontSmall</item>
     </style>
+
+    <style name="ApplicationTextView">
+        <item name="android:textSize">@dimen/fontSmall</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

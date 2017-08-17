@@ -7,12 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.CallbackManager;
@@ -36,6 +37,7 @@ import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
+import com.project.boostcamp.publiclibrary.animation.ViewSizeAnimation;
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.AccountType;
@@ -146,30 +148,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void appearView(View v) {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.appear);
-        animation.setInterpolator(new DecelerateInterpolator());
-        v.startAnimation(animation);
         v.setVisibility(View.VISIBLE);
     }
 
-    private void disappearView(final View v) {
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.disappear);
-        animation.setInterpolator(new DecelerateInterpolator());
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                v.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-            }
-        });
-        v.startAnimation(animation);
+    private void disappearView(View v) {
+        v.setVisibility(View.GONE);
     }
 
     /**

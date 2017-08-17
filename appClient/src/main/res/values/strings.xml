@@ -45,7 +45,7 @@
     <string name="text_select_this">이곳으로 지정</string>
     <string name="text_no_address">주소 없음</string>
     <string name="dialog_alert_title">알림</string>
-    <string name="dialog_apply_message">신청하면 취소는 가능하지만 수정이 불가능합니다. 이대로 신청하시겠습니까?</string>
+    <string name="dialog_apply_message">메시지: %1$s\n인원: %2$d명\n시간: %3$s\n분위기: %4$s\n메뉴: %5$s\n위치: %6$s\n\n신청하면 취소는 가능하지만 수정이 불가능합니다. 이대로 신청하시겠습니까?</string>
     <!--<string name="dialog_contact_message">계약시 1인당 1,000￦ 의 계약금이 발생합니다. 현재 견적서로 계약을 하시겠습니까?</string>-->
     <string name="dialog_contact_message">계약을 하면 식당 사장님에게 알림이 갑니다. 또한 계약은 취소할 수 없습니다. 견적서를 계약 하시겠습니까?</string>
     <string name="dialog_cancel_message">신청서를 취소하면 내용이 모두 삭제 됩니다. 정말로 취소하시겠습니까?</string>
@@ -121,4 +121,14 @@
     <string name="sign_up_email">이메일로 가입하기</string>
     <string name="password_confirm">비밀번호 확인</string>
     <string name="bonus_image">사진</string>
+    <string name="message">메시지</string>
+    <string name="message_hint">(예시)강남역 근처에서 조용하게 회식하고 싶습니다.</string>
+    <string name="style_hint">(예시)일반</string>
+    <string name="menu_help">(예시)맛있는 치킨</string>
+    <string name="one_more_click_for_exit">한번 더 누르시면 종료됩니다</string>
+    <string name="title_is_more_than_8_characters">제목은 8글자 이상입니다.</string>
+    <string name="time_is_error">시간이 잘못되었습니다.</string>
+    <string name="select_style_please">분위기를 선택해주세요.</string>
+    <string name="select_menu_please">메뉴를 입력해주세요.</string>
+    <string name="helper">도우미</string>
 </resources>

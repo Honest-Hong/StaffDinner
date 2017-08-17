@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
@@ -76,6 +77,7 @@ import retrofit2.Response;
 
 public class ApplicationFragment extends Fragment implements OnMapReadyCallback, DialogResultListener {
     private static final LatLng DEFAULT_LOCATION = new LatLng(DefaultValue.DEFAULT_LATITUDE, DefaultValue.DEFAULT_LONGITUDE);
+    private View rootView;
     @BindView(R.id.scroll_view) NestedScrollView scrollView;
     @BindView(R.id.image_state) ImageView imageState; // 상단의 신청서 상태 이미지
     @BindView(R.id.text_state) TextView textState; // 상단의 신청서 상태 텍스트
@@ -112,6 +114,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         setupView(v);
         setupWheel(v);
         loadApplication();
+        rootView = v;
         return v;
     }
 
@@ -318,7 +321,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
      * 신청하기, 위치 찾기, 스타일 선택 버튼 이벤트
      * @param view
      */
-    @OnClick({R.id.button_apply, R.id.button_search, R.id.button_style})
+    @OnClick({R.id.button_apply, R.id.button_search, R.id.button_style, R.id.text_style})
     public void onClick(View view) {
         switch(view.getId()) {
             case R.id.button_apply:
@@ -332,6 +335,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
                 startActivityForResult(intentMap, RequestType.REQUEST_LOCATION);
                 break;
             case R.id.button_style:
+            case R.id.text_style:
                 StyleSelectDialog dialog = StyleSelectDialog.newInstance(styleResult, textStyle.getText().toString());
                 dialog.show(getFragmentManager(), null);
                 break;
@@ -347,7 +351,21 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
     private void handleApplyButton() {
         switch(application.getState()) {
             case ApplicationStateType.STATE_EDITING:
-                MyAlertDialog.newInstance(getString(R.string.dialog_alert_title), getString(R.string.dialog_apply_message), this)
+                if(!checkInvalidate()) {
+                    return;
+                }
+                String appId = application.getId();
+                application = getApplicationFromEditText(appId);
+                MyAlertDialog.newInstance(getString(R.string.dialog_alert_title),
+                        getString(
+                                R.string.dialog_apply_message,
+                                application.getTitle(),
+                                application.getNumber(),
+                                TimeHelper.getTimeString(application.getWantedTime(), getString(R.string.default_time_pattern)),
+                                application.getWantedStyle(),
+                                application.getWantedMenu(),
+                                textLocation.getText().toString()),
+                        this)
                         .show(getChildFragmentManager(), null);
                 break;
             case ApplicationStateType.STATE_APPLIED:
@@ -416,12 +434,6 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
      * 신청서를 등록하는 함수
      */
     public void submitApplication() {
-        if(!checkInvalidate()) {
-            return;
-        }
-
-        String appId = application.getId();
-        application = getApplicationFromEditText(appId);
         // 로컬에 저장
         SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
 
@@ -490,8 +502,8 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
      */
     private boolean checkInvalidate() {
         if(editTitle.getText().toString().length() < 8) {
-            editTitle.setError("제목은 8글자 이상입니다.");
-            editTitle.requestFocus();
+            Snackbar.make(rootView, R.string.title_is_more_than_8_characters, Snackbar.LENGTH_LONG).show();
+            scrollView.smoothScrollTo(0, editTitle.getTop());
             return false;
         }
         int hour = Integer.parseInt(wheelAdapterHour.getData().get(wheelHour.getSelectedIndex()));
@@ -505,17 +517,18 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         cal.set(Calendar.HOUR_OF_DAY, hour);
         cal.set(Calendar.MINUTE, minute);
         if(cal.getTimeInMillis() < System.currentTimeMillis()) {
-            Toast.makeText(getContext(), "잘못된 시간", Toast.LENGTH_SHORT).show();
+            Snackbar.make(rootView, R.string.time_is_error, Snackbar.LENGTH_LONG).show();
+            scrollView.smoothScrollTo(0, wheelMinute.getTop());
             return false;
         }
         if(textStyle.getText().toString().isEmpty()) {
-            textStyle.setError("분위기를 선택해주세요.");
-            textStyle.requestFocus();
+            Snackbar.make(rootView, R.string.select_style_please, Snackbar.LENGTH_LONG).show();
+            scrollView.smoothScrollTo(0, textStyle.getTop());
             return false;
         }
         if(editMenu.getText().toString().isEmpty()) {
-            editMenu.setError("메뉴를 입력해주세요.");
-            editMenu.requestFocus();
+            Snackbar.make(rootView, R.string.select_menu_please, Snackbar.LENGTH_LONG).show();
+            scrollView.smoothScrollTo(0, editMenu.getTop());
             return false;
         }
         return true;
@@ -625,5 +638,10 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         btnDown.setEnabled(!block);
         btnSearch.setEnabled(!block);
         btnStyle.setEnabled(!block);
+    }
+
+    @OnClick(R.id.button_helper)
+    public void getTemplete() {
+        Snackbar.make(rootView, "도우미", Snackbar.LENGTH_LONG).show();
     }
 }

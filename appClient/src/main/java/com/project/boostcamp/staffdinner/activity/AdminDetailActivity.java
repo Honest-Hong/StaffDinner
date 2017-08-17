@@ -35,7 +35,7 @@ import com.project.boostcamp.publiclibrary.util.TimeHelper;
 import com.project.boostcamp.staffdinner.GlideApp;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.BonusImageRecyclerAdapter;
-import com.project.boostcamp.staffdinner.adapter.NearReviewRecyclerAdapter;
+import com.project.boostcamp.publiclibrary.dialog.ImageDetailDialog;
 
 import java.util.ArrayList;
 
@@ -63,6 +63,7 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
     @BindView(R.id.rating_review_average) MaterialRatingBar ratingReviewAverage;
     @BindView(R.id.recycler_image) RecyclerView recyclerImage;
     private BonusImageRecyclerAdapter bonusImageAdapter;
+    private ArrayList<String> bonusImages;
     private String adminId;
     private int adminType;
     private AdminDTO data;
@@ -148,7 +149,7 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
         if(count == 0) {
             recyclerImage.setVisibility(View.GONE);
         } else {
-            ArrayList<String> bonusImages = new ArrayList<>();
+            bonusImages = new ArrayList<>();
             for (int i = 0; i < count; i++) {
                 bonusImages.add(RetrofitClient.getInstance().getBonusImageUrl(adminId, adminType, i));
             }
@@ -226,7 +227,11 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
     private DataEvent<String> bonusImageEvent = new DataEvent<String>() {
         @Override
         public void onClick(String data) {
-
+            new ImageDetailDialog.Builder(AdminDetailActivity.this)
+                    .setImages(bonusImages)
+                    .useInternet()
+                    .setSelected(bonusImages.indexOf(data))
+                    .create().show(getSupportFragmentManager(), null);
         }
     };
 }

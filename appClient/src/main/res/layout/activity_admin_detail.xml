@@ -34,20 +34,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"/>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:background="@color/whiteGrey" />
-
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_image"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:background="@color/whiteGrey" />
 
             <TextView
                 android:id="@+id/text_name"

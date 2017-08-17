@@ -24,6 +24,12 @@ public class BonusImageVH extends BaseVH<String> {
         super(itemView, dataEvent);
         this.context = context;
         ButterKnife.bind(this, itemView);
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BonusImageVH.this.dataEvent.onClick(data);
+            }
+        });
     }
 
     @Override

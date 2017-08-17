@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by Hong Tae Joon on 2017-07-25.
  */
 
-public class ContactRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
+public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactVH> {
     private Context context;
     private ArrayList<ContactDTO> data;
     private DataEvent<ContactDTO> dataEvent;
@@ -40,16 +40,12 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
     }
 
     @Override
-    public BaseVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == 0) {
-            return new ContactVH(LayoutInflater.from(context).inflate(R.layout.item_contact, parent, false), dataEvent, context);
-        } else {
-            return EmptyVH.vertical(parent, context.getString(R.string.not_exist_contact));
-        }
+    public ContactVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ContactVH(LayoutInflater.from(context).inflate(R.layout.item_contact, parent, false), dataEvent, context);
     }
 
     @Override
-    public void onBindViewHolder(BaseVH holder, int position) {
+    public void onBindViewHolder(ContactVH holder, int position) {
         holder.setupView(data.get(position));
     }
 

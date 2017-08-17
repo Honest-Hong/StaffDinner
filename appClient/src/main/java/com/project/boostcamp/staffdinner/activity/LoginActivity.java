@@ -239,7 +239,6 @@ public class LoginActivity extends AppCompatActivity {
                         public void onCompleted(
                                 JSONObject object,
                                 GraphResponse response) {
-                            Log.d("HTJ", "graph onComplete");
                             try {
                                 name = object.getString("name");
                                 type = AccountType.TYPE_FACEBOOK;
@@ -315,13 +314,15 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_login)
     public void doLogin() {
-        progressDialog = MyProgressDialog.show(getSupportFragmentManager());
         final String email = editEmail.getText().toString();
         final String password = editPassword.getText().toString();
+        if(email.isEmpty() || password.isEmpty()) {
+            Snackbar.make(getWindow().getDecorView().getRootView(), getString(R.string.empty_input_text), Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        progressDialog = MyProgressDialog.show(getSupportFragmentManager());
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(onSignInComplete);
-        Intent intent = new Intent(this, JoinActivity.class);
-        startActivity(intent);
     }
 
     @OnClick(R.id.button_email_sign_up)
@@ -332,7 +333,6 @@ public class LoginActivity extends AppCompatActivity {
     private OnCompleteListener<AuthResult> onSignInComplete = new OnCompleteListener<AuthResult>() {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
-            Logger.i(this, "onComplete", "");
             if(task.isSuccessful()) {
                 Logger.i(this, "onComplete", "isSuccessful");
                 id = task.getResult().getUser().getUid();

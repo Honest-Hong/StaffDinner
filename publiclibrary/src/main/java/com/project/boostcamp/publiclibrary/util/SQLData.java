@@ -50,4 +50,10 @@ public class SQLData {
      */
     public static final String QUERY_SELECT_CONTACT_LASTEST_ID
             = "SELECT id FROM contacts ORDER BY contactTime DESC LIMIT 1";
+
+    /**
+     * 계약 목록 비우기 쿼리
+     */
+    public static final String QUERT_DELETE_CONTACTS
+            = "DELETE FROM contacts";
 }

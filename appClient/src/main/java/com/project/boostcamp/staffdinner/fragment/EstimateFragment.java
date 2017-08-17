@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
@@ -40,6 +42,8 @@ import static android.app.Activity.RESULT_OK;
 public class EstimateFragment extends Fragment {
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
+    @BindView(R.id.text_empty) TextView textEmpty;
+    @BindView(R.id.image_empty) ImageView imageEmpty;
     private EstimateRecyclerAdapter adapter;
     private ContactEventListener contactEventListener;
 
@@ -94,12 +98,24 @@ public class EstimateFragment extends Fragment {
     private DataReceiver<ArrayList<ClientEstimateDTO>> dataReceiver = new DataReceiver<ArrayList<ClientEstimateDTO>>() {
         @Override
         public void onReceive(ArrayList<ClientEstimateDTO> data) {
-            adapter.setData(data);
+            if(data.size() == 0) {
+                recyclerView.setVisibility(View.GONE);
+                textEmpty.setVisibility(View.VISIBLE);
+                imageEmpty.setVisibility(View.VISIBLE);
+            } else {
+                recyclerView.setVisibility(View.VISIBLE);
+                textEmpty.setVisibility(View.GONE);
+                imageEmpty.setVisibility(View.GONE);
+                adapter.setData(data);
+            }
             hideRefreshing();
         }
 
         @Override
         public void onFail() {
+            recyclerView.setVisibility(View.GONE);
+            textEmpty.setVisibility(View.VISIBLE);
+            imageEmpty.setVisibility(View.VISIBLE);
             Toast.makeText(getContext(), R.string.fail_to_load_estimates, Toast.LENGTH_SHORT).show();
             hideRefreshing();
         }

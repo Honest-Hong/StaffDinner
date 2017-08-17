@@ -120,4 +120,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
         cursor.close();
     }
+
+    /**
+     * 계약 목록 비우기
+     */
+    public void removeContacts() {
+        getWritableDatabase().execSQL(SQLData.QUERT_DELETE_CONTACTS);
+    }
 }

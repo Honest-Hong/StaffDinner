@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by Hong Tae Joon on 2017-08-04.
  */
 
-public class EstimateRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
+public class EstimateRecyclerAdapter extends RecyclerView.Adapter<EstimateVH> {
     private Context context;
     private ArrayList<ClientEstimateDTO> data;
     private DataEvent<ClientEstimateDTO> dataEvent;
@@ -40,22 +40,13 @@ public class EstimateRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
     }
 
     @Override
-    public BaseVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == 0) {
-            return new EstimateVH(LayoutInflater.from(context).inflate(R.layout.item_estimate, parent, false), dataEvent, context);
-        } else {
-            return EmptyVH.vertical(parent, context.getString(R.string.not_exist_estimate));
-        }
+    public EstimateVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new EstimateVH(LayoutInflater.from(context).inflate(R.layout.item_estimate, parent, false), dataEvent, context);
     }
 
     @Override
-    public void onBindViewHolder(BaseVH holder, int position) {
+    public void onBindViewHolder(EstimateVH holder, int position) {
         holder.setupView(data.get(position));
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return data.get(position).getViewType();
     }
 
     @Override

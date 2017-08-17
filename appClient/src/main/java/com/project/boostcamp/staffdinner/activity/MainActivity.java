@@ -49,6 +49,7 @@ import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.inter.GuidePlayer;
 import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
 import com.project.boostcamp.publiclibrary.util.Logger;
+import com.project.boostcamp.publiclibrary.util.SQLiteHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.staffdinner.GlideApp;
@@ -302,6 +303,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         int type = SharedPreperenceHelper.getInstance(this).getLoginType();
         SharedPreperenceHelper.getInstance(this).saveLogin(new LoginDTO());
         SharedPreperenceHelper.getInstance(this).saveApplication(new Application());
+        SQLiteHelper.getInstance(this).removeContacts();
         if(type == AccountType.TYPE_KAKAO) {
             UserManagement.requestLogout(new LogoutResponseCallback() {
                 @Override

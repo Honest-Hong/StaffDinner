@@ -12,6 +12,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
@@ -38,6 +40,8 @@ import butterknife.ButterKnife;
 public class ContactFragment extends Fragment {
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
+    @BindView(R.id.image_empty) ImageView imageEmpty;
+    @BindView(R.id.text_empty) TextView textEmpty;
     private ContactRecyclerAdapter adapter;
     private ReviewEventListener reviewEventListener;
 
@@ -100,16 +104,35 @@ public class ContactFragment extends Fragment {
     private DataReceiver<ArrayList<ContactDTO>> dataReceiver = new DataReceiver<ArrayList<ContactDTO>>() {
         @Override
         public void onReceive(ArrayList<ContactDTO> data) {
-            SQLiteHelper.getInstance(getContext()).refreshContact(data);
-            adapter.setData(data);
+            if(data.size() == 0) {
+                recyclerView.setVisibility(View.GONE);
+                imageEmpty.setVisibility(View.VISIBLE);
+                textEmpty.setVisibility(View.VISIBLE);
+            } else {
+                recyclerView.setVisibility(View.VISIBLE);
+                imageEmpty.setVisibility(View.GONE);
+                textEmpty.setVisibility(View.GONE);
+                SQLiteHelper.getInstance(getContext()).refreshContact(data);
+                adapter.setData(data);
+            }
             hideRefreshing();
         }
 
         @Override
         public void onFail() {
-            adapter.setData(SQLiteHelper.getInstance(getContext()).selectContact());
-            Toast.makeText(getContext(), R.string.fail_to_load_contacts, Toast.LENGTH_SHORT).show();
+            ArrayList<ContactDTO> data = SQLiteHelper.getInstance(getContext()).selectContact();
+            if(data.size() == 0) {
+                recyclerView.setVisibility(View.GONE);
+                imageEmpty.setVisibility(View.VISIBLE);
+                textEmpty.setVisibility(View.VISIBLE);
+            } else {
+                recyclerView.setVisibility(View.VISIBLE);
+                imageEmpty.setVisibility(View.GONE);
+                textEmpty.setVisibility(View.GONE);
+                adapter.setData(data);
+            }
             hideRefreshing();
+            Toast.makeText(getContext(), R.string.fail_to_load_contacts, Toast.LENGTH_SHORT).show();
         }
     };
 

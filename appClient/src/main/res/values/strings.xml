@@ -131,4 +131,5 @@
     <string name="select_style_please">분위기를 선택해주세요.</string>
     <string name="select_menu_please">메뉴를 입력해주세요.</string>
     <string name="helper">도우미</string>
+    <string name="empty_input_text">입력창이 비어있습니다.</string>
 </resources>

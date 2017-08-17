@@ -298,4 +298,8 @@ public class RetrofitClient {
     public String getEventImageUrl(int id) {
         return BASE_URL + "images/event_" + id + ".jpg";
     }
+
+    public String getBonusImageUrl(String adminId, int adminType, int index) {
+        return BASE_URL + "images/" + adminId + "-" + adminType + "-bonus-" + index + ".jpg";
+    }
 }

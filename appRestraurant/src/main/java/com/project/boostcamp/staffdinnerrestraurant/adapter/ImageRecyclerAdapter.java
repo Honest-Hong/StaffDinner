@@ -8,8 +8,11 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
+import com.project.boostcamp.publiclibrary.util.Logger;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.adapter.viewholder.ImageVH;
+
+import java.util.ArrayList;
 
 /**
  * Created by Hong Tae Joon on 2017-08-16.
@@ -17,20 +20,20 @@ import com.project.boostcamp.staffdinnerrestraurant.adapter.viewholder.ImageVH;
 
 public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageVH> {
     private Context context;
-    private ArraySet<String> data;
+    private ArrayList<String> data;
     private DataEvent<String> dataEvent;
 
     public ImageRecyclerAdapter(Context context, DataEvent<String> dataEvent) {
         this.context = context;
         this.dataEvent = dataEvent;
-        this.data = new ArraySet<>();
+        this.data = new ArrayList<>();
     }
 
-    public ArraySet<String> getData() {
+    public ArrayList<String> getData() {
         return data;
     }
 
-    public void setData(ArraySet<String> data) {
+    public void setData(ArrayList<String> data) {
         this.data = data;
         notifyDataSetChanged();
     }
@@ -42,7 +45,7 @@ public class ImageRecyclerAdapter extends RecyclerView.Adapter<ImageVH> {
 
     @Override
     public void onBindViewHolder(ImageVH holder, int position) {
-        holder.setupView(data.valueAt(position));
+        holder.setupView(data.get(position));
     }
 
     @Override

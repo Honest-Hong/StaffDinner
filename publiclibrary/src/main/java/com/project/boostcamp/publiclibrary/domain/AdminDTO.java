@@ -22,6 +22,7 @@ public class AdminDTO implements Parcelable {
     private GeoDTO geo;
     private String image;
     private int type;
+    private int bonusImageCount;
 
     public AdminDTO() {
     }
@@ -36,6 +37,7 @@ public class AdminDTO implements Parcelable {
         geo = in.readParcelable(GeoDTO.class.getClassLoader());
         image = in.readString();
         type = in.readInt();
+        bonusImageCount = in.readInt();
     }
 
     public static final Creator<AdminDTO> CREATOR = new Creator<AdminDTO>() {
@@ -66,6 +68,7 @@ public class AdminDTO implements Parcelable {
         parcel.writeParcelable(geo, i);
         parcel.writeString(image);
         parcel.writeInt(type);
+        parcel.writeInt(bonusImageCount);
     }
 
     public String getId() {
@@ -138,5 +141,13 @@ public class AdminDTO implements Parcelable {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public int getBonusImageCount() {
+        return bonusImageCount;
+    }
+
+    public void setBonusImageCount(int bonusImageCount) {
+        this.bonusImageCount = bonusImageCount;
     }
 }

@@ -1,6 +1,7 @@
 package com.project.boostcamp.publiclibrary.api;
 
 import com.project.boostcamp.publiclibrary.domain.AdminApplicationDTO;
+import com.project.boostcamp.publiclibrary.domain.AdminDTO;
 import com.project.boostcamp.publiclibrary.domain.AdminEstimateDTO;
 import com.project.boostcamp.publiclibrary.domain.AdminJoinDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
@@ -109,4 +110,35 @@ public interface AdminService {
      */
     @GET("/admin/{id}/estimate/{appId}")
     Call<ResultIntDTO> existEstimate(@Path("id") String id, @Path("appId") String appId);
+
+    /**
+     * 식당 정보 요청
+     * @param id 식당 아이디
+     * @param type 식당 아이디 타입
+     * @return 식당 정보
+     */
+    @GET("/admin/{id}/information")
+    Call<AdminDTO> getAdminInformation(@Path("id") String id, @Query("type") int type);
+
+    /**
+     * 추가 이미지 설정 요청
+     * @param id
+     * @param type
+     * @param index
+     * @param file
+     * @return
+     */
+    @Multipart
+    @POST("/admin/{id}/{type}/bonusImage/{index}")
+    Call<ResultIntDTO> setBonusImage(@Path("id") String id, @Path("type") int type, @Path("index") int index, @Part MultipartBody.Part file);
+
+    /**
+     * 식당 정보 수정 요청
+     * @param id
+     * @param type
+     * @param adminDTO
+     * @return
+     */
+    @POST("/admin/{id}/{type}/information")
+    Call<ResultIntDTO> setAdminInformation(@Path("id") String id, @Path("type") int type, @Body AdminDTO adminDTO);
 }

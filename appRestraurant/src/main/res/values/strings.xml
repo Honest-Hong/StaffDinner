@@ -116,8 +116,14 @@
     <string name="admin_image_help">식당을 대표하는 이미지를 지정합니다. 클릭하면 선택할 수 있습니다.</string>
     <string name="main_menu">대표 메뉴</string>
     <string name="add_image">이미지 추가</string>
-    <string name="image">이미지</string>
+    <string name="image_max_10">이미지(최대 10장)</string>
     <string name="do_save">저장하기</string>
     <string name="account_activity_title">계정 설정</string>
     <string name="image_select_tool">이미지 선택 도구</string>
+    <string name="admin_style">식당 분위기</string>
+
+    <plurals name="menu_cost">
+        <item quantity="many">%d원</item>
+        <item quantity="other">%d원</item>
+    </plurals>
 </resources>

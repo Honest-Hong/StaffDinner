@@ -1,17 +1,14 @@
 package com.project.boostcamp.publiclibrary.api;
 
-import android.util.Log;
-
 import com.facebook.stetho.okhttp3.StethoInterceptor;
-import com.google.gson.Gson;
 import com.project.boostcamp.publiclibrary.domain.AdminApplicationDTO;
+import com.project.boostcamp.publiclibrary.domain.AdminDTO;
 import com.project.boostcamp.publiclibrary.domain.AdminEstimateDTO;
 import com.project.boostcamp.publiclibrary.domain.AdminJoinDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
-import com.project.boostcamp.publiclibrary.util.Logger;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -128,7 +125,6 @@ public class RetrofitAdmin {
     }
 
     public void setImage(String id, int type, File file, final DataReceiver<ResultIntDTO> dataReceiver) {
-        // TODO: 2017-08-08 이미지를 작게 만들 필요가 있다
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
         adminService.setImage(id, type, body).enqueue(new Callback<ResultIntDTO>() {
@@ -159,10 +155,75 @@ public class RetrofitAdmin {
         });
     }
 
+    /**
+     * 식당 정보 요청
+     * @param adminId 식당 아이디
+     * @param adminType 식당 아이디 타입
+     * @param dataReceiver 데이터 결과 리스너
+     */
+    public void getAdminInformation(String adminId, int adminType, final DataReceiver<AdminDTO> dataReceiver) {
+        adminService.getAdminInformation(adminId, adminType).enqueue(new Callback<AdminDTO>() {
+            @Override
+            public void onResponse(Call<AdminDTO> call, Response<AdminDTO> response) {
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<AdminDTO> call, Throwable t) {
+                dataReceiver.onFail();
+            }
+        });
+    }
+
     public void refreshToken(String id, int type, String token) {
         TokenRefreshDTO dto = new TokenRefreshDTO();
         dto.setType(type);
         dto.setToken(token);
         adminService.updateToken(id, dto);
+    }
+
+    /**
+     * 식당의 추가 이미지 설정 요청
+     * @param id
+     * @param type
+     * @param index
+     * @param file
+     * @param dataReceiver
+     */
+    public void setBonusImage(String id, int type, int index, File file, final DataReceiver<ResultIntDTO> dataReceiver) {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestBody);
+        adminService.setBonusImage(id, type, index, body).enqueue(new Callback<ResultIntDTO>() {
+            @Override
+            public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResultIntDTO> call, Throwable t) {
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    /**
+     * 식당 정보 수정 요청
+     * @param adminId
+     * @param adminType
+     * @param dto
+     * @param dataReceiver
+     */
+    public void setAdminInformation(String adminId, int adminType, AdminDTO dto, final DataReceiver<ResultIntDTO> dataReceiver) {
+        adminService.setAdminInformation(adminId, adminType, dto).enqueue(new Callback<ResultIntDTO>() {
+            @Override
+            public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResultIntDTO> call, Throwable t) {
+                dataReceiver.onFail();
+            }
+        });
     }
 }

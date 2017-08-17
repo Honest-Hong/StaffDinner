@@ -34,6 +34,7 @@ import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.publiclibrary.util.TimeHelper;
 import com.project.boostcamp.staffdinner.GlideApp;
 import com.project.boostcamp.staffdinner.R;
+import com.project.boostcamp.staffdinner.adapter.BonusImageRecyclerAdapter;
 import com.project.boostcamp.staffdinner.adapter.NearReviewRecyclerAdapter;
 
 import java.util.ArrayList;
@@ -60,6 +61,8 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
     @BindView(R.id.text_review_average) TextView textReviewAverage;
     @BindView(R.id.text_review_number) TextView textReviewNumber;
     @BindView(R.id.rating_review_average) MaterialRatingBar ratingReviewAverage;
+    @BindView(R.id.recycler_image) RecyclerView recyclerImage;
+    private BonusImageRecyclerAdapter bonusImageAdapter;
     private String adminId;
     private int adminType;
     private AdminDTO data;
@@ -135,9 +138,26 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
         textMenu.setText(data.getMenu());
         textCost.setText(getString(R.string.won, data.getCost()));
         textLocation.setText(GeocoderHelper.getAddress(AdminDetailActivity.this, data.getGeo().toLatLng()));
+        setupBonusImage(data.getBonusImageCount());
 
         SupportMapFragment map = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         map.getMapAsync(AdminDetailActivity.this);
+    }
+
+    private void setupBonusImage(int count) {
+        if(count == 0) {
+            recyclerImage.setVisibility(View.GONE);
+        } else {
+            ArrayList<String> bonusImages = new ArrayList<>();
+            for (int i = 0; i < count; i++) {
+                bonusImages.add(RetrofitClient.getInstance().getBonusImageUrl(adminId, adminType, i));
+            }
+            bonusImageAdapter = new BonusImageRecyclerAdapter(this, bonusImageEvent);
+            bonusImageAdapter.setData(bonusImages);
+            recyclerImage.setHasFixedSize(true);
+            recyclerImage.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+            recyclerImage.setAdapter(bonusImageAdapter);
+        }
     }
 
     private void setupReview(ArrayList<ReviewDTO> data) {
@@ -202,4 +222,11 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
         intent.setData(Uri.parse("tel:" + data.getPhone()));
         startActivity(intent);
     }
+
+    private DataEvent<String> bonusImageEvent = new DataEvent<String>() {
+        @Override
+        public void onClick(String data) {
+
+        }
+    };
 }

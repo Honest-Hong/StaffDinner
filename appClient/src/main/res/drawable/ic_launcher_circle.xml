@@ -6,7 +6,7 @@
     android:viewportHeight="192">
 
     <path
-        android:fillColor="#159d82"
+        android:fillColor="#4CAF50"
         android:strokeWidth="1"
         android:pathData="M96.49 192C43.78 192 0.98 149.2 0.98 96.49C0.98 43.77 43.78 0.98 96.49
 0.98C149.2 0.98 192 43.77 192 96.49C192 149.2 149.2 192 96.49 192Z" />
@@ -19,7 +19,7 @@
         android:pathData="M96.49 192C43.78 192 0.98 149.2 0.98 96.49C0.98 43.77 43.78 0.98 96.49
 0.98C149.2 0.98 192 43.77 192 96.49C192 149.2 149.2 192 96.49 192Z" />
     <path
-        android:fillColor="#159d82"
+        android:fillColor="#4CAF50"
         android:fillAlpha="0"
         android:strokeColor="#000000"
         android:strokeAlpha="0"

@@ -160,11 +160,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void onReceive(LoginDTO data) {
             if(data.getId() == null) {
-                Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
-                intent.putExtra(ExtraType.EXTRA_LOGIN_ID, id);
-                intent.putExtra(ExtraType.EXTRA_LOGIN_TYPE, type);
-                startActivity(intent);
-                finish();
+                redirectJoinActivity();
             } else {
                 redirectMainActivity(data);
             }
@@ -174,6 +170,13 @@ public class LoginActivity extends AppCompatActivity {
         public void onFail() {
         }
     };
+
+    private void redirectJoinActivity() {
+        Intent intent = new Intent(LoginActivity.this, JoinActivity.class);
+        intent.putExtra(ExtraType.EXTRA_LOGIN_ID, id);
+        intent.putExtra(ExtraType.EXTRA_LOGIN_TYPE, type);
+        startActivity(intent);
+    }
 
     private void redirectMainActivity(LoginDTO loginDTO) {
         RetrofitAdmin.getInstance().refreshToken(loginDTO.getId(), loginDTO.getType(), FirebaseInstanceId.getInstance().getToken());

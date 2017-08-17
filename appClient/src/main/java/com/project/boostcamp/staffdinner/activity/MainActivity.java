@@ -45,6 +45,7 @@ import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.inter.GuidePlayer;
 import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
+import com.project.boostcamp.publiclibrary.util.Logger;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.staffdinner.R;
@@ -217,6 +218,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             return;
         }
         int type = intent.getIntExtra(ExtraType.EXTRA_NOTIFICATION_TYPE, NotiType.NOTIFICATION_TYPE_NONE);
+        Logger.i(this, "handleIntent type", type + "");
         switch(type) {
             case NotiType.NOTIFICATION_TYPE_APPLICATION:
                 viewPager.setCurrentItem(1);
@@ -349,8 +351,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @Override
     public void onContact() {
         viewPager.setCurrentItem(1);
-        ApplicationFragment fragment = (ApplicationFragment) getSupportFragmentManager().getFragments().get(2);
-        fragment.setState(ApplicationStateType.STATE_CONTACTED);
+        ApplicationFragment appFragment = (ApplicationFragment) getSupportFragmentManager().getFragments().get(2);
+        appFragment.setState(ApplicationStateType.STATE_CONTACTED);
+        ContactFragment contactFragment = (ContactFragment) getSupportFragmentManager().getFragments().get(4);
+        contactFragment.loadData();
     }
 
     /**

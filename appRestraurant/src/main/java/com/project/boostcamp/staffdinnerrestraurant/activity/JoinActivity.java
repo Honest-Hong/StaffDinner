@@ -26,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -39,8 +40,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.kakao.auth.Session;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
+import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.Geo;
 import com.project.boostcamp.publiclibrary.data.RequestType;
@@ -418,5 +423,19 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     protected void onStart() {
         super.onStart();
         checkGPS();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(loginType == AccountType.TYPE_KAKAO) {
+            UserManagement.requestLogout(new LogoutResponseCallback() {
+                @Override
+                public void onCompleteLogout() {
+                }
+            });
+        } else if(loginType == AccountType.TYPE_FACEBOOK) {
+            LoginManager.getInstance().logOut();
+        }
+        super.onBackPressed();
     }
 }

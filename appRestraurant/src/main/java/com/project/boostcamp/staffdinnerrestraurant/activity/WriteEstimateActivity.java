@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.AdminApplication;
+import com.project.boostcamp.publiclibrary.data.ExtraType;
+import com.project.boostcamp.publiclibrary.data.NotiType;
 import com.project.boostcamp.publiclibrary.inter.DialogResultListener;
 import com.project.boostcamp.publiclibrary.dialog.MyAlertDialog;
 import com.project.boostcamp.publiclibrary.domain.EstimateAddDTO;
@@ -127,6 +129,7 @@ public class WriteEstimateActivity extends AppCompatActivity implements DialogRe
     private void returnToMain() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(ExtraType.EXTRA_NOTIFICATION_TYPE, NotiType.NOTIFICATION_TYPE_ESTIMATE);
         startActivity(intent);
         finish();
     }

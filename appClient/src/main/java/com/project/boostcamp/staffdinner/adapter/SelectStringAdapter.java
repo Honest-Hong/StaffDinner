@@ -17,16 +17,15 @@ import java.util.ArrayList;
 
 public class SelectStringAdapter extends RecyclerView.Adapter<SelectStringVH> {
     private Context context;
-    private ArrayList<String> data;
+    private String[] data;
     private DataEvent<String> dataEvent;
 
     public SelectStringAdapter(Context context, DataEvent<String> dataEvent) {
         this.context = context;
         this.dataEvent = dataEvent;
-        this.data = new ArrayList<>();
     }
 
-    public void setData(ArrayList<String> data) {
+    public void setData(String[] data) {
         this.data = data;
     }
 
@@ -37,11 +36,13 @@ public class SelectStringAdapter extends RecyclerView.Adapter<SelectStringVH> {
 
     @Override
     public void onBindViewHolder(SelectStringVH holder, int position) {
-        holder.setupView(data.get(position));
+        holder.setupView(data[position]);
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return data != null?
+                data.length :
+                0;
     }
 }

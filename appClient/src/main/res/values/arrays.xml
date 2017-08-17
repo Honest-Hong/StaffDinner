@@ -23,4 +23,26 @@
         <item>최근에 올린 신청서에 달린 모든 견적서를 이 곳에서 확인할 수 있습니다. 견적서는 식당의 사장님들께서 직접 작성한 내용입니다. 견적서를 자세히 보신 후에 계약을 하실 수 있습니다.</item>
         <item>견적서를 계약하셨을 때 모든 이력이 이 곳에 남게 됩니다. 계약서를 자세히 볼 수 있습니다.</item>
     </string-array>
+
+    <string-array name="example_title">
+        <item>근처에서 회식을 하고 싶습니다!</item>
+        <item>맛있는 치맥 식당 연락 주세요!</item>
+        <item>삼겹살에 소주 한잔 하고 싶습니다.</item>
+        <item>근처 조용한 단체석 구합니다.</item>
+    </string-array>
+
+    <string-array name="example_time">
+        <item>30분 후</item>
+        <item>1시간 후</item>
+        <item>1시간 30분 후</item>
+        <item>2시간 후</item>
+        <item>3시간 후</item>
+    </string-array>
+
+    <string-array name="example_menu">
+        <item>맛있는 삼겹살</item>
+        <item>치킨과 맥주</item>
+        <item>얼큰한 탕</item>
+        <item>소고기</item>
+    </string-array>
 </resources>

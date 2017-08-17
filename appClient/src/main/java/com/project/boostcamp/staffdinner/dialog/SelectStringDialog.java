@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class SelectStringDialog extends DialogFragment {
     private String title;
-    private ArrayList<String> data;
+    private String[] data;
     private DataEvent<String> returnEvent;
 
     @NonNull
@@ -55,7 +55,7 @@ public class SelectStringDialog extends DialogFragment {
         this.title = title;
     }
 
-    public void setData(ArrayList<String> data) {
+    public void setData(String[] data) {
         this.data = data;
     }
 
@@ -74,7 +74,7 @@ public class SelectStringDialog extends DialogFragment {
             return this;
         }
 
-        public Builder setData(ArrayList<String> data) {
+        public Builder setData(String[] data) {
             dialog.setData(data);
             return this;
         }

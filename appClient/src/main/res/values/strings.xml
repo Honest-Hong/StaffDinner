@@ -132,4 +132,7 @@
     <string name="select_menu_please">메뉴를 입력해주세요.</string>
     <string name="helper">도우미</string>
     <string name="empty_input_text">입력창이 비어있습니다.</string>
+    <string name="time_example">시간 예시</string>
+    <string name="message_example">메시지 예시</string>
+    <string name="menu_example">메뉴 예시</string>
 </resources>

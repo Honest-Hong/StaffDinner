@@ -257,17 +257,25 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         editNumber.setText(application.getNumber() + "");
         textStyle.setText(application.getWantedStyle());
         editMenu.setText(application.getWantedMenu());
+        setWheelTime(application.getWantedTime());
 
+
+        // TODO: 2017-08-03 정확한 날짜를 가리키도록 하기
+        setState(application.getState());
+        // TODO: 2017-07-28 저장된 위치 맵에 출력하기
+    }
+
+    private void setWheelTime(long time) {
         // 현재 시간 또는 신청서에 저장되어있는 시간을 가져와서
         // 해당하는 시, 분, 날짜를 가리키도록 한다
         // 하지만 41분이면 40분으로 설정할 수 없기 때문에 시간을 추가해서 지정해주는데
         // 51분이었을 경우 0분으로 바꾸고 1시간을 추가해줘야 한다
         // 마찬가지로 시간도 23시에서 24시로 변경될 경우 하루를 추가해준다
-        int hourIndex = TimeHelper.getHour(application.getWantedTime());
-        int minuteIndex = (TimeHelper.getMinute(application.getWantedTime()) + 9) / 10;
+        int hourIndex = TimeHelper.getHour(time);
+        int minuteIndex = (TimeHelper.getMinute(time) + 9) / 10;
         int dateIndex = 0;
         Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(application.getWantedTime());
+        cal.setTimeInMillis(time);
         String str = new SimpleDateFormat("hh/mm").format(cal.getTime());
         int i=0;
         for(String date : wheelAdapterDate.getData()) {
@@ -288,10 +296,6 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         wheelHour.setSelectedIndex(hourIndex);
         wheelMinute.setSelectedIndex(minuteIndex);
         wheelDate.setSelectedIndex(dateIndex);
-
-        // TODO: 2017-08-03 정확한 날짜를 가리키도록 하기
-        setState(application.getState());
-        // TODO: 2017-07-28 저장된 위치 맵에 출력하기
     }
 
     /**
@@ -642,17 +646,62 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         btnStyle.setEnabled(!block);
     }
 
-    public void getTemplete() {
-        ArrayList<String> data = new ArrayList<>();
-        data.add("1번 예시입니다.");
-        data.add("우리 모두 힘을 내요.");
+    @OnClick(R.id.button_message)
+    public void getMessageExample() {
         new SelectStringDialog.Builder()
-                .setTitle("선택해주세요")
-                .setData(data)
+                .setTitle(getString(R.string.message_example))
+                .setData(getResources().getStringArray(R.array.example_title))
                 .setReturnEvent(new DataEvent<String>() {
                     @Override
                     public void onClick(String data) {
+                        editTitle.setText(data);
+                    }
+                })
+                .create().show(getFragmentManager(), null);
+    }
+
+    @OnClick(R.id.button_time)
+    public void getTimeExample() {
+        new SelectStringDialog.Builder()
+                .setTitle(getString(R.string.time_example))
+                .setData(getResources().getStringArray(R.array.example_time))
+                .setReturnEvent(new DataEvent<String>() {
+                    @Override
+                    public void onClick(String data) {
+                        long addedTime = 0;
+                        switch(data) {
+                            case "30분 후":
+                                addedTime = 30 * 60 * 1000;
+                                break;
+                            case "1시간 후":
+                                addedTime = 60 * 60 * 1000;
+                                break;
+                            case "1시간 30분 후":
+                                addedTime = 90 * 60 * 1000;
+                                break;
+                            case "2시간 후":
+                                addedTime = 120 * 60 * 1000;
+                                break;
+                            case "3시간 후":
+                                addedTime = 180 * 60 * 1000;
+                                break;
+                        }
+                        setWheelTime(System.currentTimeMillis() + addedTime);
                         Toast.makeText(getContext(), data, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .create().show(getFragmentManager(), null);
+    }
+
+    @OnClick(R.id.button_menu)
+    public void getMenuExample() {
+        new SelectStringDialog.Builder()
+                .setTitle(getString(R.string.menu_example))
+                .setData(getResources().getStringArray(R.array.example_menu))
+                .setReturnEvent(new DataEvent<String>() {
+                    @Override
+                    public void onClick(String data) {
+                        editMenu.setText(data);
                     }
                 })
                 .create().show(getFragmentManager(), null);

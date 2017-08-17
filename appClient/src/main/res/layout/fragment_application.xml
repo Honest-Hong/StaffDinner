@@ -35,9 +35,9 @@
                 android:textSize="@dimen/fontLargest"
                 android:textColor="@color/orange"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toRightOf="@id/image_state"
-                app:layout_constraintTop_toTopOf="@id/image_state"
-                app:layout_constraintBottom_toBottomOf="@id/image_state"/>
+                app:layout_constraintLeft_toRightOf="@+id/image_state"
+                app:layout_constraintTop_toTopOf="@+id/image_state"
+                app:layout_constraintBottom_toBottomOf="@+id/image_state"/>
 
             <View
                 android:id="@+id/line1"
@@ -47,7 +47,7 @@
                 android:background="@color/whiteGrey"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_state"/>
+                app:layout_constraintTop_toBottomOf="@+id/image_state"/>
 
             <TextView
                 android:id="@+id/text_message_title"
@@ -58,22 +58,34 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/message"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line1"/>
+                app:layout_constraintTop_toBottomOf="@+id/line1"/>
 
             <EditText
                 android:id="@+id/edit_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
                 android:hint="@string/message_hint"
                 android:maxLength="@integer/max_length_message"
                 android:background="@drawable/background_edit_text_white"
                 android:inputType="text"
                 android:maxLines="1"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/button_message"
+                app:layout_constraintTop_toBottomOf="@+id/text_message_title"/>
+
+            <ImageButton
+                android:id="@+id/button_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/background_rectangle_button_primary"
+                android:src="@drawable/ic_arrow_drop_down"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_message_title"/>
+                app:layout_constraintLeft_toRightOf="@+id/edit_title"
+                app:layout_constraintTop_toTopOf="@+id/edit_title"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_title"/>
 
             <TextView
                 android:id="@+id/text_number_title"
@@ -84,7 +96,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/text_number"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_title"/>
+                app:layout_constraintTop_toBottomOf="@+id/edit_title"/>
 
             <View
                 android:layout_width="0dp"
@@ -105,23 +117,22 @@
                 android:src="@drawable/ic_add_green_24dp"
                 android:background="?attr/selectableItemBackground"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_number_title"/>
+                app:layout_constraintTop_toBottomOf="@+id/text_number_title"/>
 
             <EditText
                 android:id="@+id/edit_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
+                android:layout_marginStart="8dp"
                 android:gravity="center_horizontal"
                 android:maxLength="2"
                 android:inputType="number"
                 android:maxLines="1"
                 android:minWidth="50dp"
-                android:background="@drawable/background_edit_text_white"
-                app:layout_constraintLeft_toRightOf="@id/button_up"
-                app:layout_constraintTop_toTopOf="@id/button_up"
-                app:layout_constraintBottom_toBottomOf="@id/button_up"/>
+                android:background="@null"
+                app:layout_constraintLeft_toRightOf="@+id/button_up"
+                app:layout_constraintTop_toTopOf="@+id/button_up"
+                app:layout_constraintBottom_toBottomOf="@+id/button_up"/>
 
             <TextView
                 style="@style/ApplicationTextView"
@@ -130,20 +141,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:text="@string/text_count_person"
-                app:layout_constraintLeft_toRightOf="@id/edit_number"
-                app:layout_constraintTop_toTopOf="@id/button_up"
-                app:layout_constraintBottom_toBottomOf="@id/button_up"/>
+                app:layout_constraintLeft_toRightOf="@+id/edit_number"
+                app:layout_constraintTop_toTopOf="@+id/button_up"
+                app:layout_constraintBottom_toBottomOf="@+id/button_up"/>
 
             <ImageButton
                 android:id="@+id/button_down"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:src="@drawable/ic_remove_green_24dp"
                 android:background="?attr/selectableItemBackground"
-                app:layout_constraintLeft_toRightOf="@id/text_number"
-                app:layout_constraintTop_toTopOf="@id/button_up"
-                app:layout_constraintBottom_toBottomOf="@id/button_up"/>
+                app:layout_constraintLeft_toRightOf="@+id/text_number"
+                app:layout_constraintTop_toTopOf="@+id/button_up"
+                app:layout_constraintBottom_toBottomOf="@+id/button_up"/>
 
             <View
                 android:id="@+id/line2"
@@ -155,7 +166,7 @@
                 android:background="@color/whiteGrey"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/button_up"/>
+                app:layout_constraintTop_toBottomOf="@+id/button_up"/>
 
             <TextView
                 android:id="@+id/text_time_title"
@@ -163,10 +174,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
                 android:text="@string/text_time"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line2"/>
+                app:layout_constraintTop_toTopOf="@+id/button_time"
+                app:layout_constraintBottom_toBottomOf="@+id/button_time"/>
+
+            <ImageButton
+                android:id="@+id/button_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/background_rectangle_button_primary"
+                android:src="@drawable/ic_arrow_drop_down"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@+id/edit_title"
+                app:layout_constraintTop_toBottomOf="@+id/line2"/>
 
             <LinearLayout
                 android:id="@+id/linear"
@@ -181,7 +204,7 @@
                 android:padding="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_time_title">
+                app:layout_constraintTop_toBottomOf="@+id/button_time">
 
                 <com.project.boostcamp.publiclibrary.view.WheelPicker
                     android:id="@+id/wheel_hour"
@@ -223,7 +246,7 @@
                 android:background="@color/whiteGrey"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linear"/>
+                app:layout_constraintTop_toBottomOf="@+id/linear"/>
 
             <TextView
                 android:id="@+id/text_style_title"
@@ -234,7 +257,7 @@
                 android:layout_marginStart="16dp"
                 android:text="@string/text_style"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line3"/>
+                app:layout_constraintTop_toBottomOf="@+id/line3"/>
 
             <TextView
                 android:id="@+id/text_style"
@@ -261,9 +284,9 @@
                 android:text="@string/select"
                 android:textSize="@dimen/fontNormal"
                 android:textColor="@color/colorPrimary"
-                app:layout_constraintLeft_toRightOf="@id/text_style"
+                app:layout_constraintLeft_toRightOf="@+id/text_style"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_style_title"/>
+                app:layout_constraintTop_toBottomOf="@+id/text_style_title"/>
 
             <TextView
                 android:id="@+id/text_menu_title"
@@ -274,22 +297,34 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/text_menu"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/button_style"/>
+                app:layout_constraintTop_toBottomOf="@+id/button_style"/>
 
             <EditText
                 android:id="@+id/edit_menu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="8dp"
                 android:hint="@string/menu_help"
                 android:maxLength="@integer/max_length_menu"
                 android:background="@drawable/background_edit_text_white"
                 android:inputType="text"
                 android:maxLines="1"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@+id/button_menu"
+                app:layout_constraintTop_toBottomOf="@+id/text_menu_title" />
+
+            <ImageButton
+                android:id="@+id/button_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/background_rectangle_button_primary"
+                android:src="@drawable/ic_arrow_drop_down"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_menu_title"/>
+                app:layout_constraintLeft_toRightOf="@+id/edit_menu"
+                app:layout_constraintTop_toTopOf="@+id/edit_menu"
+                app:layout_constraintBottom_toBottomOf="@+id/edit_menu"/>
 
             <TextView
                 android:id="@+id/text_location_title"
@@ -300,7 +335,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/text_location"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_menu"/>
+                app:layout_constraintTop_toBottomOf="@+id/edit_menu"/>
 
             <TextView
                 android:id="@+id/text_location"
@@ -325,19 +360,19 @@
                 android:padding="8dp"
                 android:src="@drawable/ic_search_green_24dp"
                 android:background="@drawable/background_rectangle_button_primary"
-                app:layout_constraintLeft_toRightOf="@id/text_location"
+                app:layout_constraintLeft_toRightOf="@+id/text_location"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_location_title"/>
+                app:layout_constraintTop_toBottomOf="@+id/text_location_title"/>
 
             <fragment
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="300dp"
                 android:layout_marginTop="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/button_search"/>
+                app:layout_constraintTop_toBottomOf="@+id/button_search"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 

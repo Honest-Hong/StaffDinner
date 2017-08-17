@@ -44,6 +44,7 @@ import com.project.boostcamp.publiclibrary.inter.ArrayResultListener;
 import com.project.boostcamp.publiclibrary.domain.ClientApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultStringDTO;
+import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.publiclibrary.data.Application;
 import com.project.boostcamp.staffdinner.activity.MapDetailActivity;
@@ -55,6 +56,7 @@ import com.project.boostcamp.publiclibrary.util.TimeHelper;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
+import com.project.boostcamp.staffdinner.dialog.SelectStringDialog;
 import com.project.boostcamp.staffdinner.dialog.StyleSelectDialog;
 
 import java.text.SimpleDateFormat;
@@ -642,6 +644,18 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
 
     @OnClick(R.id.button_helper)
     public void getTemplete() {
-        Snackbar.make(rootView, "도우미", Snackbar.LENGTH_LONG).show();
+        ArrayList<String> data = new ArrayList<>();
+        data.add("1번 예시입니다.");
+        data.add("우리 모두 힘을 내요.");
+        new SelectStringDialog.Builder()
+                .setTitle("선택해주세요")
+                .setData(data)
+                .setReturnEvent(new DataEvent<String>() {
+                    @Override
+                    public void onClick(String data) {
+                        Toast.makeText(getContext(), data, Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .create().show(getFragmentManager(), null);
     }
 }

@@ -18,8 +18,10 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.NotiType;
@@ -36,9 +38,6 @@ import butterknife.ButterKnife;
 
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener{
-    public static final String EXTRA_NOTIFICATION_TYPE = "noti_type";
-    public static final int NOTIFICATION_TYPE_NONE = 0x00;
-    public static final int NOTIFICATION_TYPE_ESTIMATE = 0x01;
     @BindView(R.id.drawer) DrawerLayout drawer;
     @BindView(R.id.tab_layout) TabLayout tabLayout;
     @BindView(R.id.view_pager) ViewPager viewPager;
@@ -48,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("HTJ", "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -67,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addApi(LocationServices.API)
                 .build();
         googleApiClient.connect();
+
+        refreshToken();
     }
 
     private void setupToolbar() {
@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     private void setupViewPager() {
-        Log.d("HTJ", "setupViewPager");
         pagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
         viewPager = (ViewPager)findViewById(R.id.view_pager);
         viewPager.setAdapter(pagerAdapter);
@@ -109,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-        Log.d("HTJ", "setupViewPager end");
     }
 
     @Override
@@ -195,5 +193,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void refreshToken() {
+        String id = SharedPreperenceHelper.getInstance(this).getLoginId();
+        int type = SharedPreperenceHelper.getInstance(this).getLoginType();
+        RetrofitAdmin.getInstance().refreshToken(id, type, FirebaseInstanceId.getInstance().getToken());
     }
 }

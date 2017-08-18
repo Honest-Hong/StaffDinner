@@ -129,4 +129,5 @@
     <string name="time_example">시간 예시</string>
     <string name="message_example">메시지 예시</string>
     <string name="menu_example">메뉴 예시</string>
+    <string name="rating_format">%.1f점</string>
 </resources>

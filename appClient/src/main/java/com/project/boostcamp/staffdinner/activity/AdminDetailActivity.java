@@ -1,12 +1,15 @@
 package com.project.boostcamp.staffdinner.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -178,6 +181,14 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
             textTime.setText(TimeHelper.getTimeString(review.getWritedTime(), "MM/dd"));
             ratingBar.setProgress((int)(review.getRating()*2));
             linear.addView(v);
+
+            View line = new View(this);
+            line.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics())
+            ));
+            line.setBackgroundColor(ContextCompat.getColor(this, R.color.whiteGrey));
+            linear.addView(line);
         }
     }
 

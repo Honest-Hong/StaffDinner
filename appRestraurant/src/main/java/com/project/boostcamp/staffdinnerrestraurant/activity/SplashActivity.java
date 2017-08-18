@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.util.PermissionHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
@@ -52,9 +53,9 @@ public class SplashActivity extends AppCompatActivity {
     private void handleNotification() {
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         if(getIntent().getExtras() != null) {
-            String type = getIntent().getStringExtra(MainActivity.EXTRA_NOTIFICATION_TYPE);
+            String type = getIntent().getStringExtra(ExtraType.EXTRA_NOTIFICATION_TYPE);
             if(type != null) {
-                intent.putExtra(MainActivity.EXTRA_NOTIFICATION_TYPE, Integer.valueOf(type));
+                intent.putExtra(ExtraType.EXTRA_NOTIFICATION_TYPE, Integer.valueOf(type));
             }
         }
         startActivity(intent);

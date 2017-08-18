@@ -46,9 +46,10 @@ public class WriteReviewDialog extends DialogFragment implements MaterialRatingB
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.dialog_write_review, null);
         editContent = (EditText) v.findViewById(R.id.edit_content);
+        textRating = (TextView) v.findViewById(R.id.text_rating);
         ratingBar = (MaterialRatingBar) v.findViewById(R.id.rating_bar);
         ratingBar.setOnRatingChangeListener(this);
-        textRating = (TextView) v.findViewById(R.id.text_rating);
+        ratingBar.setRating(2.5f);
         TextView textWriter = (TextView) v.findViewById(R.id.text_writer);
         textWriter.setText(getArguments().getString(ExtraType.EXTRA_WRITER));
         TextView textReceiver = (TextView) v.findViewById(R.id.text_receiver);
@@ -74,6 +75,6 @@ public class WriteReviewDialog extends DialogFragment implements MaterialRatingB
 
     @Override
     public void onRatingChanged(MaterialRatingBar ratingBar, float rating) {
-        textRating.setText(rating + "점");
+        textRating.setText(getString(R.string.rating_format, rating));
     }
 }

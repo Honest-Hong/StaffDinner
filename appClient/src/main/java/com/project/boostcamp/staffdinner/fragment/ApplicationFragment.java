@@ -34,6 +34,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.gson.Gson;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.ApplicationStateType;
 import com.project.boostcamp.publiclibrary.data.DefaultValue;
@@ -45,6 +46,7 @@ import com.project.boostcamp.publiclibrary.domain.ClientApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultStringDTO;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
+import com.project.boostcamp.publiclibrary.util.Logger;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.publiclibrary.data.Application;
 import com.project.boostcamp.staffdinner.activity.MapDetailActivity;
@@ -232,7 +234,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
 
             @Override
             public void onFailure(Call<ClientApplicationDTO> call, Throwable t) {
-                application = SharedPreperenceHelper.getInstance(getContext()).getApply();
+//                application = SharedPreperenceHelper.getInstance(getContext()).getApply();
                 if(application == null) {
                     application = new Application();
                 }
@@ -396,6 +398,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
      */
     @Override
     public void onPositive() {
+        Logger.i(this, "onPositive", new Gson().toJson(application));
         if(application.getState() == ApplicationStateType.STATE_EDITING) {
             submitApplication();
         } else {
@@ -498,7 +501,6 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
                 marker.getPosition().longitude,
                 marker.getPosition().latitude));
         application.setWritedTime(TimeHelper.now());
-        application.setState(ApplicationStateType.STATE_APPLIED);
         return application;
     }
 

@@ -100,7 +100,6 @@
     <string name="login_by_kakao">카카오 계정으로 로그인</string>
     <string name="login_by_facebook">페이스북 계정으로 로그인</string>
     <string name="login_by_email">일반 이메일로 시작하기</string>
-    <string name="help">도움말</string>
     <string name="general">일반</string>
     <string name="new_admin">새로운 식당</string>
     <string name="to" translatable="false">To.</string>
@@ -131,4 +130,5 @@
     <string name="menu_example">메뉴 예시</string>
     <string name="rating_format">%.1f점</string>
     <string name="refresh">새로고침</string>
+    <string name="open_source_license">오픈소스 라이선스</string>
 </resources>

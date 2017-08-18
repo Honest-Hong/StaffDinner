@@ -2,15 +2,12 @@ package com.project.boostcamp.staffdinner.activity;
 
 import android.content.Intent;
 import android.location.LocationManager;
-import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
-import android.support.design.internal.BottomNavigationMenu;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -52,7 +49,6 @@ import com.project.boostcamp.publiclibrary.util.Logger;
 import com.project.boostcamp.publiclibrary.util.SQLiteHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
-import com.project.boostcamp.staffdinner.GlideApp;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.MainViewPagerAdapter;
 import com.project.boostcamp.staffdinner.fragment.ApplicationFragment;
@@ -287,6 +283,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 logout();
                 break;
             case R.id.nav_account:
+                break;
+            case R.id.nav_open_source_license:
+                startActivity(new Intent(this, OSLActivity.class));
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

@@ -12,6 +12,10 @@
                     android:id="@+id/nav_logout"
                     android:title="@string/nav_logout"
                     android:icon="@drawable/ic_arrow_back_grey"/>
+                <item
+                    android:id="@+id/nav_review"
+                    android:title="@string/review"
+                    android:icon="@drawable/ic_review_grey_24dp"/>
             </menu>
         </item>
     </group>

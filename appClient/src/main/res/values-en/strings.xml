@@ -37,7 +37,6 @@
     <string name="fail_to_load_contacts">Fail to load contacts. Load local data.</string>
     <string name="fail_to_load_estimates">Fail to load estimates.</string>
     <string name="general">General</string>
-    <string name="help">Help</string>
     <string name="help_empty">Data is empty!</string>
     <string name="hour">Hour</string>
     <string name="join_activity_title">Join</string>

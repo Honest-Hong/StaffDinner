@@ -209,7 +209,7 @@
         android:id="@+id/button_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
+        android:background="@drawable/background_rectangle_button_primary"
         android:textSize="@dimen/fontNormal"
         android:textColor="@color/colorPrimary"
         android:text="@string/text_send_estimate"/>

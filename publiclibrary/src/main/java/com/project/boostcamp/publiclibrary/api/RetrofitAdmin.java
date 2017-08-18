@@ -179,7 +179,17 @@ public class RetrofitAdmin {
         TokenRefreshDTO dto = new TokenRefreshDTO();
         dto.setType(type);
         dto.setToken(token);
-        adminService.updateToken(id, dto);
+        adminService.updateToken(id, dto).enqueue(new Callback<ResultIntDTO>() {
+            @Override
+            public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ResultIntDTO> call, Throwable t) {
+
+            }
+        });
     }
 
     /**

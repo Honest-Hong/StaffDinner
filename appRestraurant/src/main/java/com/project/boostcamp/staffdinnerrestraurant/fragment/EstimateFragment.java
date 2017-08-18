@@ -173,12 +173,15 @@ public class EstimateFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_estimate, menu);
+        inflater.inflate(R.menu.menu_estimates, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
+            case R.id.menu_refresh:
+                loadData();
+                break;
             case R.id.menu_show_all:
                 recyclerAdapter.setData(dataAll);
                 showMode = -1;

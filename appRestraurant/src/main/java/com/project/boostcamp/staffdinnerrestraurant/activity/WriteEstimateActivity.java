@@ -50,7 +50,6 @@ public class WriteEstimateActivity extends AppCompatActivity implements DialogRe
         ButterKnife.bind(this);
         if(getIntent() != null) {
             application = getIntent().getParcelableExtra(AdminApplication.class.getName());
-            setupToolbar();
             setupView();
         }
     }
@@ -62,14 +61,6 @@ public class WriteEstimateActivity extends AppCompatActivity implements DialogRe
         textTime.setText(TimeHelper.getTimeString(application.getTime(), getString(R.string.default_date)));
         textStyle.setText(application.getStyle());
         textMenu.setText(application.getMenu());
-    }
-
-    private void setupToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.write_estimate_activity_title);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
     }
 
     @OnClick(R.id.button_send)
@@ -91,7 +82,6 @@ public class WriteEstimateActivity extends AppCompatActivity implements DialogRe
         RetrofitAdmin.getInstance().adminService.addEstimate(application.getId(), dto).enqueue(new Callback<ResultIntDTO>() {
             @Override
             public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
-                Log.d("HTJ", "Estimate add - onResponse: " + response.body().getResult());
                 if(response.body().getResult() == 1) {
                     Animation animation = AnimationUtils.loadAnimation(WriteEstimateActivity.this, R.anim.disappear_up);
                     animation.setInterpolator(new DecelerateInterpolator());

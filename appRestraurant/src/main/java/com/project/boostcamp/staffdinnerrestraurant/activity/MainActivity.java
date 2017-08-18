@@ -68,8 +68,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addApi(LocationServices.API)
                 .build();
         googleApiClient.connect();
-
-        refreshToken();
     }
 
     private void setupToolbar() {
@@ -225,11 +223,5 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         } else {
             super.onBackPressed();
         }
-    }
-
-    private void refreshToken() {
-        String id = SharedPreperenceHelper.getInstance(this).getLoginId();
-        int type = SharedPreperenceHelper.getInstance(this).getLoginType();
-        RetrofitAdmin.getInstance().refreshToken(id, type, FirebaseInstanceId.getInstance().getToken());
     }
 }

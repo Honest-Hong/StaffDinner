@@ -9,9 +9,9 @@
     <application
         android:name=".GlobalApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher_circle"
+        android:icon="@drawable/ic_launcher_circle_green"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_launcher_circle"
+        android:roundIcon="@drawable/ic_launcher_circle_green"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data

@@ -2,6 +2,9 @@ package com.project.boostcamp.staffdinnerrestraurant.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -39,7 +42,7 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener{
     @BindView(R.id.drawer) DrawerLayout drawer;
-    @BindView(R.id.tab_layout) TabLayout tabLayout;
+    @BindView(R.id.bottom_nav) BottomNavigationView bottomNav;
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.navigation)
     NavigationView navigationView;
@@ -82,10 +85,30 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     }
 
     private void setupTabLayout() {
-        tabLayout = (TabLayout)findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_application));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_estimate));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.tab_title_contact));
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) bottomNav.getChildAt(0);
+        for(int i=0; i<menuView.getChildCount(); i++) {
+            BottomNavigationItemView menu = (BottomNavigationItemView) menuView.getChildAt(i);
+            menu.setShiftingMode(false);
+            menu.setChecked(false);
+        }
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()) {
+                    case R.id.menu_application:
+                        viewPager.setCurrentItem(0);
+                        break;
+                    case R.id.menu_estimate:
+                        viewPager.setCurrentItem(1);
+                        break;
+                    case R.id.menu_contact:
+                        viewPager.setCurrentItem(2);
+                        break;
+
+                }
+                return true;
+            }
+        });
     }
 
     private void setupViewPager() {
@@ -93,19 +116,28 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         viewPager = (ViewPager)findViewById(R.id.view_pager);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(3);
-        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
+            public void onPageSelected(int position) {
+                switch(position) {
+                    case 0:
+                        bottomNav.setSelectedItemId(R.id.menu_application);
+                        break;
+                    case 1:
+                        bottomNav.setSelectedItemId(R.id.menu_estimate);
+                        break;
+                    case 2:
+                        bottomNav.setSelectedItemId(R.id.menu_contact);
+                        break;
+                }
             }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
+            public void onPageScrollStateChanged(int state) {
             }
         });
     }

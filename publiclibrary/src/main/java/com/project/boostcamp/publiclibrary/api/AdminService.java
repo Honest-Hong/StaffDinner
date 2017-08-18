@@ -8,6 +8,8 @@ import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.EstimateAddDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewAverageDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
 
 import java.util.ArrayList;
@@ -141,4 +143,19 @@ public interface AdminService {
      */
     @POST("/admin/{id}/{type}/information")
     Call<ResultIntDTO> setAdminInformation(@Path("id") String id, @Path("type") int type, @Body AdminDTO adminDTO);
+
+    /**
+     *  식당에 달려있는 모든 리뷰 요청
+     */
+    @GET("/admin/{id}/review")
+    Call<ArrayList<ReviewDTO>> getAdminReviews(@Path("id") String id, @Query("type") int type);
+
+    /**
+     * 리뷰 평균 정보 요청
+     * @param id 식당 아이디
+     * @param type 식당 아이디 타입
+     * @return 리뷰 평균 정보
+     */
+    @GET("/admin/{id}/review/average")
+    Call<ReviewAverageDTO> getReviewAverage(@Path("id") String id, @Query("type") int type);
 }

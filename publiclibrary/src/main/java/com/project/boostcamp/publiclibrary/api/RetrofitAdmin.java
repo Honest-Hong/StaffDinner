@@ -8,6 +8,8 @@ import com.project.boostcamp.publiclibrary.domain.AdminJoinDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewAverageDTO;
+import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.domain.TokenRefreshDTO;
 
 import java.io.File;
@@ -232,6 +234,40 @@ public class RetrofitAdmin {
 
             @Override
             public void onFailure(Call<ResultIntDTO> call, Throwable t) {
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    /**
+     * 식당 리뷰 목록 요청
+     * @param adminId
+     * @param adminType
+     * @param dataReceiver
+     */
+    public void getAdminReviews(String adminId, int adminType, final DataReceiver<ArrayList<ReviewDTO>> dataReceiver) {
+        adminService.getAdminReviews(adminId, adminType).enqueue(new Callback<ArrayList<ReviewDTO>>() {
+            @Override
+            public void onResponse(Call<ArrayList<ReviewDTO>> call, Response<ArrayList<ReviewDTO>> response) {
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<ReviewDTO>> call, Throwable t) {
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    public void getAdminReviewAverage(String adminId, int adminType, final DataReceiver<ReviewAverageDTO> dataReceiver) {
+        adminService.getReviewAverage(adminId, adminType).enqueue(new Callback<ReviewAverageDTO>() {
+            @Override
+            public void onResponse(Call<ReviewAverageDTO> call, Response<ReviewAverageDTO> response) {
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ReviewAverageDTO> call, Throwable t) {
                 dataReceiver.onFail();
             }
         });

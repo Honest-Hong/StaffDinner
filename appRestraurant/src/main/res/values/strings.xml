@@ -128,6 +128,8 @@
     <string name="not_exist_contacts">아직 계약하신 적이 없으시군요!</string>
     <string name="refresh">새로고침</string>
     <string name="review">리뷰</string>
+    <string name="to">To.</string>
+    <string name="from">From.</string>
 
     <plurals name="menu_cost">
         <item quantity="many">%d원</item>

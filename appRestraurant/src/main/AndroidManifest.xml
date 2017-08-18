@@ -90,7 +90,8 @@
         <activity android:name=".activity.ContactDetailActivity" />
         <activity android:name=".activity.MapDetailActivity" />
         <activity android:name=".activity.EmailSignUpActivity" />
-        <activity android:name=".activity.AccountActivity"/>
+        <activity android:name=".activity.AccountActivity" />
+        <activity android:name=".activity.ReviewsActivity"></activity>
     </application>
 
 </manifest>

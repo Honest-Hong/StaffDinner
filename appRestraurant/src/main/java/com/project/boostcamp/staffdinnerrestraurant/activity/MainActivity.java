@@ -189,8 +189,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 logout();
                 break;
             case R.id.nav_account:
-                Intent intentAccount = new Intent(this, AccountActivity.class);
-                startActivity(intentAccount);
+                startActivity(new Intent(this, AccountActivity.class));
+                break;
+            case R.id.nav_review:
+                startActivity(new Intent(this, ReviewsActivity.class));
                 break;
         }
 

@@ -5,4 +5,5 @@
     <dimen name="fontLarge">21sp</dimen>
     <dimen name="fontNormal">19sp</dimen>
     <dimen name="fontSmall">17sp</dimen>
+    <dimen name="fontSmallest">14sp</dimen>
 </resources>

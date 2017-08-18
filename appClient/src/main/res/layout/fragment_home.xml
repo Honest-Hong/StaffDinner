@@ -1,167 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    
-    <LinearLayout
+
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <android.support.v4.view.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/event_height"/>
-
-            <me.relex.circleindicator.CircleIndicator
-                android:id="@+id/indicator"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_marginBottom="12dp"
-                android:layout_gravity="bottom|center_horizontal"/>
-        </FrameLayout>
+        <me.relex.circleindicator.CircleIndicator
+            android:id="@+id/indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginBottom="12dp"
+            android:layout_gravity="bottom|center_horizontal"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/view_pager"/>
 
         <View
-            android:layout_width="match_parent"
+            android:id="@+id/line1"
+            android:layout_width="0dp"
             android:layout_height="4dp"
-            android:background="@color/whiteGrey" />
+            android:background="@color/whiteGrey"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view_pager"/>
 
-        <FrameLayout
+        <View
             android:id="@+id/button_guide"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line1"/>
+
+        <ImageView
+            android:id="@+id/image_guide"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_help_white"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/text_guide"
+            app:layout_constraintTop_toTopOf="@+id/button_guide"
+            app:layout_constraintBottom_toBottomOf="@+id/button_guide"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
+
+        <TextView
+            android:id="@+id/text_guide"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:background="@color/colorPrimary">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:src="@drawable/ic_help_white"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/play_app_guide"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/fontLarge"/>
-            </LinearLayout>
-        </FrameLayout>
+            android:gravity="center"
+            android:text="@string/play_app_guide"
+            android:textColor="@color/white"
+            android:textSize="@dimen/fontLarge"
+            app:layout_constraintLeft_toRightOf="@+id/image_guide"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_guide"
+            app:layout_constraintBottom_toBottomOf="@+id/button_guide"/>
 
         <View
-            android:layout_width="match_parent"
+            android:id="@+id/line2"
+            android:layout_width="0dp"
             android:layout_height="4dp"
-            android:background="@color/whiteGrey" />
+            android:background="@color/whiteGrey"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_guide"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/text_near_admin"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/fontSmall"
+            android:text="@string/near_admin"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_refresh_location"
+            app:layout_constraintBottom_toBottomOf="@+id/button_refresh_location"/>
+
+        <ImageButton
+            android:id="@+id/button_refresh_location"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:src="@drawable/ic_refresh_primary_24dp"
+            android:background="@drawable/background_rectangle_button_primary"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line2"/>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/grey"
-                android:textSize="@dimen/fontSmall"
-                android:text="@string/near_admin"/>
+        <TextView
+            android:id="@+id/text_current_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:textSize="@dimen/fontSmallest"
+            android:textColor="@color/black"
+            app:layout_constraintRight_toLeftOf="@+id/button_refresh_location"
+            app:layout_constraintTop_toTopOf="@+id/button_refresh_location"
+            app:layout_constraintBottom_toBottomOf="@+id/button_refresh_location"/>
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_my_location_grey"/>
-
-            <TextView
-                android:id="@+id/text_current_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textSize="@dimen/fontSmallest"
-                android:textColor="@color/black"/>
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/image_my_location"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_my_location_grey"
+            app:layout_constraintRight_toLeftOf="@+id/text_current_location"
+            app:layout_constraintTop_toTopOf="@+id/button_refresh_location"
+            app:layout_constraintBottom_toBottomOf="@+id/button_refresh_location"
+            app:layout_constraintHorizontal_chainStyle="packed" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_near"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button_refresh_location"/>
 
         <View
-            android:layout_width="match_parent"
+            android:id="@+id/line3"
+            android:layout_width="0dp"
             android:layout_height="4dp"
             android:layout_marginTop="16dp"
-            android:background="@color/whiteGrey" />
+            android:background="@color/whiteGrey"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recycler_view_near"/>
 
         <TextView
+            android:id="@+id/text_lastest_review"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:text="@string/lastest_review"
             android:textColor="@color/grey"
-            android:textSize="@dimen/fontSmall"/>
+            android:textSize="@dimen/fontSmall"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line3"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_review"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginEnd="16dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_lastest_review"/>
 
         <View
-            android:layout_width="match_parent"
+            android:id="@+id/line4"
+            android:layout_width="0dp"
             android:layout_height="4dp"
             android:layout_marginTop="16dp"
-            android:background="@color/whiteGrey" />
+            android:background="@color/whiteGrey"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recycler_view_review"/>
 
         <TextView
+            android:id="@+id/text_new_admin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
             android:text="@string/new_admin"
             android:textColor="@color/grey"
-            android:textSize="@dimen/fontSmall"/>
+            android:textSize="@dimen/fontSmall"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line4"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_new_admin"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"/>
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_new_admin"/>
 
         <View
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="4dp"
             android:layout_marginTop="16dp"
-            android:background="@color/whiteGrey" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-
+            android:background="@color/whiteGrey"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recycler_view_new_admin"/>
+    </android.support.constraint.ConstraintLayout>
+    <!--
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
@@ -177,10 +227,5 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/fontSmall"/>
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@color/whiteGrey" />
-    </LinearLayout>
+    -->
 </android.support.v4.widget.NestedScrollView>

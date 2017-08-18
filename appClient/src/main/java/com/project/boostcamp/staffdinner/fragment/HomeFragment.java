@@ -74,8 +74,8 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
     private FusedLocationProviderClient fusedLocationClient; // 현재 위치를 가져오는 서비스
     private GuidePlayer guidePlayer;
     private Timer timer;
-    private double latitude = DefaultValue.DEFAULT_LATITUDE;
-    private double longitude = DefaultValue.DEFAULT_LONGITUDE;
+    private double latitude;
+    private double longitude;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -106,28 +106,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
         setupNearAdmin();
         setupNearReview();
         setupNewAdmin();
-        if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                    if(location != null) {
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-                        loadNearAdmin();
-                        loadNearReview();
-                        textCurrentLocation.setText(GeocoderHelper.getAddress(getContext(), new LatLng(latitude, longitude)));
-                    }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    loadNearAdmin();
-                    loadNearReview();
-                    textCurrentLocation.setText(GeocoderHelper.getAddress(getContext(), new LatLng(latitude, longitude)));
-                }
-            });
-        }
+        refreshLocation();
         loadNewAdmin();
         return v;
     }
@@ -281,5 +260,33 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
     public void onNewReview() {
         RetrofitClient.getInstance().getNearReviews(latitude, longitude, nearReviewReceiver);
         scrollView.smoothScrollTo(0, recyclerReview.getTop());
+    }
+
+    @OnClick(R.id.button_refresh_location)
+    public void refreshLocation() {
+        if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if(location != null) {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                        loadNearAdmin();
+                        loadNearReview();
+                        textCurrentLocation.setText(GeocoderHelper.getAddress(getContext(), new LatLng(latitude, longitude)));
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    latitude = DefaultValue.DEFAULT_LATITUDE;
+                    longitude = DefaultValue.DEFAULT_LONGITUDE;
+                    loadNearAdmin();
+                    loadNearReview();
+                    textCurrentLocation.setText(GeocoderHelper.getAddress(getContext(), new LatLng(latitude, longitude)));
+                }
+            });
+        }
     }
 }

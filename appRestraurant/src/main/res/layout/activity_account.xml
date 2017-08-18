@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,37 +11,60 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:focusable="true"
-        android:focusableInTouchMode="true" />
+        android:focusableInTouchMode="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
-        app:titleTextColor="@color/white"/>
+    <ImageView
+        android:id="@+id/image_background"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@drawable/orange_background"/>
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:id="@+id/scroll_view"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_save">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp">
 
+            <TextView
+                android:id="@+id/text_activity_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/account_settings"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fontLargest"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
             <com.rengwuxian.materialedittext.MaterialEditText
                 style="@style/MaterialEditText"
                 android:id="@+id/edit_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:hint="@string/admin_name"
                 android:inputType="textPersonName"
                 android:maxLines="1"
                 app:met_helperText="@string/admin_name_help"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/text_activity_title"/>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 style="@style/MaterialEditText"
@@ -54,7 +78,7 @@
                 app:met_helperText="@string/phone_help"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_name"/>
+                app:layout_constraintTop_toBottomOf="@+id/edit_name"/>
 
             <TextView
                 android:id="@+id/text_admin_picutre"
@@ -63,9 +87,9 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/admin_image"
                 android:textSize="@dimen/fontSmall"
-                android:textColor="@color/grey"
+                android:textColor="@color/whiteHalf"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_phone"/>
+                app:layout_constraintTop_toBottomOf="@+id/edit_phone"/>
 
             <ImageView
                 android:id="@+id/image_admin_image"
@@ -76,7 +100,7 @@
                 android:background="@drawable/image_empty"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_admin_picutre"/>
+                app:layout_constraintTop_toBottomOf="@+id/text_admin_picutre"/>
 
             <TextView
                 android:id="@+id/text_admin_image_help"
@@ -84,10 +108,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/admin_image_help"
                 android:textSize="@dimen/fontSmall"
-                android:textColor="@color/grey"
+                android:textColor="@color/whiteHalf"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_admin_image"/>
+                app:layout_constraintTop_toBottomOf="@+id/image_admin_image"/>
 
             <TextView
                 android:id="@+id/text_admin_style_title"
@@ -96,9 +120,9 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/admin_style"
                 android:textSize="@dimen/fontSmall"
-                android:textColor="@color/grey"
+                android:textColor="@color/whiteHalf"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_admin_image_help"/>
+                app:layout_constraintTop_toBottomOf="@+id/text_admin_image_help"/>
 
             <LinearLayout
                 android:id="@+id/linear"
@@ -107,7 +131,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_admin_style_title">
+                app:layout_constraintTop_toBottomOf="@+id/text_admin_style_title">
 
                 <TextView
                     android:id="@+id/text_admin_style"
@@ -115,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:textSize="@dimen/fontNormal"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/white"/>
 
                 <Button
                     android:id="@+id/button_admin_style"
@@ -134,10 +158,10 @@
                 android:layout_height="wrap_content"
                 android:text="@string/admin_style_help"
                 android:textSize="@dimen/fontSmall"
-                android:textColor="@color/grey"
+                android:textColor="@color/whiteHalf"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/linear"/>
+                app:layout_constraintTop_toBottomOf="@+id/linear"/>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 style="@style/MaterialEditText"
@@ -150,7 +174,7 @@
                 android:maxLines="1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_admin_style_help"/>
+                app:layout_constraintTop_toBottomOf="@+id/text_admin_style_help"/>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 style="@style/MaterialEditText"
@@ -163,7 +187,7 @@
                 app:met_helperText="@string/text_menu_help"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_menu"/>
+                app:layout_constraintTop_toBottomOf="@+id/edit_menu"/>
 
             <Button
                 android:id="@+id/button_add_image"
@@ -177,19 +201,19 @@
                 android:textSize="@dimen/fontNormal"
                 android:background="@drawable/background_rectangle_button_primary"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_menu_cost"/>
+                app:layout_constraintTop_toBottomOf="@+id/edit_menu_cost"/>
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:text="@string/image_max_10"
-                android:textColor="@color/grey"
+                android:textColor="@color/whiteHalf"
                 android:textSize="@dimen/fontSmall"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/button_add_image"
-                app:layout_constraintTop_toTopOf="@id/button_add_image"
-                app:layout_constraintBottom_toBottomOf="@id/button_add_image"/>
+                app:layout_constraintRight_toLeftOf="@+id/button_add_image"
+                app:layout_constraintTop_toTopOf="@+id/button_add_image"
+                app:layout_constraintBottom_toBottomOf="@+id/button_add_image"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_image"
@@ -198,16 +222,20 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/button_add_image"/>
+                app:layout_constraintTop_toBottomOf="@+id/button_add_image"/>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 
     <Button
         android:id="@+id/button_save"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/do_save"
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/fontNormal"
-        android:background="@drawable/background_rectangle_button_primary"/>
-</LinearLayout>
+        android:background="@drawable/background_rectangle_button_primary"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scroll_view"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</android.support.constraint.ConstraintLayout>

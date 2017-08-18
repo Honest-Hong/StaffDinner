@@ -64,6 +64,7 @@ import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.staffdinner.dialog.StyleSelectDialog;
+import com.project.boostcamp.staffdinnerrestraurant.GlideApp;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.dialog.ImageModeDialog;
 
@@ -82,6 +83,7 @@ import butterknife.OnClick;
  */
 public class JoinActivity extends AppCompatActivity implements CompoundButton.OnCheckedChangeListener, OnMapReadyCallback, OnSuccessListener<Location>, GoogleApiClient.OnConnectionFailedListener {
     private View rootView;
+    @BindView(R.id.image_background) ImageView imageBackground;
     @BindView(R.id.edit_name) EditText editName;
     @BindView(R.id.edit_phone) EditText editPhone;
     @BindView(R.id.text_style) TextView textStyle;
@@ -123,6 +125,10 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
     private void setupView() {
         rootView = getWindow().getDecorView().getRootView();
         checkBox.setOnCheckedChangeListener(this);
+        GlideApp.with(this)
+                .load(R.drawable.orange_background)
+                .centerCrop()
+                .into(imageBackground);
 
         // TODO: 2017-07-31 위치 기능이 켜있는지 확인
         SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);

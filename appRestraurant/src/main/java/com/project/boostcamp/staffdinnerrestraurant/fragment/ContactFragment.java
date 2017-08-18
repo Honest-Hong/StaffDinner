@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
@@ -34,7 +36,8 @@ import butterknife.ButterKnife;
 public class ContactFragment extends Fragment {
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
-    @BindView(R.id.help_empty) View viewEmpty;
+    @BindView(R.id.image_empty) ImageView imageEmpty;
+    @BindView(R.id.text_empty) TextView textEmpty;
     private ContactRecyclerAdapter adapter;
 
     public static ContactFragment newInstance() {
@@ -57,6 +60,7 @@ public class ContactFragment extends Fragment {
         adapter = new ContactRecyclerAdapter(getContext(), dataEvent);
         recyclerView.setAdapter(adapter);
         swipeRefresh.setOnRefreshListener(onRefreshListener);
+        textEmpty.setText(R.string.not_exist_contacts);
     }
 
     public void loadData() {
@@ -88,12 +92,14 @@ public class ContactFragment extends Fragment {
             if(data == null) {
                 data = new ArrayList<>();
             }
-            if(data.size() == 0) {
-                viewEmpty.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
-            } else {
-                viewEmpty.setVisibility(View.GONE);
+            if(data.size() > 0) {
+                imageEmpty.setVisibility(View.GONE);
+                textEmpty.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+            } else {
+                imageEmpty.setVisibility(View.VISIBLE);
+                textEmpty.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
                 SQLiteHelper.getInstance(getContext()).refreshContact(data);
             }
             adapter.setData(data);

@@ -37,6 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class AccountActivity extends AppCompatActivity {
+    @BindView(R.id.image_background) ImageView imageBackground;
     @BindView(R.id.recycler_image) RecyclerView recyclerImage;
     @BindView(R.id.edit_name) MaterialEditText editName;
     @BindView(R.id.edit_phone) MaterialEditText editPhone;
@@ -64,11 +65,10 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     private void setupView() {
-        Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar);
-        toolbar.setTitle(R.string.account_activity_title);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        GlideApp.with(this)
+                .load(R.drawable.orange_background)
+                .centerCrop()
+                .into(imageBackground);
 
         images = new ArrayList<>();
         imageRecyclerAdapter = new ImageRecyclerAdapter(this, uriDataEvent);

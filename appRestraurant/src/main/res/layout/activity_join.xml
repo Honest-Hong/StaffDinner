@@ -1,242 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary">
+    xmlns:tool="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/image_background"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        tool:src="@drawable/orange_background"/>
 
-        <TextView
-            android:id="@+id/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="32dp"
-            android:text="@string/join_activity_title"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontLargest"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@color/whiteOrange"
-            android:layout_marginTop="32dp"/>
-
-        <TextView
-            style="@style/OrangeTitleTextView"
-            android:layout_marginTop="16dp"
-            android:text="@string/text_restraurant_name"/>
-
-        <EditText
-            style="@style/OrangeEditText"
-            android:id="@+id/edit_name"
-            android:inputType="textPersonName"
-            android:maxLines="1"/>
-
-        <TextView
-            style="@style/OrangeHelpTextView"
-            android:text="@string/admin_name_help"/>
-
-        <TextView
-            style="@style/OrangeTitleTextView"
-            android:layout_marginTop="8dp"
-            android:text="@string/text_image_title"/>
-
-        <ImageView
-            android:id="@+id/image_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:minHeight="100dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:background="@drawable/image_empty"/>
-
-        <TextView
-            style="@style/OrangeHelpTextView"
-            android:text="@string/text_image_title_help"/>
-
-        <TextView
-            style="@style/OrangeTitleTextView"
-            android:layout_marginTop="8dp"
-            android:text="@string/text_phone" />
-
-        <EditText
-            style="@style/OrangeEditText"
-            android:id="@+id/edit_phone"
-            android:inputType="phone"
-            android:maxLines="1"/>
-
-        <TextView
-            style="@style/OrangeHelpTextView"
-            android:text="@string/phone_help"/>
-
-        <TextView
-            style="@style/OrangeTitleTextView"
-            android:layout_marginTop="8dp"
-            android:text="@string/text_style"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/text_style"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textSize="@dimen/fontNormal"
-                android:textColor="@color/white"/>
-
-            <Button
-                android:id="@+id/button_style"
+                android:id="@+id/text_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:background="?attr/selectableItemBackground"
-                android:text="@string/select"
-                android:textSize="@dimen/fontNormal"
-                android:textColor="@color/white"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@color/whiteOrange" />
-
-        <TextView
-            style="@style/OrangeHelpTextView"
-            android:text="@string/admin_style_help"/>
-
-        <TextView
-            style="@style/OrangeTitleTextView"
-            android:layout_marginTop="8dp"
-            android:text="@string/text_menu"/>
-
-        <EditText
-            style="@style/OrangeEditText"
-            android:id="@+id/edit_menu"
-            android:inputType="text"
-            android:maxLines="1"/>
-
-        <TextView
-            style="@style/OrangeTitleTextView"
-            android:text="@string/text_cost"/>
-
-        <EditText
-            style="@style/OrangeEditText"
-            android:id="@+id/edit_menu_cost"
-            android:inputType="numberDecimal"
-            android:maxLines="1"/>
-
-        <TextView
-            style="@style/OrangeHelpTextView"
-            android:text="@string/text_menu_help"/>
-
-        <TextView
-            style="@style/OrangeTitleTextView"
-            android:layout_marginTop="8dp"
-            android:text="@string/text_location"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/text_location"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="32dp"
+                android:text="@string/join_activity_title"
                 android:textColor="@color/white"
-                android:textSize="@dimen/fontNormal"/>
+                android:textSize="@dimen/fontLargest"/>
 
-            <ImageButton
-                android:id="@+id/button_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:src="@drawable/ic_search_orange_24dp"/>
-        </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/whiteOrange"
+                android:layout_marginTop="32dp"/>
 
-        <TextView
-            style="@style/OrangeHelpTextView"
-            android:text="@string/text_location_help"/>
-
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginTop="8dp"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@color/whiteOrange"/>
-
-        <TextView
-            android:id="@+id/text_agree"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/text_join_agree"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontNormal"
-            android:gravity="center"/>
-
-        <CheckBox
-            android:id="@+id/check_box"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/text_i_agree"
-            android:textColor="@color/white"
-            android:textSize="@dimen/fontNormal"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:layout_marginTop="16dp"
-            android:background="@color/whiteOrange"/>
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/button_join"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:layout_marginEnd="12dp"
-            android:visibility="invisible">
-
-            <TextView
-                android:layout_width="wrap_content"
+            <com.rengwuxian.materialedittext.MaterialEditText
+                style="@style/MaterialEditText"
+                android:id="@+id/edit_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="@string/text_join"
-                android:textColor="@color/colorPrimary" />
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
-</ScrollView>
+                android:hint="@string/text_restraurant_name"
+                app:met_helperText="@string/admin_name_help"/>
+
+            <TextView
+                style="@style/OrangeTitleTextView"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_image_title"/>
+
+            <ImageView
+                android:id="@+id/image_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:minHeight="100dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:background="@drawable/image_empty"/>
+
+            <TextView
+                style="@style/OrangeHelpTextView"
+                android:text="@string/text_image_title_help"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                style="@style/MaterialEditText"
+                android:id="@+id/edit_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/text_phone"
+                app:met_helperText="@string/phone_help"/>
+
+            <TextView
+                style="@style/OrangeTitleTextView"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_style"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_style"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="@dimen/fontNormal"
+                    android:textColor="@color/white"/>
+
+                <Button
+                    android:id="@+id/button_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/background_rectangle_button_primary"
+                    android:text="@string/select"
+                    android:textSize="@dimen/fontNormal"
+                    android:textColor="@color/colorPrimary"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:background="@color/whiteOrange" />
+
+            <TextView
+                style="@style/OrangeHelpTextView"
+                android:text="@string/admin_style_help"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                style="@style/MaterialEditText"
+                android:id="@+id/edit_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/text_menu"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                style="@style/MaterialEditText"
+                android:id="@+id/edit_menu_cost"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/text_cost"
+                app:met_helperText="@string/text_menu_help"/>
+
+            <TextView
+                style="@style/OrangeTitleTextView"
+                android:layout_marginTop="8dp"
+                android:text="@string/text_location"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_location"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/fontNormal"/>
+
+                <ImageButton
+                    android:id="@+id/button_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:padding="4dp"
+                    android:src="@drawable/ic_search_orange_24dp"
+                    android:background="@drawable/background_rectangle_button_primary"/>
+            </LinearLayout>
+
+            <TextView
+                style="@style/OrangeHelpTextView"
+                android:text="@string/text_location_help"/>
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="8dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/whiteOrange"/>
+
+            <TextView
+                android:id="@+id/text_agree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:text="@string/text_join_agree"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fontNormal"
+                android:gravity="center"/>
+
+            <CheckBox
+                android:id="@+id/check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:text="@string/text_i_agree"
+                android:textColor="@color/white"
+                android:textSize="@dimen/fontNormal"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/whiteOrange"/>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/button_join"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginEnd="12dp"
+                android:visibility="invisible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/text_join"
+                    android:textColor="@color/colorPrimary" />
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -12,6 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
@@ -36,7 +38,8 @@ import butterknife.ButterKnife;
 public class EstimateFragment extends Fragment {
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
-    @BindView(R.id.help_empty) View viewEmpty;
+    @BindView(R.id.image_empty) ImageView imageEmpty;
+    @BindView(R.id.text_empty) TextView textEmpty;
     private EstimateAdapter recyclerAdapter;
     private ArrayList<AdminEstimate> dataAll;
     private ArrayList<AdminEstimate> dataWating;
@@ -70,6 +73,7 @@ public class EstimateFragment extends Fragment {
         recyclerAdapter = new EstimateAdapter(getContext(), dataEvent);
         recyclerView.setAdapter(recyclerAdapter);
         swipeRefresh.setOnRefreshListener(onRefreshListener);
+        textEmpty.setText(R.string.not_exist_estimates);
     }
 
     private DataEvent<AdminEstimate> dataEvent = new DataEvent<AdminEstimate>() {
@@ -116,10 +120,12 @@ public class EstimateFragment extends Fragment {
                 }
             }
             if(dataAll.size() > 0) {
-                viewEmpty.setVisibility(View.GONE);
+                imageEmpty.setVisibility(View.GONE);
+                textEmpty.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
             } else {
-                viewEmpty.setVisibility(View.VISIBLE);
+                imageEmpty.setVisibility(View.VISIBLE);
+                textEmpty.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             }
             hideRefreshing();

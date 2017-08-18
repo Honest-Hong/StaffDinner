@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,6 +23,7 @@ import com.project.boostcamp.publiclibrary.dialog.MyProgressDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
+import com.project.boostcamp.staffdinnerrestraurant.GlideApp;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 
 import butterknife.BindView;
@@ -35,6 +37,7 @@ import retrofit2.Response;
  * 이메일로 회원가입을 시작하기 위해서 이메일과 비밀번호를 입력받는 액티비티
  */
 public class EmailSignUpActivity extends AppCompatActivity {
+    @BindView(R.id.image_background) ImageView imageBackground;
     @BindView(R.id.edit_email) EditText editEmail;
     @BindView(R.id.edit_password) EditText editPassword;
     @BindView(R.id.edit_password2) EditText editPassword2;
@@ -49,6 +52,10 @@ public class EmailSignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_email_sign_up);
         ButterKnife.bind(this);
         initFirebaseAuth();
+        GlideApp.with(this)
+                .load(R.drawable.orange_background)
+                .centerCrop()
+                .into(imageBackground);
     }
 
     private void initFirebaseAuth() {

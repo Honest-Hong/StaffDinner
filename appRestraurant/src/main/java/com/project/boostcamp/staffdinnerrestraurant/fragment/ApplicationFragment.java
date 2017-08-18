@@ -7,30 +7,26 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.AdminApplication;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.AdminApplicationDTO;
-import com.project.boostcamp.publiclibrary.domain.GeoDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.activity.ApplicationDetailActivity;
 import com.project.boostcamp.staffdinnerrestraurant.adapter.ApplicationAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by Hong Tae Joon on 2017-07-28.
@@ -40,7 +36,8 @@ public class ApplicationFragment extends Fragment {
     private static final float MAX_DISTANCE = 2.0f;
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
-    @BindView(R.id.help_empty) View viewEmpty;
+    @BindView(R.id.image_empty) ImageView imageEmpty;
+    @BindView(R.id.text_empty) TextView textEmpty;
     private ApplicationAdapter adapter;
 
     public static ApplicationFragment newInstance() {
@@ -63,6 +60,7 @@ public class ApplicationFragment extends Fragment {
         adapter = new ApplicationAdapter(getContext(), dataEvent);
         recyclerView.setAdapter(adapter);
         swipeRefresh.setOnRefreshListener(onRefreshListener);
+        textEmpty.setText(R.string.not_exist_application);
     }
 
     private DataEvent<AdminApplication> dataEvent = new DataEvent<AdminApplication>() {
@@ -103,10 +101,12 @@ public class ApplicationFragment extends Fragment {
             }
             // 데이터가 존재하면 보여주고 존재하지 않으면 데이터가 없다는 것을 표시해줌
             if(arr.size() > 0) {
-                viewEmpty.setVisibility(View.GONE);
+                imageEmpty.setVisibility(View.GONE);
+                textEmpty.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
             } else {
-                viewEmpty.setVisibility(View.VISIBLE);
+                imageEmpty.setVisibility(View.VISIBLE);
+                textEmpty.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             }
             hideRefreshing();

@@ -7,12 +7,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.util.PermissionHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
+import com.project.boostcamp.staffdinnerrestraurant.GlideApp;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 
 public class SplashActivity extends AppCompatActivity {
@@ -22,6 +24,12 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        ImageView imageView = (ImageView) findViewById(R.id.image_background);
+        GlideApp.with(this)
+                .load(R.drawable.orange_background)
+                .centerCrop()
+                .into(imageView);
 
         if(PermissionHelper.checkAndRequestPermissions(
                 this,

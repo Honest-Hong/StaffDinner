@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -36,6 +38,7 @@ import com.project.boostcamp.publiclibrary.dialog.MyProgressDialog;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.util.Logger;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
+import com.project.boostcamp.staffdinnerrestraurant.GlideApp;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 
 import java.util.ArrayList;
@@ -47,13 +50,20 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
+    @BindView(R.id.image_view) ImageView imageView;
     @BindView(R.id.edit_email) EditText editEmail;
     @BindView(R.id.edit_password) EditText editPassword;
+    @BindView(R.id.button_kakao) View btnKaKao;
+    @BindView(R.id.button_facebook) View btnFacebook;
+    @BindView(R.id.button_email) View btnEmail;
+    @BindView(R.id.button_login) View btnLogin;
+    @BindView(R.id.button_email_sign_up) View btnEmailSignUp;
     private FirebaseAuth auth;
     private CallbackManager callbackManager;
     private String id;
     private int type;
     private MyProgressDialog progressDialog;
+    private boolean showLoginView = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +71,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         ButterKnife.bind(this);
+        GlideApp.with(this)
+                .load(R.drawable.orange_background)
+                .centerCrop()
+                .into(imageView);
         auth = FirebaseAuth.getInstance();
         Session.getCurrentSession().addCallback(callbackKaKao);
         Session.getCurrentSession().checkAndImplicitOpen();
@@ -68,15 +82,58 @@ public class LoginActivity extends AppCompatActivity {
         LoginManager.getInstance().registerCallback(callbackManager, callbackFacebook);
     }
 
+    /**
+     * 로그인 버튼 클릭 이벤트
+     * 카카오, 페이스북, 이메일
+     * @param v
+     */
     @OnClick({R.id.button_kakao, R.id.button_facebook, R.id.button_email})
     public void onLoginClick(View v) {
         if(v.getId() == R.id.button_kakao) {
+            progressDialog = MyProgressDialog.show(getSupportFragmentManager());
             Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, this);
         } else if(v.getId() == R.id.button_facebook) {
+            progressDialog = MyProgressDialog.show(getSupportFragmentManager());
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
-        } else if(v.getId() == R.id.button_email){
-            startActivity(new Intent(this, EmailSignUpActivity.class));
+        } else if(v.getId() == R.id.button_email) {
+            showEmailInput();
         }
+    }
+
+    /**
+     * 로그인 입력창을 보여주는 과정
+     */
+    private void showEmailInput() {
+        showLoginView = true;
+        appearView(editEmail);
+        appearView(editPassword);
+        appearView(btnLogin);
+        appearView(btnEmailSignUp);
+        disappearView(btnEmail);
+        disappearView(btnKaKao);
+        disappearView(btnFacebook);
+    }
+
+    /**
+     * 로그인 입력창을 보여주는 과정
+     */
+    private void hideEmailInput() {
+        showLoginView = false;
+        disappearView(editEmail);
+        disappearView(editPassword);
+        disappearView(btnLogin);
+        disappearView(btnEmailSignUp);
+        appearView(btnEmail);
+        appearView(btnKaKao);
+        appearView(btnFacebook);
+    }
+
+    private void appearView(View v) {
+        v.setVisibility(View.VISIBLE);
+    }
+
+    private void disappearView(View v) {
+        v.setVisibility(View.GONE);
     }
 
     @Override
@@ -176,6 +233,9 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra(ExtraType.EXTRA_LOGIN_ID, id);
         intent.putExtra(ExtraType.EXTRA_LOGIN_TYPE, type);
         startActivity(intent);
+        if(progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 
     private void redirectMainActivity(LoginDTO loginDTO) {
@@ -187,11 +247,20 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.button_login)
     public void doLogin() {
-        progressDialog = MyProgressDialog.show(getSupportFragmentManager());
         final String email = editEmail.getText().toString();
         final String password = editPassword.getText().toString();
+        if(email.isEmpty() || password.isEmpty()) {
+            Snackbar.make(getWindow().getDecorView().getRootView(), getString(R.string.empty_input_text), Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        progressDialog = MyProgressDialog.show(getSupportFragmentManager());
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(onSignInComplete);
+    }
+
+    @OnClick(R.id.button_email_sign_up)
+    public void doEmailSignUp() {
+        startActivity(new Intent(this, EmailSignUpActivity.class));
     }
 
     private OnCompleteListener<AuthResult> onSignInComplete = new OnCompleteListener<AuthResult>() {
@@ -209,4 +278,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        if(showLoginView) {
+            hideEmailInput();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

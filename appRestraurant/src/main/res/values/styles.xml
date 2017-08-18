@@ -38,39 +38,29 @@
     <style name="OrangeTitleTextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">16dp</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:textColor">@color/whiteHalf</item>
         <item name="android:textSize">@dimen/fontSmall</item>
-    </style>
-
-    <style name="OrangeEditText">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">16dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/fontNormal</item>
-        <item name="android:background">@drawable/background_edit_text_orange</item>
     </style>
 
     <style name="OrangeHelpTextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">16dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:textColor">@color/whiteOrange</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:layout_marginEnd">24dp</item>
+        <item name="android:textColor">@color/whiteHalf</item>
         <item name="android:textSize">@dimen/fontSmall</item>
     </style>
 
     <style name="MaterialEditText" parent="AppTheme">
         <item name="android:textSize">@dimen/fontNormal</item>
-        <item name="met_textColor">@color/black</item>
-        <item name="met_textColorHint">@color/grey</item>
+        <item name="met_textColor">@color/white</item>
+        <item name="met_textColorHint">@color/whiteHalf</item>
         <item name="met_floatingLabel">normal</item>
-        <item name="met_baseColor">@color/grey</item>
+        <item name="met_baseColor">@color/white</item>
         <item name="met_primaryColor">@color/colorPrimary</item>
         <item name="met_helperTextAlwaysShown">true</item>
-        <item name="met_helperTextColor">@color/grey</item>
+        <item name="met_helperTextColor">@color/white</item>
         <item name="met_bottomTextSize">@dimen/fontSmall</item>
         <item name="met_floatingLabelTextSize">@dimen/fontSmall</item>
     </style>

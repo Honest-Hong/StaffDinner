@@ -121,6 +121,11 @@
     <string name="account_activity_title">계정 설정</string>
     <string name="image_select_tool">이미지 선택 도구</string>
     <string name="admin_style">식당 분위기</string>
+    <string name="empty_input_text">입력창이 비어있습니다.</string>
+    <string name="account_settings">계정 설정</string>
+    <string name="not_exist_application">올라온 신청서가 없습니다!</string>
+    <string name="not_exist_estimates">작성한 견적서가 아직 없네요!</string>
+    <string name="not_exist_contacts">아직 계약하신 적이 없으시군요!</string>
 
     <plurals name="menu_cost">
         <item quantity="many">%d원</item>

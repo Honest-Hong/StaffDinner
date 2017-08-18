@@ -75,7 +75,6 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.button_email) View btnEmail;
     @BindView(R.id.button_login) View btnLogin;
     @BindView(R.id.button_email_sign_up) View btnEmailSignUp;
-    @BindView(R.id.text_email_login) TextView textEmailLogin;
     private FirebaseAuth auth;
     private CallbackManager callbackManager;
     private String id;

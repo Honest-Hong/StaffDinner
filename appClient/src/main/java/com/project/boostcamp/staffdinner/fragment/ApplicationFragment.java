@@ -64,6 +64,7 @@ import com.project.boostcamp.staffdinner.dialog.StyleSelectDialog;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -182,7 +183,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         wheelAdapterHour = new TextWheelAdapter();
         ArrayList<String> hours = new ArrayList<>();
         for(int i = 0; i< DefaultValue.DEFAULT_MAX_HOUR; i++) {
-            hours.add(String.format("%02d", i));
+            hours.add(String.format(Locale.getDefault(), "%02d", i));
         }
         wheelAdapterHour.setData(hours);
         wheelHour.setAdapter(wheelAdapterHour);
@@ -190,7 +191,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         wheelAdapterMinute = new TextWheelAdapter();
         ArrayList<String> minutes = new ArrayList<>();
         for(int i = 0; i< DefaultValue.DEFAULT_MAX_MINUTE; i+= 10) {
-            minutes.add(String.format("%02d", i));
+            minutes.add(String.format(Locale.getDefault(), "%02d", i));
         }
         wheelAdapterMinute.setData(minutes);
         wheelMinute.setAdapter(wheelAdapterMinute);
@@ -200,7 +201,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
 
         Calendar calendar = Calendar.getInstance();
         for(int i = 0; i< DefaultValue.DEFAULT_MAX_DATE; i++) {
-            dates.add(String.format("%02d/%02d", calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE)));
+            dates.add(String.format(Locale.getDefault(), "%02d/%02d", calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DATE)));
             calendar.add(Calendar.DATE, 1);
         }
         wheelAdapterDate.setData(dates);
@@ -256,7 +257,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         }
 
         editTitle.setText(application.getTitle());
-        editNumber.setText(application.getNumber() + "");
+        editNumber.setText(String.format(Locale.getDefault(), "%d", application.getNumber()));
         textStyle.setText(application.getWantedStyle());
         editMenu.setText(application.getWantedMenu());
         setWheelTime(application.getWantedTime());
@@ -278,7 +279,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         int dateIndex = 0;
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(time);
-        String str = new SimpleDateFormat("hh/mm").format(cal.getTime());
+        String str = new SimpleDateFormat("hh/mm", Locale.getDefault()).format(cal.getTime());
         int i=0;
         for(String date : wheelAdapterDate.getData()) {
             if(date.equals(str)) {
@@ -311,14 +312,14 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
             case R.id.button_up:
                 if (number < DefaultValue.DEFAULT_MAX_NUMBER) {
                     number++;
-                    editNumber.setText(Integer.toString(number));
+                    editNumber.setText(String.format(Locale.getDefault(), "%d", number));
                     application.setNumber(number);
                 }
                 break;
             case R.id.button_down:
                 if (number > DefaultValue.DEFAULT_MIN_NUMBER) {
                     number--;
-                    editNumber.setText(Integer.toString(number));
+                    editNumber.setText(String.format(Locale.getDefault(), "%d", number));
                     application.setNumber(number);
                 }
                 break;
@@ -442,7 +443,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
     /**
      * 신청서를 등록하는 함수
      */
-    public void submitApplication() {
+    private void submitApplication() {
         // 로컬에 저장
         SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
 
@@ -463,7 +464,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
                 if(response.body().getResult() != null) {
                     application.setId(response.body().getResult());
                     SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
-                    setState(ApplicationStateType.STATE_APPLIED);;
+                    setState(ApplicationStateType.STATE_APPLIED);
                 } else {
                     Log.d("HTJ", "Not receive application id");
                 }

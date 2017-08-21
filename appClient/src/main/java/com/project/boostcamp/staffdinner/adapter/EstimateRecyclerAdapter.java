@@ -7,9 +7,7 @@ import android.view.ViewGroup;
 
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
-import com.project.boostcamp.publiclibrary.object.BaseVH;
 import com.project.boostcamp.staffdinner.R;
-import com.project.boostcamp.staffdinner.adapter.viewholder.EmptyVH;
 import com.project.boostcamp.staffdinner.adapter.viewholder.EstimateVH;
 
 import java.util.ArrayList;
@@ -41,7 +39,7 @@ public class EstimateRecyclerAdapter extends RecyclerView.Adapter<EstimateVH> {
 
     @Override
     public EstimateVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new EstimateVH(LayoutInflater.from(context).inflate(R.layout.item_estimate, parent, false), dataEvent, context);
+        return new EstimateVH(LayoutInflater.from(context).inflate(R.layout.item_estimate, parent, false), dataEvent);
     }
 
     @Override

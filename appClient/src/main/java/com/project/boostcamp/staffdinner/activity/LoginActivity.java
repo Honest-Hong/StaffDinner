@@ -7,14 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -37,7 +31,6 @@ import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.MeResponseCallback;
 import com.kakao.usermgmt.response.model.UserProfile;
 import com.kakao.util.exception.KakaoException;
-import com.project.boostcamp.publiclibrary.animation.ViewSizeAnimation;
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.AccountType;
@@ -186,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
     private ISessionCallback callbackKaKao = new ISessionCallback() {
         @Override
         public void onSessionOpened() {
-            List<String> propertyKeys = new ArrayList<String>();
+            List<String> propertyKeys = new ArrayList<>();
             propertyKeys.add("kaccount_email");
             propertyKeys.add("nickname");
             propertyKeys.add("profile_image");

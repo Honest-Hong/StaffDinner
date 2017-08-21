@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import com.project.boostcamp.publiclibrary.domain.AdminDTO;
 import com.project.boostcamp.publiclibrary.domain.NewAdminDTO;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.object.BaseVH;

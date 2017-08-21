@@ -2,7 +2,6 @@ package com.project.boostcamp.staffdinner.adapter.viewholder;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.project.boostcamp.publiclibrary.object.BaseVH;

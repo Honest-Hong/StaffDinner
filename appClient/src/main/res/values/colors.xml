@@ -17,15 +17,9 @@
     <color name="black">#000</color>
     <color name="blackHalf">#8000</color>
     <color name="grey">#888</color>
-    <color name="greyHalf">#8888</color>
     <color name="whiteGrey">#ddd</color>
     <color name="yellow">#f1c40f</color>
     <color name="orange">#f39c12</color>
-    <color name="whiteOrange">#facc99</color>
-    <color name="darkOrange">#C07704</color>
-    <color name="redOrange">#F36312</color>
     <color name="red">#c0392b</color>>
-    <color name="whiteGreen">#1fe0ba</color>
     <color name="green">#16a085</color>
-    <color name="darkGreen">#0f705d</color>
 </resources>

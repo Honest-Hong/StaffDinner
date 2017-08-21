@@ -37,7 +37,7 @@ public class WriteReviewDialog extends DialogFragment implements MaterialRatingB
         return dialog;
     }
 
-    public void setReviewListener(ReviewListener reviewListener) {
+    private void setReviewListener(ReviewListener reviewListener) {
         this.reviewListener = reviewListener;
     }
 

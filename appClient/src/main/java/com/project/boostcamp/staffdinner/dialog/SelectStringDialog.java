@@ -3,20 +3,16 @@ package com.project.boostcamp.staffdinner.dialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.SelectStringAdapter;
-
-import java.util.ArrayList;
 
 /**
  * Created by Hong Tae Joon on 2017-08-17.
@@ -51,15 +47,15 @@ public class SelectStringDialog extends DialogFragment {
         }
     };
 
-    public void setTitle(String title) {
+    private void setTitle(String title) {
         this.title = title;
     }
 
-    public void setData(String[] data) {
+    private void setData(String[] data) {
         this.data = data;
     }
 
-    public void setReturnEvent(DataEvent<String> returnEvent) {
+    private void setReturnEvent(DataEvent<String> returnEvent) {
         this.returnEvent = returnEvent;
     }
 

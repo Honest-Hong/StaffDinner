@@ -49,8 +49,7 @@ public class ContactFragment extends Fragment {
     private ReviewEventListener reviewEventListener;
 
     public static ContactFragment newInstance() {
-        ContactFragment fragment = new ContactFragment();
-        return fragment;
+        return new ContactFragment();
     }
 
     @Override
@@ -176,7 +175,7 @@ public class ContactFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_estimates, menu);
+        inflater.inflate(R.menu.menu_contacts, menu);
     }
 
     @Override

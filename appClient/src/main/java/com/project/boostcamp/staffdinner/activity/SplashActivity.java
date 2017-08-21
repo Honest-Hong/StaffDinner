@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -19,14 +17,13 @@ import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.GlideApp;
 import com.project.boostcamp.staffdinner.R;
 
-import java.util.ArrayList;
 
 /**
  * 앱의 처음화면
  * 앱의 이름과 아이콘을 보여준다
  */
 public class SplashActivity extends AppCompatActivity {
-    boolean isLogined = false;
+    private boolean isLogined = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

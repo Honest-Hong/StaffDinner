@@ -1,8 +1,6 @@
 package com.project.boostcamp.staffdinner.adapter.viewholder;
 
-import android.content.Context;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,15 +20,13 @@ import butterknife.ButterKnife;
  */
 
 public class EstimateVH extends BaseVH<ClientEstimateDTO> implements View.OnClickListener{
-    private Context context;
     @BindView(R.id.image_view) ImageView imageView;
     @BindView(R.id.text_name) TextView textName;
     @BindView(R.id.text_message) TextView textMessage;
     @BindView(R.id.text_date) TextView textDate;
 
-    public EstimateVH(View v, DataEvent<ClientEstimateDTO> dataEvent, Context context) {
+    public EstimateVH(View v, DataEvent<ClientEstimateDTO> dataEvent) {
         super(v, dataEvent);
-        this.context = context;
         ButterKnife.bind(this, v);
         v.setOnClickListener(this);
     }

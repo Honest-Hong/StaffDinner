@@ -9,7 +9,6 @@ import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.viewholder.SelectStringVH;
 
-import java.util.ArrayList;
 
 /**
  * Created by Hong Tae Joon on 2017-08-17.

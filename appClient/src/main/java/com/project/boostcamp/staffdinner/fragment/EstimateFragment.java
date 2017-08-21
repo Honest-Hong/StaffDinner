@@ -51,8 +51,7 @@ public class EstimateFragment extends Fragment {
     private ContactEventListener contactEventListener;
 
     public static EstimateFragment newInstance() {
-        EstimateFragment fragment = new EstimateFragment();
-        return fragment;
+        return new EstimateFragment();
     }
 
     @Override

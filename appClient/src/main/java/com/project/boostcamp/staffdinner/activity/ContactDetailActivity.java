@@ -23,8 +23,6 @@ import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewAddDTO;
-import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
-import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
 import com.project.boostcamp.publiclibrary.inter.ReviewListener;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;

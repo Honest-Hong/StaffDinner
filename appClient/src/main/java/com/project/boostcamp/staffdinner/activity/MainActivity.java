@@ -37,7 +37,6 @@ import com.project.boostcamp.publiclibrary.data.Application;
 import com.project.boostcamp.publiclibrary.data.ApplicationStateType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.NotiType;
-import com.project.boostcamp.publiclibrary.dialog.MyProgressDialog;
 import com.project.boostcamp.publiclibrary.domain.ClientDTO;
 import com.project.boostcamp.publiclibrary.inter.ContactEventListener;
 import com.project.boostcamp.publiclibrary.inter.DialogResultListener;
@@ -64,7 +63,7 @@ import butterknife.ButterKnife;
  * 신청서, 견적서, 계약서 탭 3가지가 존재한다.
  */
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener, ContactEventListener, GuidePlayer, ReviewEventListener{
-    public static final int SHOWCASE_DELAY_MILLIS = 150;
+    private static final int SHOWCASE_DELAY_MILLIS = 150;
     @BindView(R.id.drawer) DrawerLayout drawer;
     @BindView(R.id.bottom_nav) BottomNavigationView bottomNav;
     @BindView(R.id.view_pager) ViewPager viewPager;

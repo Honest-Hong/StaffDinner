@@ -18,7 +18,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -78,7 +77,6 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
     private Handler scrollHandler;
     private FusedLocationProviderClient fusedLocationClient; // 현재 위치를 가져오는 서비스
     private GuidePlayer guidePlayer;
-    private Timer timer;
     private double latitude;
     private double longitude;
 
@@ -241,7 +239,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
     }
 
     private void startAutoScroll() {
-        timer = new Timer();
+        Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {

@@ -31,7 +31,7 @@ public class OSLActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
 
-    public ArrayList<OSLData> getOSLData() {
+    private ArrayList<OSLData> getOSLData() {
         String[] names = getResources().getStringArray(R.array.osl_names);
         String[] links = getResources().getStringArray(R.array.osl_links);
         String[] copyrights = getResources().getStringArray(R.array.osl_copyrights);

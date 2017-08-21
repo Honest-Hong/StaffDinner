@@ -1,19 +1,15 @@
 package com.project.boostcamp.staffdinner.adapter.viewholder;
 
 import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.project.boostcamp.publiclibrary.data.StyleListData;
-import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.inter.ViewHolderEvent;
-import com.project.boostcamp.publiclibrary.object.BaseVH;
 import com.project.boostcamp.staffdinner.R;
 
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

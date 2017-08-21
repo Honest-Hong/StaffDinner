@@ -1,6 +1,5 @@
 package com.project.boostcamp.staffdinner.adapter.viewholder;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
@@ -19,15 +18,13 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
  */
 
 public class ReviewVH extends BaseVH<ReviewDTO> {
-    private Context context;
     @BindView(R.id.text_writer) TextView textWriter;
     @BindView(R.id.text_receiver) TextView textReceiver;
     @BindView(R.id.text_content) TextView textContent;
     @BindView(R.id.text_time) TextView textTime;
     @BindView(R.id.rating_bar) MaterialRatingBar ratingBar;
-    public ReviewVH(Context context, View itemView, final DataEvent<ReviewDTO> dataEvent) {
+    public ReviewVH(View itemView, final DataEvent<ReviewDTO> dataEvent) {
         super(itemView, dataEvent);
-        this.context = context;
         ButterKnife.bind(this, itemView);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

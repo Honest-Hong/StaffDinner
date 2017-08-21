@@ -1,10 +1,5 @@
 package com.project.boostcamp.staffdinner.adapter.viewholder;
 
-import android.os.Build;
-import android.text.Html;
-import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
-import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,7 +8,6 @@ import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.object.BaseVH;
 import com.project.boostcamp.staffdinner.R;
 
-import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

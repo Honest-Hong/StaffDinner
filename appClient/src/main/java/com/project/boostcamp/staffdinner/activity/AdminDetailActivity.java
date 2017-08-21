@@ -1,7 +1,6 @@
 package com.project.boostcamp.staffdinner.activity;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -65,7 +64,6 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
     @BindView(R.id.text_review_number) TextView textReviewNumber;
     @BindView(R.id.rating_review_average) MaterialRatingBar ratingReviewAverage;
     @BindView(R.id.recycler_image) RecyclerView recyclerImage;
-    private BonusImageRecyclerAdapter bonusImageAdapter;
     private ArrayList<String> bonusImages;
     private String adminId;
     private int adminType;
@@ -120,7 +118,7 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
     private DataReceiver<ReviewAverageDTO> reviewAverageDataReceiver = new DataReceiver<ReviewAverageDTO>() {
         @Override
         public void onReceive(ReviewAverageDTO data) {
-            textReviewAverage.setText(String.format("%1$.1f", data.getAverage()));
+            textReviewAverage.setText(getString(R.string.rating_format, data.getAverage()));
             textReviewNumber.setText(getString(R.string.person_number, data.getCount()));
             ratingReviewAverage.setProgress((int)(data.getAverage() * 2));
         }
@@ -156,7 +154,7 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
             for (int i = 0; i < count; i++) {
                 bonusImages.add(RetrofitClient.getInstance().getBonusImageUrl(adminId, adminType, i));
             }
-            bonusImageAdapter = new BonusImageRecyclerAdapter(this, bonusImageEvent);
+            BonusImageRecyclerAdapter bonusImageAdapter = new BonusImageRecyclerAdapter(this, bonusImageEvent);
             bonusImageAdapter.setData(bonusImages);
             recyclerImage.setHasFixedSize(true);
             recyclerImage.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));

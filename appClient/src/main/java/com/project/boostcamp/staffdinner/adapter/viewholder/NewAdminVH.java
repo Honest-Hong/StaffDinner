@@ -5,9 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
-import com.project.boostcamp.publiclibrary.domain.AdminDTO;
 import com.project.boostcamp.publiclibrary.domain.NewAdminDTO;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.object.BaseVH;

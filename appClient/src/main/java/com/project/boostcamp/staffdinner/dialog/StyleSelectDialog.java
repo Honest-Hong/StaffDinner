@@ -6,9 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.util.ArrayMap;
-import android.support.v4.util.ArraySet;
-import android.support.v4.util.Pair;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -16,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.project.boostcamp.publiclibrary.data.StyleListData;
-import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.inter.ArrayResultListener;
 import com.project.boostcamp.publiclibrary.inter.ViewHolderEvent;
 import com.project.boostcamp.staffdinner.R;
@@ -24,8 +20,6 @@ import com.project.boostcamp.staffdinner.adapter.StyleRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Hong Tae Joon on 2017-08-09.
@@ -45,7 +39,7 @@ public class StyleSelectDialog extends DialogFragment implements ViewHolderEvent
         return dialog;
     }
 
-    public void setSelectedStyles(String selectedStyles) {
+    private void setSelectedStyles(String selectedStyles) {
         this.selectedStyles = selectedStyles;
     }
 

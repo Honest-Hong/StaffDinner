@@ -49,7 +49,7 @@ public class NearReviewRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
     @Override
     public BaseVH onCreateViewHolder(ViewGroup parent, int viewType) {
         if(viewType == 0) {
-            return new ReviewVH(context, LayoutInflater.from(context).inflate(R.layout.item_review, parent, false), dataEvent);
+            return new ReviewVH(LayoutInflater.from(context).inflate(R.layout.item_review, parent, false), dataEvent);
         } else {
             return EmptyVH.horizontal(parent, context.getString(R.string.not_exist_review));
         }

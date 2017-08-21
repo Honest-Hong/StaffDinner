@@ -35,7 +35,6 @@ public class EmailSignUpActivity extends AppCompatActivity {
     @BindView(R.id.edit_password2) EditText editPassword2;
     private FirebaseAuth auth;
     private String id;
-    private final int type = AccountType.TYPE_EMAIL;
     private MyProgressDialog progressDialog;
 
     @Override
@@ -118,7 +117,7 @@ public class EmailSignUpActivity extends AppCompatActivity {
         }
         Intent intent = new Intent(EmailSignUpActivity.this, JoinActivity.class);
         intent.putExtra(ExtraType.EXTRA_LOGIN_ID, id);
-        intent.putExtra(ExtraType.EXTRA_LOGIN_TYPE, type);
+        intent.putExtra(ExtraType.EXTRA_LOGIN_TYPE, AccountType.TYPE_EMAIL);
         startActivity(intent);
         finish();
     }

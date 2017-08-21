@@ -41,6 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:hint="@string/text_name"
+            android:inputType="textPersonName"
+            android:maxLines="1"
             app:met_helperText="@string/text_join_name_help"
             app:layout_constraintTop_toBottomOf="@id/text_title"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -53,6 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/text_phone"
+            android:inputType="phone"
+            android:maxLines="1"
             app:met_helperText="@string/text_join_phone_help"
             app:layout_constraintTop_toBottomOf="@id/edit_name"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -91,8 +95,7 @@
                 android:layout_marginEnd="24dp"
                 android:text="@string/text_i_agree"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/fontNormal"
-                android:buttonTint="@color/colorPrimary"/>
+                android:textSize="@dimen/fontNormal"/>
         </LinearLayout>
 
         <Button

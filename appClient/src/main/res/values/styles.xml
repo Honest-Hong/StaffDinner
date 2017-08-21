@@ -9,33 +9,6 @@
         <item name="colorControlNormal">@color/white</item>
     </style>
 
-    <style name="PrimaryTitleTextView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">16dp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textSize">@dimen/fontSmall</item>
-    </style>
-
-    <style name="PrimaryEditText">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">16dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
-        <item name="android:textSize">@dimen/fontNormal</item>
-        <item name="android:background">@drawable/background_edit_text_white</item>
-    </style>
-
-    <style name="PrimaryHelpTextView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginStart">16dp</item>
-        <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:textColor">@color/grey</item>
-        <item name="android:textSize">@dimen/fontSmall</item>
-    </style>
-
     <style name="CustomShowcaseTheme" parent="ShowcaseView.Light">
         <item name="sv_backgroundColor">@color/colorShowcaseBackground</item>
         <item name="sv_showcaseColor">@color/colorShowcase</item>

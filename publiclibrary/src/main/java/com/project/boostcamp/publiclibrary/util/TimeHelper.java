@@ -45,8 +45,7 @@ public class TimeHelper {
      * @return 밀리초
      */
     public static long now() {
-        Calendar cal = Calendar.getInstance();
-        return cal.getTimeInMillis();
+        return System.currentTimeMillis();
     }
 
     /**
@@ -81,9 +80,25 @@ public class TimeHelper {
         return new SimpleDateFormat(pattern).format(new Date(time));
     }
 
+    /**
+     * 입력된 시간을 ~분 전 / ~시간 전 문자열로 변환시켜주는 함수
+     * @param time 시간
+     * @return 변환된 문자열
+     */
     public static String getTimeDiffString(long time) {
         long diff = now() - time;
-        diff /= 1000 * 60;
-        return String.format("%d분 전", diff);
+        final int oneMinute = 60 * 1000;
+        final int oneHour = 60 * oneMinute;
+        final int oneDay = 24 * oneHour;
+        final int oneWeek = 7 * oneDay;
+        if(diff < oneHour) {
+            return (diff / oneMinute) + "분 전";
+        } else if(diff < oneDay) {
+            return (diff / oneHour) + "시간 전";
+        } else if(diff < oneWeek) {
+            return (diff / oneDay) + "일 전";
+        } else {
+            return (diff / oneWeek) + "주 전";
+        }
     }
 }

@@ -26,17 +26,17 @@
     </string-array>
 
     <string-array name="osl_links">
-        <item>https://android.googlesource.com/platform/frameworks/supports</item>
-        <item>https://github.com/bumptech/glide</item>
-        <item>https://developers.google.com/android/reference/com/google/android/gms/location/package-summary</item>
-        <item>https://www.firebase.com/terms/terms-of-service.html</item>
-        <item>https://github.com/google/gson</item>
+        <item><u>https://android.googlesource.com/platform/frameworks/supports</u></item>
+        <item><u>https://github.com/bumptech/glide</u></item>
+        <item><u>https://developers.google.com/android/reference/com/google/android/gms/location/package-summary</u></item>
+        <item><u>https://www.firebase.com/terms/terms-of-service.html</u></item>
+        <item><u>https://github.com/google/gson</u></item>
 
-        <item>https://jakewharton.github.io/butterknife</item>
-        <item>https://github.com/facebook/facebook-android-sdk</item>
-        <item>https://android.googlesource.com/platform/frameworks/multidex</item>
-        <item>https://github.com/DreaminginCodeZH/MaterialRatingBar</item>
-        <item>https://github.com/rengwuxian/MaterialEditText</item>
+        <item><u>https://jakewharton.github.io/butterknife</u></item>
+        <item><u>https://github.com/facebook/facebook-android-sdk</u></item>
+        <item><u>https://android.googlesource.com/platform/frameworks/multidex</u></item>
+        <item><u>https://github.com/DreaminginCodeZH/MaterialRatingBar</u></item>
+        <item><u>https://github.com/rengwuxian/MaterialEditText</u></item>
     </string-array>
 
     <string-array name="osl_copyrights">

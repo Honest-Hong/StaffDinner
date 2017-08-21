@@ -18,6 +18,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -29,7 +31,6 @@ import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.DefaultValue;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
-import com.project.boostcamp.publiclibrary.domain.AdminDTO;
 import com.project.boostcamp.publiclibrary.domain.EventDTO;
 import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.NewAdminDTO;
@@ -62,10 +63,14 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
     @BindView(R.id.scroll_view) NestedScrollView scrollView;
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.indicator) CircleIndicator circleIndicator;
-    @BindView(R.id.recycler_view_near) RecyclerView recyclerNearAdmin;
+    @BindView(R.id.recycler_view_near_admin) RecyclerView recyclerNearAdmin;
     @BindView(R.id.text_current_location) TextView textCurrentLocation;
     @BindView(R.id.recycler_view_review) RecyclerView recyclerReview;
     @BindView(R.id.recycler_view_new_admin) RecyclerView recyclerNewAdmin;
+    @BindView(R.id.progress_event) ProgressBar imageErrorEvent;
+    @BindView(R.id.progress_near_admin) ProgressBar imageErrorNearAdmin;
+    @BindView(R.id.progress_near_review) ProgressBar imageErrorNearReview;
+    @BindView(R.id.progress_new_admin) ProgressBar imageErrorNewAdmin;
     private EventPagerAdapter eventPagerAdapter;
     private NearAdminRecyclerAdapter nearAdminRecyclerAdapter;
     private NearReviewRecyclerAdapter nearReviewRecyclerAdapter;
@@ -151,6 +156,9 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
         circleIndicator.setViewPager(viewPager);
         scrollHandler = new Handler();
         startAutoScroll();
+        imageErrorEvent.setVisibility(data.size() == 0
+                ? View.VISIBLE
+                : View.GONE);
     }
 
     private DataReceiver<ArrayList<EventDTO>> eventDataReceiver = new DataReceiver<ArrayList<EventDTO>>() {
@@ -169,11 +177,25 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
         @Override
         public void onReceive(ArrayList<NearAdminDTO> data) {
             nearAdminRecyclerAdapter.setData(data);
+            imageErrorNearAdmin.setVisibility(View.GONE);
         }
 
         @Override
         public void onFail() {
+            imageErrorNearAdmin.setVisibility(View.VISIBLE);
+        }
+    };
 
+    private DataReceiver<ArrayList<ReviewDTO>> nearReviewReceiver = new DataReceiver<ArrayList<ReviewDTO>>() {
+        @Override
+        public void onReceive(ArrayList<ReviewDTO> data) {
+            nearReviewRecyclerAdapter.setData(data);
+            imageErrorNearReview.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onFail() {
+            imageErrorNearReview.setVisibility(View.VISIBLE);
         }
     };
 
@@ -181,11 +203,12 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
         @Override
         public void onReceive(ArrayList<NewAdminDTO> data) {
             newAdminRecyclerAdapter.setData(data);
+            imageErrorNewAdmin.setVisibility(View.GONE);
         }
 
         @Override
         public void onFail() {
-
+            imageErrorNewAdmin.setVisibility(View.VISIBLE);
         }
     };
 
@@ -236,18 +259,6 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
             } else {
                 viewPager.setCurrentItem(0);
             }
-        }
-    };
-
-    private DataReceiver<ArrayList<ReviewDTO>> nearReviewReceiver = new DataReceiver<ArrayList<ReviewDTO>>() {
-        @Override
-        public void onReceive(ArrayList<ReviewDTO> data) {
-            nearReviewRecyclerAdapter.setData(data);
-        }
-
-        @Override
-        public void onFail() {
-
         }
     };
 

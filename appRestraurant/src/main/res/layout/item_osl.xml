@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:textColor="#0000ff"
-        android:textSize="@dimen/fontSmallest"/>
+        android:textSize="@dimen/fontSmallest"
+        android:autoLink="web"/>
 
     <TextView
         android:id="@+id/text_copyright"

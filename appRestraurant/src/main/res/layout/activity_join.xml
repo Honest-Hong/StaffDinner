@@ -46,6 +46,8 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="16dp"
                 android:hint="@string/text_restraurant_name"
+                android:inputType="text"
+                android:maxLines="1"
                 app:met_helperText="@string/admin_name_help"/>
 
             <TextView
@@ -77,6 +79,8 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="16dp"
                 android:hint="@string/text_phone"
+                android:inputType="phone"
+                android:maxLines="1"
                 app:met_helperText="@string/phone_help"/>
 
             <TextView
@@ -130,6 +134,8 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="16dp"
+                android:inputType="text"
+                android:maxLines="1"
                 android:hint="@string/text_menu"/>
 
             <com.rengwuxian.materialedittext.MaterialEditText
@@ -141,6 +147,8 @@
                 android:layout_marginEnd="24dp"
                 android:layout_marginTop="16dp"
                 android:hint="@string/text_cost"
+                android:inputType="numberDecimal"
+                android:maxLines="1"
                 app:met_helperText="@string/text_menu_help"/>
 
             <TextView

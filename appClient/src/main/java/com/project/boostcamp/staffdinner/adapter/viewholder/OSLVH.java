@@ -1,5 +1,10 @@
 package com.project.boostcamp.staffdinner.adapter.viewholder;
 
+import android.os.Build;
+import android.text.Html;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.TextView;
 

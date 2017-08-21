@@ -95,8 +95,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 .addApi(LocationServices.API)
                 .build();
         googleApiClient.connect();
-
-        MyProgressDialog.show(getSupportFragmentManager(), 1500);
     }
 
     private void setupShowcase() {

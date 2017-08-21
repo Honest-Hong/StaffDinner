@@ -21,10 +21,6 @@
             android:title="@string/general">
             <menu>
                 <item
-                    android:id="@+id/nav_settings"
-                    android:title="@string/app_settings"
-                    android:icon="@drawable/ic_settings_grey"/>
-                <item
                     android:id="@+id/nav_open_source_license"
                     android:title="@string/open_source_license"
                     android:icon="@drawable/ic_help_grey"/>

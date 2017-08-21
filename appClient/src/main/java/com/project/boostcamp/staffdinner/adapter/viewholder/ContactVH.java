@@ -46,8 +46,9 @@ public class ContactVH extends BaseVH<ContactDTO> implements View.OnClickListene
         String contactTime = TimeHelper.getTimeString(data.getContactTime(), context.getString(R.string.default_time_pattern));
         textContactTime.setText(contactTime);
 
-        final long oneDay = 24 * 60 * 60 * 1000;
-        if(System.currentTimeMillis() - data.getContactTime() < oneDay) {
+        final int oneDay = 24 * 60 * 60 * 1000;
+        long diff = System.currentTimeMillis() - data.getContactTime();
+        if(diff < oneDay) {
             frameCloud.setVisibility(View.GONE);
         } else {
             frameCloud.setVisibility(View.VISIBLE);

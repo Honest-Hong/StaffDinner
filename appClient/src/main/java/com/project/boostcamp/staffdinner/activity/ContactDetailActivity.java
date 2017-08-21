@@ -58,6 +58,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact_detail);
+        overridePendingTransition(R.anim.slide_in_bottom, android.R.anim.fade_out);
 
         if(getIntent() != null) {
             contact = getIntent().getParcelableExtra(ContactDTO.class.getName());
@@ -65,6 +66,12 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         } else {
             finish();
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_bottom);
     }
 
     /**

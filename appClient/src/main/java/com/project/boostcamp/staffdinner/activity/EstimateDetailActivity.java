@@ -48,6 +48,7 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_estimate_detail);
+        overridePendingTransition(R.anim.slide_in_bottom, android.R.anim.fade_out);
 
         if(getIntent() != null) {
             estimate = getIntent().getParcelableExtra(ClientEstimateDTO.class.getName());
@@ -55,6 +56,12 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
         } else {
             finish();
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(android.R.anim.fade_in, R.anim.slide_out_bottom);
     }
 
     /**

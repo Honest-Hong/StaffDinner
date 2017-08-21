@@ -27,13 +27,12 @@ public class EstimateVH extends BaseVH<ClientEstimateDTO> implements View.OnClic
     @BindView(R.id.text_name) TextView textName;
     @BindView(R.id.text_message) TextView textMessage;
     @BindView(R.id.text_date) TextView textDate;
-    @BindView(R.id.button_detail) Button btnDetail;
 
     public EstimateVH(View v, DataEvent<ClientEstimateDTO> dataEvent, Context context) {
         super(v, dataEvent);
         this.context = context;
         ButterKnife.bind(this, v);
-        btnDetail.setOnClickListener(this);
+        v.setOnClickListener(this);
     }
 
     @Override

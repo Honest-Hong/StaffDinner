@@ -26,13 +26,12 @@ public class ContactVH extends BaseVH<ContactDTO> implements View.OnClickListene
     @BindView(R.id.text_application_time) TextView textApplicationTime;
     @BindView(R.id.text_estimate_time) TextView textEstimateTime;
     @BindView(R.id.text_contact_time) TextView textContactTime;
-    @BindView(R.id.button_detail) TextView btnDetail;
 
     public ContactVH(View itemView, DataEvent<ContactDTO> dataEvent, Context context) {
         super(itemView, dataEvent);
         this.context = context;
         ButterKnife.bind(this, itemView);
-        btnDetail.setOnClickListener(this);
+        itemView.setOnClickListener(this);
     }
 
     @Override

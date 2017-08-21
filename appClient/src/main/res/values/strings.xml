@@ -131,4 +131,6 @@
     <string name="rating_format">%.1f점</string>
     <string name="refresh">새로고침</string>
     <string name="open_source_license">오픈소스 라이선스</string>
+    <string name="account_settings">계정 설정</string>
+    <string name="save">저장</string>
 </resources>

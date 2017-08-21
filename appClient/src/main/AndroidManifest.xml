@@ -82,7 +82,8 @@
 
         <activity android:name=".activity.EmailSignUpActivity" />
         <activity android:name=".activity.AdminDetailActivity" />
-        <activity android:name=".activity.OSLActivity"></activity>
+        <activity android:name=".activity.OSLActivity" />
+        <activity android:name=".activity.AccountActivity"></activity>
     </application>
 
 </manifest>

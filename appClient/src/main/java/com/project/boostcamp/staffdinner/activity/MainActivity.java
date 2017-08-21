@@ -283,6 +283,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
                 logout();
                 break;
             case R.id.nav_account:
+                startActivity(new Intent(this, AccountActivity.class));
                 break;
             case R.id.nav_open_source_license:
                 startActivity(new Intent(this, OSLActivity.class));

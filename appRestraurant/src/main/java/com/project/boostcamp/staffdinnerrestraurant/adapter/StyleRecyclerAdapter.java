@@ -5,7 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.project.boostcamp.publiclibrary.data.StyleListData;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
+import com.project.boostcamp.publiclibrary.inter.ViewHolderEvent;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.adapter.viewholder.StyleVH;
 
@@ -15,18 +17,19 @@ import java.util.ArrayList;
  * Created by Hong Tae Joon on 2017-08-09.
  */
 
+
 public class StyleRecyclerAdapter extends RecyclerView.Adapter<StyleVH> {
     private Context context;
-    private ArrayList<String> styles;
-    private DataEvent<String> dataEvent;
+    private ArrayList<StyleListData> styles;
+    private ViewHolderEvent<StyleListData> dataEvent;
 
-    public StyleRecyclerAdapter(Context context, DataEvent<String> dataEvent) {
+    public StyleRecyclerAdapter(Context context, ViewHolderEvent<StyleListData> dataEvent) {
         this.context = context;
         this.dataEvent = dataEvent;
         this.styles = new ArrayList<>();
     }
 
-    public void setStyles(ArrayList<String> styles) {
+    public void setStyles(ArrayList<StyleListData> styles) {
         this.styles = styles;
     }
 

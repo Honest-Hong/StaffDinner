@@ -2,10 +2,13 @@ package com.project.boostcamp.staffdinnerrestraurant.adapter.viewholder;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
+import com.project.boostcamp.publiclibrary.data.StyleListData;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
+import com.project.boostcamp.publiclibrary.inter.ViewHolderEvent;
 import com.project.boostcamp.publiclibrary.object.BaseVH;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 
@@ -16,30 +19,31 @@ import butterknife.ButterKnife;
  * Created by Hong Tae Joon on 2017-08-09.
  */
 
-public class StyleVH extends BaseVH<String> {
-    CardView cardView;
+public class StyleVH extends RecyclerView.ViewHolder {
+    private CardView cardView;
     @BindView(R.id.text_view) TextView textView;
-    private boolean isChecked = false;
+    private StyleListData data;
 
-    public StyleVH(final View itemView, final DataEvent<String> dataEvent) {
-        super(itemView, dataEvent);
+    public StyleVH(final View itemView, final ViewHolderEvent<StyleListData> dataEvent) {
+        super(itemView);
         ButterKnife.bind(this, itemView);
         cardView = (CardView) itemView;
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isChecked = !isChecked;
-                cardView.setBackgroundColor(isChecked
-                        ? ContextCompat.getColor(itemView.getContext(), R.color.colorPrimary)
-                        : ContextCompat.getColor(itemView.getContext(), R.color.white));
-                dataEvent.onClick(data);
+                dataEvent.onClick(data, getAdapterPosition());
             }
         });
     }
 
-    @Override
-    public void setupView(String data) {
+    public void setupView(StyleListData data) {
         this.data = data;
-        textView.setText(data);
+        textView.setText(data.getName());
+        cardView.setBackgroundColor(data.isChecked()
+                ? ContextCompat.getColor(itemView.getContext(), R.color.colorPrimary)
+                : ContextCompat.getColor(itemView.getContext(), R.color.white));
+        textView.setTextColor(data.isChecked()
+                ? ContextCompat.getColor(itemView.getContext(), R.color.white)
+                : ContextCompat.getColor(itemView.getContext(), R.color.colorPrimary));
     }
 }

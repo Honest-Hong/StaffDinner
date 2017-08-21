@@ -1,12 +1,16 @@
 package com.project.boostcamp.staffdinner.adapter;
 
 import android.content.Context;
+import android.support.v4.util.ArrayMap;
 import android.support.v4.util.ArraySet;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.project.boostcamp.publiclibrary.data.StyleListData;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
+import com.project.boostcamp.publiclibrary.inter.ViewHolderEvent;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.viewholder.StyleVH;
 
@@ -21,16 +25,16 @@ import java.util.Set;
 
 public class StyleRecyclerAdapter extends RecyclerView.Adapter<StyleVH> {
     private Context context;
-    private ArraySet<Map.Entry<String, Boolean>> styles;
-    private DataEvent<Map.Entry<String, Boolean>> dataEvent;
+    private ArrayList<StyleListData> styles;
+    private ViewHolderEvent<StyleListData> dataEvent;
 
-    public StyleRecyclerAdapter(Context context, DataEvent<Map.Entry<String, Boolean>> dataEvent) {
+    public StyleRecyclerAdapter(Context context, ViewHolderEvent<StyleListData> dataEvent) {
         this.context = context;
         this.dataEvent = dataEvent;
-        this.styles = new ArraySet<>();
+        this.styles = new ArrayList<>();
     }
 
-    public void setStyles(ArraySet<Map.Entry<String, Boolean>> styles) {
+    public void setStyles(ArrayList<StyleListData> styles) {
         this.styles = styles;
     }
 
@@ -44,7 +48,7 @@ public class StyleRecyclerAdapter extends RecyclerView.Adapter<StyleVH> {
 
     @Override
     public void onBindViewHolder(StyleVH holder, int position) {
-        holder.setupView(styles.valueAt(position));
+        holder.setupView(styles.get(position));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.project.boostcamp.staffdinner.dialog;
+package com.project.boostcamp.staffdinnerrestraurant.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -12,8 +12,9 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.project.boostcamp.publiclibrary.inter.DataEvent;
+import com.project.boostcamp.publiclibrary.data.StyleListData;
 import com.project.boostcamp.publiclibrary.inter.ArrayResultListener;
+import com.project.boostcamp.publiclibrary.inter.ViewHolderEvent;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.adapter.StyleRecyclerAdapter;
 
@@ -24,16 +25,22 @@ import java.util.Arrays;
  * Created by Hong Tae Joon on 2017-08-09.
  */
 
-public class StyleSelectDialog extends DialogFragment implements DataEvent<String>{
+public class StyleSelectDialog extends DialogFragment implements ViewHolderEvent<StyleListData> {
     private RecyclerView recyclerView;
     private StyleRecyclerAdapter adapter;
-    private ArrayList<String> selectedStyles;
+    private ArrayList<StyleListData> data;
+    private String selectedStyles;
     private ArrayResultListener<String> resultListener;
 
-    public static StyleSelectDialog newInstance(ArrayResultListener<String> resultListener) {
+    public static StyleSelectDialog newInstance(ArrayResultListener<String> resultListener, String currentStyle) {
         StyleSelectDialog dialog = new StyleSelectDialog();
+        dialog.setSelectedStyles(currentStyle);
         dialog.setResultListener(resultListener);
         return dialog;
+    }
+
+    public void setSelectedStyles(String selectedStyles) {
+        this.selectedStyles = selectedStyles;
     }
 
     private void setResultListener(ArrayResultListener<String> resultListener) {
@@ -47,15 +54,21 @@ public class StyleSelectDialog extends DialogFragment implements DataEvent<Strin
         View v = LayoutInflater.from(context).inflate(R.layout.dialog_style_select, null);
         setupView(v);
         return new AlertDialog.Builder(context)
-                .setTitle("분위기를 선택해주세요")
+                .setTitle(R.string.please_select_style)
                 .setView(v)
-                .setPositiveButton(context.getString(R.string.button_yes), new DialogInterface.OnClickListener() {
+                .setPositiveButton(context.getString(R.string.select), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        resultListener.onResult(selectedStyles);
+                        ArrayList<String> result = new ArrayList<>();
+                        for(StyleListData style: data) {
+                            if(style.isChecked()) {
+                                result.add(style.getName());
+                            }
+                        }
+                        resultListener.onResult(result);
                     }
                 })
-                .setNegativeButton(context.getString(R.string.button_no), new DialogInterface.OnClickListener() {
+                .setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -68,17 +81,29 @@ public class StyleSelectDialog extends DialogFragment implements DataEvent<Strin
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setHasFixedSize(true);
         adapter = new StyleRecyclerAdapter(getContext(), this);
-        adapter.setStyles(new ArrayList<String>(Arrays.asList(getContext().getResources().getStringArray(R.array.styles))));
+        data = new ArrayList<>();
+        for(String str: new ArrayList<>(Arrays.asList(getContext().getResources().getStringArray(R.array.styles)))) {
+            data.add(new StyleListData(str, false));
+        }
+        if(!selectedStyles.equals("")) {
+            selectedStyles = selectedStyles.replaceAll(" ", "");
+            String[] strings = selectedStyles.split(",");
+            for (String str : strings) {
+                for(int i=0; i<data.size(); i++) {
+                    if(data.get(i).getName().equals(str)) {
+                        data.get(i).setChecked(true);
+                        break;
+                    }
+                }
+            }
+        }
+        adapter.setStyles(data);
         recyclerView.setAdapter(adapter);
-        selectedStyles = new ArrayList<>();
     }
 
     @Override
-    public void onClick(String data) {
-        if(selectedStyles.contains(data)) {
-            selectedStyles.remove(data);
-        } else {
-            selectedStyles.add(data);
-        }
+    public void onClick(StyleListData data, int position) {
+        this.data.get(position).setChecked(!data.isChecked());
+        adapter.notifyItemChanged(position);
     }
 }

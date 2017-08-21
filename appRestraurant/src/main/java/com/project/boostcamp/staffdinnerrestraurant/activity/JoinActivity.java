@@ -63,10 +63,10 @@ import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
-import com.project.boostcamp.staffdinner.dialog.StyleSelectDialog;
 import com.project.boostcamp.staffdinnerrestraurant.GlideApp;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.dialog.ImageModeDialog;
+import com.project.boostcamp.staffdinnerrestraurant.dialog.StyleSelectDialog;
 
 import java.io.File;
 import java.io.IOException;
@@ -374,7 +374,7 @@ public class JoinActivity extends AppCompatActivity implements CompoundButton.On
 
     @OnClick(R.id.button_style)
     public void selectStyle() {
-        StyleSelectDialog dialog = StyleSelectDialog.newInstance(styleResult);
+        StyleSelectDialog dialog = StyleSelectDialog.newInstance(styleResult, textStyle.getText().toString());
         dialog.show(getSupportFragmentManager(), null);
     }
 

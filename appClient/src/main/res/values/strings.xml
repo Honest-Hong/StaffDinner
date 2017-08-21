@@ -133,4 +133,5 @@
     <string name="open_source_license">오픈소스 라이선스</string>
     <string name="account_settings">계정 설정</string>
     <string name="save">저장</string>
+    <string name="please_select_style">분위기를 선택해주세요</string>
 </resources>

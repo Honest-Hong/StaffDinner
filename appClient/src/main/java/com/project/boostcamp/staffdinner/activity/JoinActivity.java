@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
@@ -120,7 +121,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if(!StringHelper.isValidCellPhoneNumber(phone)) {
-            Snackbar.make(rootView, "올바르지 않은 전화번호 형식입니다.", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(rootView, R.string.wrong_phone_number, Snackbar.LENGTH_SHORT).show();
             return false;
         }
         return true;
@@ -134,19 +135,17 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
     private Callback<LoginDTO> joinCallback = new Callback<LoginDTO>() {
         @Override
         public void onResponse(Call<LoginDTO> call, Response<LoginDTO> response) {
-            Log.d("HTJ", "join onResponse: " + response.body());
             LoginDTO dto = response.body();
             if(dto.getId() != null) {
                 SharedPreperenceHelper.getInstance(JoinActivity.this).saveLogin(dto);
                 startMainActivity();
-            } else {
-                Log.e("HTJ", "Fail to join");
             }
         }
 
         @Override
         public void onFailure(Call<LoginDTO> call, Throwable t) {
-            Log.e("HTJ", "join onFailure: " + t.getMessage());
+            Toast.makeText(JoinActivity.this, R.string.fail_to_join, Toast.LENGTH_SHORT).show();
+            finish();
         }
     };
 
@@ -154,6 +153,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finish();
     }
 
     /**

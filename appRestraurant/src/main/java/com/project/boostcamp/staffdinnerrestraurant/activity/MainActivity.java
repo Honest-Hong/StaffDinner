@@ -194,6 +194,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case R.id.nav_review:
                 startActivity(new Intent(this, ReviewsActivity.class));
                 break;
+            case R.id.nav_osl:
+                startActivity(new Intent(this, OSLActivity.class));
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);

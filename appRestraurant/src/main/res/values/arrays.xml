@@ -10,4 +10,72 @@
         <item>룸</item>
         <item>바</item>
     </string-array>
+
+    <string-array name="osl_names">
+        <item>Android - platform - frameworks - support</item>
+        <item>Glide</item>
+        <item>Google Play Services API : Google Location, and Places</item>
+        <item>Google Firebase for Android</item>
+        <item>google-gson</item>
+
+        <item>Butter Knife</item>
+        <item>Facebook SDK for Android</item>
+        <item>Android - platform - frameworks - multidex</item>
+        <item>CircleIndicator - ongakuer</item>
+        <item>MaterialRatingBar - DreaminginCodeZH</item>
+
+        <item>ShowcaseView - amlcurran</item>
+        <item>MaterialEditText - rengwuxian</item>
+    </string-array>
+
+    <string-array name="osl_links">
+        <item>https://android.googlesource.com/platform/frameworks/supports</item>
+        <item>https://github.com/bumptech/glide</item>
+        <item>https://developers.google.com/android/reference/com/google/android/gms/location/package-summary</item>
+        <item>https://www.firebase.com/terms/terms-of-service.html</item>
+        <item>https://github.com/google/gson</item>
+
+        <item>https://jakewharton.github.io/butterknife</item>
+        <item>https://github.com/facebook/facebook-android-sdk</item>
+        <item>https://android.googlesource.com/platform/frameworks/multidex</item>
+        <item>https://github.com/ongakuer/CircleIndicator</item>
+        <item>https://github.com/DreaminginCodeZH/MaterialRatingBar</item>
+
+        <item>https://github.com/amlcurran/ShowcaseView</item>
+        <item>https://github.com/rengwuxian/MaterialEditText</item>
+    </string-array>
+
+    <string-array name="osl_copyrights">
+        <item>Copyright 2014 The Android Open Source Project</item>
+        <item>Copyright 2014 Google, Inc</item>
+        <item>Copyright 2015 Google, Inc</item>
+        <item>Copyright 2015 Google, Inc</item>
+        <item>Copyright 2008 Google, Inc</item>
+
+        <item>Copyright 2013 Jake Wharton</item>
+        <item>Copyright 2014 Facebook, Inc</item>
+        <item>Copyright 2005&#8211;2014 The Android Open Source Project</item>
+        <item>Copyright 2014 relax</item>
+        <item>Copyright 2016 Zhang Hai</item>
+
+        <item>Copyright 2012&#8211;2014 Alex Curran (@amlcurran)</item>
+        <item>Copyright 2014 rengwuxian</item>
+    </string-array>
+
+    <string-array name="osl_apache_licenses">
+        <item>Apache License 2.0</item>
+        <item>Apache License 2.0</item>
+        <item>Apache License 2.0</item>
+        <item>Apache License 2.0</item>
+        <item>Apache License 2.0</item>
+
+        <item>Apache License 2.0</item>
+        <item>Apache License 2.0</item>
+        <item>Apache License 2.0</item>
+        <item>Apache License 2.0</item>
+        <item>Apache License 2.0</item>
+
+        <item>Apache License 2.0</item>
+        <item>Apache License 2.0</item>
+    </string-array>
 </resources>

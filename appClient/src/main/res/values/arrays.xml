@@ -56,10 +56,7 @@
         <item>Butter Knife</item>
         <item>Facebook SDK for Android</item>
         <item>Android - platform - frameworks - multidex</item>
-        <item>CircleIndicator - ongakuer</item>
         <item>MaterialRatingBar - DreaminginCodeZH</item>
-
-        <item>ShowcaseView - amlcurran</item>
         <item>MaterialEditText - rengwuxian</item>
     </string-array>
 
@@ -73,10 +70,7 @@
         <item>https://jakewharton.github.io/butterknife</item>
         <item>https://github.com/facebook/facebook-android-sdk</item>
         <item>https://android.googlesource.com/platform/frameworks/multidex</item>
-        <item>https://github.com/ongakuer/CircleIndicator</item>
         <item>https://github.com/DreaminginCodeZH/MaterialRatingBar</item>
-
-        <item>https://github.com/amlcurran/ShowcaseView</item>
         <item>https://github.com/rengwuxian/MaterialEditText</item>
     </string-array>
 
@@ -90,10 +84,7 @@
         <item>Copyright 2013 Jake Wharton</item>
         <item>Copyright 2014 Facebook, Inc</item>
         <item>Copyright 2005&#8211;2014 The Android Open Source Project</item>
-        <item>Copyright 2014 relax</item>
         <item>Copyright 2016 Zhang Hai</item>
-
-        <item>Copyright 2012&#8211;2014 Alex Curran (@amlcurran)</item>
         <item>Copyright 2014 rengwuxian</item>
     </string-array>
 
@@ -107,9 +98,6 @@
         <item>Apache License 2.0</item>
         <item>Apache License 2.0</item>
         <item>Apache License 2.0</item>
-        <item>Apache License 2.0</item>
-        <item>Apache License 2.0</item>
-
         <item>Apache License 2.0</item>
         <item>Apache License 2.0</item>
     </string-array>

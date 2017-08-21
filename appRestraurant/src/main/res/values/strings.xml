@@ -130,6 +130,7 @@
     <string name="review">리뷰</string>
     <string name="to">To.</string>
     <string name="from">From.</string>
+    <string name="open_source_license">오픈소스 라이선스</string>
 
     <plurals name="menu_cost">
         <item quantity="many">%d원</item>

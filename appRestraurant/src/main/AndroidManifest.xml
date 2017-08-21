@@ -91,7 +91,8 @@
         <activity android:name=".activity.MapDetailActivity" />
         <activity android:name=".activity.EmailSignUpActivity" />
         <activity android:name=".activity.AccountActivity" />
-        <activity android:name=".activity.ReviewsActivity"></activity>
+        <activity android:name=".activity.ReviewsActivity" />
+        <activity android:name=".activity.OSLActivity"></activity>
     </application>
 
 </manifest>

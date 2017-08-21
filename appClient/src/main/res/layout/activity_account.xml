@@ -18,8 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="32dp"
-        android:orientation="vertical">
+        android:padding="32dp">
 
         <TextView
             android:id="@+id/text_title"
@@ -66,9 +65,8 @@
             android:text="@string/save"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/fontNormal"
-            android:background="@drawable/background_rectangle_button_primary"
+            android:background="@drawable/button_white"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit_phone"/>
     </android.support.constraint.ConstraintLayout>
-
 </FrameLayout>

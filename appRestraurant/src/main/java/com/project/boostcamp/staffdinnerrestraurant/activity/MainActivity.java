@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
@@ -24,12 +26,15 @@ import com.google.android.gms.location.LocationServices;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.AccountType;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.NotiType;
+import com.project.boostcamp.publiclibrary.domain.AdminDTO;
 import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
+import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.adapter.MainViewPagerAdapter;
 import com.project.boostcamp.staffdinnerrestraurant.fragment.ApplicationFragment;
@@ -44,8 +49,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @BindView(R.id.drawer) DrawerLayout drawer;
     @BindView(R.id.bottom_nav) BottomNavigationView bottomNav;
     @BindView(R.id.view_pager) ViewPager viewPager;
-    @BindView(R.id.navigation)
-    NavigationView navigationView;
+    @BindView(R.id.navigation) NavigationView navigationView;
     private MainViewPagerAdapter pagerAdapter;
 
     @Override
@@ -80,6 +84,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        String id = SharedPreperenceHelper.getInstance(this).getLoginId();
+        int type = SharedPreperenceHelper.getInstance(this).getLoginType();
+        RetrofitAdmin.getInstance().getAdminInformation(id, type, adminInformReceiver);
     }
 
     private void setupTabLayout() {
@@ -229,4 +237,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             super.onBackPressed();
         }
     }
+
+    private DataReceiver<AdminDTO> adminInformReceiver = new DataReceiver<AdminDTO>() {
+        @Override
+        public void onReceive(AdminDTO data) {
+            View v = navigationView.getHeaderView(0);
+            TextView textName = (TextView) v.findViewById(R.id.text_name);
+            TextView textPhone = (TextView) v.findViewById(R.id.text_phone);
+            textName.setText(data.getName());
+            textPhone.setText(StringHelper.toPhoneNumber(data.getPhone()));
+        }
+
+        @Override
+        public void onFail() {
+
+        }
+    };
 }

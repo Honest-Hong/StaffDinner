@@ -80,51 +80,37 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
-        <android.support.v7.widget.CardView
+        <Button
             android:id="@+id/button_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:text="@string/login"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/fontNormal"
+            android:background="@drawable/button_white"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/edit_password"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/button_email_sign_up"
-            app:layout_constraintHorizontal_chainStyle="packed">
+            app:layout_constraintHorizontal_chainStyle="packed"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:paddingStart="32dp"
-                android:paddingEnd="32dp"
-                android:text="@string/login"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/fontNormal"/>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
+        <Button
             android:id="@+id/button_email_sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
+            android:padding="8dp"
+            android:text="@string/email_sign_up"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/fontNormal"
+            android:background="@drawable/button_white"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/edit_password"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@id/button_login">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:paddingStart="32dp"
-                android:paddingEnd="32dp"
-                android:text="@string/email_sign_up"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/fontNormal"/>
-        </android.support.v7.widget.CardView>
+            app:layout_constraintRight_toLeftOf="@id/button_login"/>
 
         <LinearLayout
             android:id="@+id/button_kakao"

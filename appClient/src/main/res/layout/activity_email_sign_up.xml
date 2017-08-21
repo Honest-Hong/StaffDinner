@@ -70,45 +70,31 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
-        <android.support.v7.widget.CardView
+        <Button
             android:id="@+id/button_prev"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:padding="8dp"
+            android:text="@string/text_prev"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/fontNormal"
+            android:background="@drawable/button_white"
             app:layout_constraintTop_toBottomOf="@id/edit_password2"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent">
+            app:layout_constraintLeft_toLeftOf="parent"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:paddingStart="32dp"
-                android:paddingEnd="32dp"
-                android:text="@string/text_prev"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/fontNormal"/>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
+        <Button
             android:id="@+id/button_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:padding="8dp"
+            android:text="@string/text_next"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/fontNormal"
+            android:background="@drawable/button_white"
             app:layout_constraintTop_toBottomOf="@id/edit_password2"
-            app:layout_constraintRight_toRightOf="parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
-                android:paddingStart="32dp"
-                android:paddingEnd="32dp"
-                android:text="@string/text_next"
-                android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/fontNormal"/>
-        </android.support.v7.widget.CardView>
+            app:layout_constraintRight_toRightOf="parent"/>
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

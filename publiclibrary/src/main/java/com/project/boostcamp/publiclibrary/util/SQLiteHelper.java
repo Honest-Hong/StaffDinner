@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.GeoDTO;
 
+import junit.framework.Assert;
+
 import java.util.ArrayList;
 
 /**

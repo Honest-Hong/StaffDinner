@@ -122,8 +122,8 @@ public class RetrofitClient {
         });
     }
 
-    public void getContacts(String id, final DataReceiver<ArrayList<ContactDTO>> dataReceiver) {
-        clientService.getContacts(id).enqueue(new Callback<ArrayList<ContactDTO>>() {
+    public void getContacts(String id, int page, final DataReceiver<ArrayList<ContactDTO>> dataReceiver) {
+        clientService.getContacts(id, page).enqueue(new Callback<ArrayList<ContactDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<ContactDTO>> call, Response<ArrayList<ContactDTO>> response) {
                 dataReceiver.onReceive(response.body());

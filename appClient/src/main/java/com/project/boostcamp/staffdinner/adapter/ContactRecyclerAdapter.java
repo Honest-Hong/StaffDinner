@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
+import com.project.boostcamp.publiclibrary.object.BaseVH;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.adapter.viewholder.ContactVH;
+import com.project.boostcamp.staffdinner.adapter.viewholder.LoadingVH;
 
 import java.util.ArrayList;
 
@@ -16,7 +18,9 @@ import java.util.ArrayList;
  * Created by Hong Tae Joon on 2017-07-25.
  */
 
-public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactVH> {
+public class ContactRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
+    private static final int VIEW_TYPE_NORMAL = 0x1;
+    private static final int VIEW_TYPE_LOADING = 0x2;
     private Context context;
     private ArrayList<ContactDTO> data;
     private DataEvent<ContactDTO> dataEvent;
@@ -29,27 +33,35 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<ContactVH> {
 
     public void setData(ArrayList<ContactDTO> data) {
         this.data = data;
-        if(this.data.size() == 0) {
-            ContactDTO dto = new ContactDTO();
-            dto.setViewType(-1);
-            this.data.add(dto);
-        }
         notifyDataSetChanged();
     }
 
-    @Override
-    public ContactVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ContactVH(LayoutInflater.from(context).inflate(R.layout.item_contact, parent, false), dataEvent, context);
+    public ArrayList<ContactDTO> getData() {
+        return data;
     }
 
     @Override
-    public void onBindViewHolder(ContactVH holder, int position) {
-        holder.setupView(data.get(position));
+    public BaseVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        if(viewType == VIEW_TYPE_NORMAL) {
+            return new ContactVH(LayoutInflater.from(context).inflate(R.layout.item_contact, parent, false), dataEvent, context);
+        } else if(viewType == VIEW_TYPE_LOADING) {
+            return new LoadingVH(LayoutInflater.from(context).inflate(R.layout.item_loading, parent, false), null);
+        }
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(BaseVH holder, int position) {
+        if(holder instanceof ContactVH) {
+            ((ContactVH)holder).setupView(data.get(position));
+        }
     }
 
     @Override
     public int getItemViewType(int position) {
-        return data.get(position).getViewType();
+        return data.get(position) == null
+                ? VIEW_TYPE_LOADING
+                : VIEW_TYPE_NORMAL;
     }
 
     @Override

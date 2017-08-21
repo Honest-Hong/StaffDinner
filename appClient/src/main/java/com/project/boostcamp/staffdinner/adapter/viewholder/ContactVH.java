@@ -26,6 +26,7 @@ public class ContactVH extends BaseVH<ContactDTO> implements View.OnClickListene
     @BindView(R.id.text_application_time) TextView textApplicationTime;
     @BindView(R.id.text_estimate_time) TextView textEstimateTime;
     @BindView(R.id.text_contact_time) TextView textContactTime;
+    @BindView(R.id.text_past_time) TextView textPastTime;
 
     public ContactVH(View itemView, DataEvent<ContactDTO> dataEvent, Context context) {
         super(itemView, dataEvent);
@@ -53,6 +54,8 @@ public class ContactVH extends BaseVH<ContactDTO> implements View.OnClickListene
         } else {
             frameCloud.setVisibility(View.VISIBLE);
         }
+
+        textPastTime.setText(TimeHelper.getTimeDiffString(data.getContactTime()));
     }
 
     public void onClick(View view) {

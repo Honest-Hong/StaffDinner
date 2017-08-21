@@ -46,7 +46,11 @@ public class ContactFragment extends Fragment {
     @BindView(R.id.image_empty) ImageView imageEmpty;
     @BindView(R.id.text_empty) TextView textEmpty;
     private ContactRecyclerAdapter adapter;
+    private LinearLayoutManager linearLayoutManager;
     private ReviewEventListener reviewEventListener;
+    private boolean isLoading = false;
+    private boolean dataEnded = false;
+    private int page = 0;
 
     public static ContactFragment newInstance() {
         return new ContactFragment();
@@ -67,23 +71,50 @@ public class ContactFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_contact, container, false);
         setupView(v);
-        loadData();
+        page = 0;
+        loadFirstData();
         return v;
     }
 
     private void setupView(View v) {
         ButterKnife.bind(this, v);
+        linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new ContactRecyclerAdapter(getContext(), dataEvent);
         recyclerView.setAdapter(adapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                final int total = linearLayoutManager.getItemCount();
+                final int last = linearLayoutManager.findLastVisibleItemPosition();
+                if(!isLoading && !dataEnded && total == (last + 1)) {
+                    isLoading = true;
+                    page++;
+                    loadMoreDate(page);
+                }
+            }
+        });
         swipeRefresh.setOnRefreshListener(onRefreshListener);
     }
 
-    public void loadData() {
+    /**
+     * 상단의 데이터를 최신화 하는 작업
+     */
+    public void loadFirstData() {
         showRefreshing();
         String clientID = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
-        RetrofitClient.getInstance().getContacts(clientID, dataReceiver);
+        RetrofitClient.getInstance().getContacts(clientID, 0, dataReceiver);
+    }
+
+    /**
+     * 더 많은 내역을 불러오는 작업(하단)
+     * @param page
+     */
+    public void loadMoreDate(int page) {
+        String clientID = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
+        RetrofitClient.getInstance().getContacts(clientID, page, moreDataReceiver);
     }
 
     private DataEvent<ContactDTO> dataEvent = new DataEvent<ContactDTO>() {
@@ -115,6 +146,7 @@ public class ContactFragment extends Fragment {
                 imageEmpty.setVisibility(View.GONE);
                 textEmpty.setVisibility(View.GONE);
                 SQLiteHelper.getInstance(getContext()).refreshContact(data);
+                data.add(null);
                 adapter.setData(data);
             }
             hideRefreshing();
@@ -138,10 +170,37 @@ public class ContactFragment extends Fragment {
         }
     };
 
+    /**
+     * 하단에서 데이터를 추가로 불러오는 요청
+     */
+    private DataReceiver<ArrayList<ContactDTO>> moreDataReceiver = new DataReceiver<ArrayList<ContactDTO>>() {
+        @Override
+        public void onReceive(ArrayList<ContactDTO> data) {
+            ArrayList<ContactDTO> arr = adapter.getData();
+            if(data.size() != 0) {
+                final int lastIndex = arr.size() - 1; // 마지막은 null임
+                for (int i = 0; i < data.size(); i++) {
+                    arr.add(lastIndex + i, data.get(i));
+                    adapter.notifyItemInserted(lastIndex + i);
+                }
+            } else {
+                arr.remove(arr.size() - 1);
+                adapter.notifyItemRemoved(arr.size());
+                dataEnded = true;
+            }
+            isLoading = false;
+        }
+
+        @Override
+        public void onFail() {
+            Toast.makeText(getContext(), "데이터 로딩 실패", Toast.LENGTH_SHORT).show();
+        }
+    };
+
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            loadData();
+            loadFirstData();
         }
     };
 
@@ -182,7 +241,7 @@ public class ContactFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.menu_refresh:
-                loadData();
+                loadFirstData();
                 break;
         }
         return super.onOptionsItemSelected(item);

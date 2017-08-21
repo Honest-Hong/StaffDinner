@@ -110,7 +110,7 @@ public interface ClientService {
      * @return 계약 목록
      */
     @GET("/client/{id}/contact")
-    Call<ArrayList<ContactDTO>> getContacts(@Path("id") String id);
+    Call<ArrayList<ContactDTO>> getContacts(@Path("id") String id, @Query("page") int page);
 
     /**
      * 이벤트 목록 요청

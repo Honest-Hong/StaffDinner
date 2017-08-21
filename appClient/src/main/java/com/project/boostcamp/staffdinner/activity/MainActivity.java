@@ -231,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case NotiType.NOTIFICATION_TYPE_CONTACT:
                 viewPager.setCurrentItem(3);
                 ContactFragment contactFragment = (ContactFragment) getSupportFragmentManager().getFragments().get(4);
-                contactFragment.loadData();
+                contactFragment.loadFirstData();
                 break;
             default:
                 viewPager.setCurrentItem(0);
@@ -363,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         ApplicationFragment appFragment = (ApplicationFragment) getSupportFragmentManager().getFragments().get(2);
         appFragment.setState(ApplicationStateType.STATE_CONTACTED);
         ContactFragment contactFragment = (ContactFragment) getSupportFragmentManager().getFragments().get(4);
-        contactFragment.loadData();
+        contactFragment.loadFirstData();
     }
 
     /**

@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case NotiType.NOTIFICATION_TYPE_CONTACT:
                 viewPager.setCurrentItem(2);
                 ContactFragment contactFragment = (ContactFragment) getSupportFragmentManager().getFragments().get(3);
-                contactFragment.loadData();
+                contactFragment.loadFirstData();
                 break;
             default:
                 viewPager.setCurrentItem(0);

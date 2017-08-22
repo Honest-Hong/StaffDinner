@@ -91,7 +91,7 @@ public interface AdminService {
      * @return 계약서 목록 반환
      */
     @GET("/admin/{id}/contact")
-    Call<ArrayList<ContactDTO>> getContacts(@Path("id") String id);
+    Call<ArrayList<ContactDTO>> getContacts(@Path("id") String id, @Query("page") int page);
 
     /**
      * 사진 업로드 요청

@@ -25,6 +25,7 @@ import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
+import com.project.boostcamp.publiclibrary.util.Logger;
 import com.project.boostcamp.publiclibrary.util.SQLiteHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.R;
@@ -71,7 +72,6 @@ public class ContactFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_contact, container, false);
         setupView(v);
-        page = 0;
         loadFirstData();
         return v;
     }
@@ -103,6 +103,8 @@ public class ContactFragment extends Fragment {
      * 상단의 데이터를 최신화 하는 작업
      */
     public void loadFirstData() {
+        page = 0;
+        dataEnded = false;
         showRefreshing();
         String clientID = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
         RetrofitClient.getInstance().getContacts(clientID, 0, dataReceiver);

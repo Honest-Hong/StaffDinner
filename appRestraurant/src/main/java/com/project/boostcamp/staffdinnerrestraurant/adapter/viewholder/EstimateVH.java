@@ -27,6 +27,8 @@ public class EstimateVH extends BaseVH<AdminEstimate> {
     @BindView(R.id.text_state) TextView textState;
     @BindView(R.id.text_writed_time) TextView textWritedTime;
     @BindView(R.id.text_message) TextView textMessage;
+    @BindView(R.id.text_past_time) TextView textPastTime;
+    @BindView(R.id.view_cloud) View viewCloud;
 
     public EstimateVH(View v, final DataEvent<AdminEstimate> dataEvent, Context context) {
         super(v, dataEvent);
@@ -47,6 +49,15 @@ public class EstimateVH extends BaseVH<AdminEstimate> {
         textTitle.setText(context.getString(R.string.text_estimate_list_title, data.getClientName()));
         textWritedTime.setText(TimeHelper.getTimeString(data.getWritedTime(), context.getString(R.string.default_time_pattern)));
         textMessage.setText(data.getMessage());
+        textPastTime.setText(TimeHelper.getTimeDiffString(data.getWritedTime()));
+
+        final int oneDay = 24 * 60 * 60 * 1000;
+        long diff = System.currentTimeMillis() - data.getWritedTime();
+        if(diff < oneDay) {
+            viewCloud.setVisibility(View.GONE);
+        } else {
+            viewCloud.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setState(int state) {

@@ -2,6 +2,7 @@ package com.project.boostcamp.staffdinnerrestraurant.adapter.viewholder;
 
 import android.content.Context;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
@@ -19,18 +20,20 @@ import butterknife.ButterKnife;
 
 public class ContactVH extends BaseVH<ContactDTO> implements View.OnClickListener {
     private Context context;
+    @BindView(R.id.frame_cloud)
+    FrameLayout frameCloud;
     @BindView(R.id.text_client) TextView textClient;
     @BindView(R.id.text_admin) TextView textAdmin;
     @BindView(R.id.text_application_time) TextView textApplicationTime;
     @BindView(R.id.text_estimate_time) TextView textEstimateTime;
     @BindView(R.id.text_contact_time) TextView textContactTime;
-    @BindView(R.id.button_detail) TextView btnDetail;
+    @BindView(R.id.text_past_time) TextView textPastTime;
 
     public ContactVH(View itemView, DataEvent<ContactDTO> dataEvent, Context context) {
         super(itemView, dataEvent);
         this.context = context;
         ButterKnife.bind(this, itemView);
-        btnDetail.setOnClickListener(this);
+        itemView.setOnClickListener(this);
     }
 
     @Override
@@ -44,6 +47,16 @@ public class ContactVH extends BaseVH<ContactDTO> implements View.OnClickListene
         textEstimateTime.setText(estimateTime);
         String contactTime = TimeHelper.getTimeString(data.getContactTime(), context.getString(R.string.default_time_pattern));
         textContactTime.setText(contactTime);
+
+        final int oneDay = 24 * 60 * 60 * 1000;
+        long diff = System.currentTimeMillis() - data.getContactTime();
+        if(diff < oneDay) {
+            frameCloud.setVisibility(View.GONE);
+        } else {
+            frameCloud.setVisibility(View.VISIBLE);
+        }
+
+        textPastTime.setText(TimeHelper.getTimeDiffString(data.getContactTime()));
     }
 
     public void onClick(View view) {

@@ -25,7 +25,6 @@ import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
-import com.project.boostcamp.publiclibrary.util.Logger;
 import com.project.boostcamp.publiclibrary.util.SQLiteHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.R;
@@ -92,7 +91,7 @@ public class ContactFragment extends Fragment {
                 if(!isLoading && !dataEnded && total == (last + 1)) {
                     isLoading = true;
                     page++;
-                    loadMoreDate(page);
+                    loadMoreData(page);
                 }
             }
         });
@@ -114,7 +113,7 @@ public class ContactFragment extends Fragment {
      * 더 많은 내역을 불러오는 작업(하단)
      * @param page
      */
-    public void loadMoreDate(int page) {
+    public void loadMoreData(int page) {
         String clientID = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
         RetrofitClient.getInstance().getContacts(clientID, page, moreDataReceiver);
     }

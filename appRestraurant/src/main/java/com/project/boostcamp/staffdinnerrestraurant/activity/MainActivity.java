@@ -6,7 +6,6 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -23,7 +22,6 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.firebase.iid.FirebaseInstanceId;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
@@ -173,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             case NotiType.NOTIFICATION_TYPE_ESTIMATE:
                 viewPager.setCurrentItem(1);
                 EstimateFragment estimateFragment = (EstimateFragment) getSupportFragmentManager().getFragments().get(2);
-                estimateFragment.loadData();
+                estimateFragment.loadFirstData();
                 break;
             case NotiType.NOTIFICATION_TYPE_CONTACT:
                 viewPager.setCurrentItem(2);

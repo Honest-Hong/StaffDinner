@@ -98,8 +98,8 @@ public class RetrofitAdmin {
         });
     }
 
-    public void getEstimateList(String id, final DataReceiver<ArrayList<AdminEstimateDTO>> dataReceiver) {
-        adminService.getEstimate(id).enqueue(new Callback<ArrayList<AdminEstimateDTO>>() {
+    public void getEstimateList(String id, int page, final DataReceiver<ArrayList<AdminEstimateDTO>> dataReceiver) {
+        adminService.getEstimate(id, page).enqueue(new Callback<ArrayList<AdminEstimateDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<AdminEstimateDTO>> call, Response<ArrayList<AdminEstimateDTO>> response) {
                 dataReceiver.onReceive(response.body());

@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.project.boostcamp.publiclibrary.data.ViewType;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.object.BaseVH;
@@ -19,8 +20,6 @@ import java.util.ArrayList;
  */
 
 public class ContactRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
-    private static final int VIEW_TYPE_NORMAL = 0x1;
-    private static final int VIEW_TYPE_LOADING = 0x2;
     private Context context;
     private ArrayList<ContactDTO> data;
     private DataEvent<ContactDTO> dataEvent;
@@ -42,9 +41,9 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
 
     @Override
     public BaseVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        if(viewType == VIEW_TYPE_NORMAL) {
+        if(viewType == ViewType.NORMAL) {
             return new ContactVH(LayoutInflater.from(context).inflate(R.layout.item_contact, parent, false), dataEvent, context);
-        } else if(viewType == VIEW_TYPE_LOADING) {
+        } else if(viewType == ViewType.LOADING) {
             return new LoadingVH(LayoutInflater.from(context).inflate(R.layout.item_loading, parent, false), null);
         }
         return null;
@@ -60,8 +59,8 @@ public class ContactRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
     @Override
     public int getItemViewType(int position) {
         return data.get(position) == null
-                ? VIEW_TYPE_LOADING
-                : VIEW_TYPE_NORMAL;
+                ? ViewType.LOADING
+                : ViewType.NORMAL;
     }
 
     @Override

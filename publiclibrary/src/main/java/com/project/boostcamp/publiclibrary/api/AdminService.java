@@ -83,7 +83,7 @@ public interface AdminService {
      * @return 견적서 목록 반환
      */
     @GET("/admin/{id}/estimate")
-    Call<ArrayList<AdminEstimateDTO>> getEstimate(@Path("id") String id);
+    Call<ArrayList<AdminEstimateDTO>> getEstimate(@Path("id") String id, @Query("page") int page);
 
     /**
      * 계약서 목록 요청

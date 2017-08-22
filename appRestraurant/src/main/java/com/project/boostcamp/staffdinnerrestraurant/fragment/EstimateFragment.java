@@ -41,11 +41,12 @@ public class EstimateFragment extends Fragment {
     @BindView(R.id.image_empty) ImageView imageEmpty;
     @BindView(R.id.text_empty) TextView textEmpty;
     private EstimateAdapter recyclerAdapter;
+    private LinearLayoutManager linearLayoutManager;
     private ArrayList<AdminEstimate> dataAll;
-    private ArrayList<AdminEstimate> dataWating;
-    private ArrayList<AdminEstimate> dataContacted;
-    private ArrayList<AdminEstimate> dataCanceled;
     private int showMode = -1;
+    private boolean isLoading = false;
+    private boolean dataEnded = false;
+    private int page = 0;
 
     public static EstimateFragment newInstance() {
         return new EstimateFragment();
@@ -62,16 +63,28 @@ public class EstimateFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_layout, container, false);
         setupView(v);
-        loadData();
+        loadFirstData();
         return v;
     }
 
     private void setupView(View v) {
         ButterKnife.bind(this, v);
+        linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerAdapter = new EstimateAdapter(getContext(), dataEvent);
         recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                final int total = linearLayoutManager.getItemCount();
+                final int last = linearLayoutManager.findLastVisibleItemPosition();
+                if(!isLoading && !dataEnded && total == last + 1) {
+                    loadMoreData();
+                }
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
         swipeRefresh.setOnRefreshListener(onRefreshListener);
         textEmpty.setText(R.string.not_exist_estimates);
     }
@@ -83,22 +96,21 @@ public class EstimateFragment extends Fragment {
         }
     };
 
-    public void loadData() {
+    public void loadFirstData() {
+        page = 0;
+        dataEnded = false;
         showRefreshing();
         String id = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
-        RetrofitAdmin.getInstance().getEstimateList(id, dataReceiver);
+        RetrofitAdmin.getInstance().getEstimateList(id, 0, firstDataReceiver);
     }
 
-    private DataReceiver<ArrayList<AdminEstimateDTO>> dataReceiver = new DataReceiver<ArrayList<AdminEstimateDTO>>() {
+    private DataReceiver<ArrayList<AdminEstimateDTO>> firstDataReceiver = new DataReceiver<ArrayList<AdminEstimateDTO>>() {
         @Override
         public void onReceive(ArrayList<AdminEstimateDTO> data) {
             if(data == null) {
                 data = new ArrayList<>();
             }
             dataAll = new ArrayList<>();
-            dataWating = new ArrayList<>();
-            dataContacted = new ArrayList<>();
-            dataCanceled = new ArrayList<>();
             for(int i=0; i<data.size();i ++) {
                 AdminEstimate item = new AdminEstimate();
                 item.set_id(data.get(i).get_id());
@@ -107,42 +119,19 @@ public class EstimateFragment extends Fragment {
                 item.setWritedTime(data.get(i).getWritedTime());
                 item.setState(data.get(i).getState());
                 dataAll.add(item);
-                switch(item.getState()) {
-                    case EstimateStateType.STATE_WATING:
-                        dataWating.add(item);
-                        break;
-                    case EstimateStateType.STATE_CONTACTED:
-                        dataContacted.add(item);
-                        break;
-                    case EstimateStateType.STATE_CANCELED:
-                        dataCanceled.add(item);
-                        break;
-                }
             }
             if(dataAll.size() > 0) {
                 imageEmpty.setVisibility(View.GONE);
                 textEmpty.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);
+                dataAll.add(null);
+                showListByMode(showMode);
             } else {
                 imageEmpty.setVisibility(View.VISIBLE);
                 textEmpty.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
             }
             hideRefreshing();
-            switch(showMode) {
-                case EstimateStateType.STATE_WATING:
-                    recyclerAdapter.setData(dataWating);
-                    break;
-                case EstimateStateType.STATE_CONTACTED:
-                    recyclerAdapter.setData(dataContacted);
-                    break;
-                case EstimateStateType.STATE_CANCELED:
-                    recyclerAdapter.setData(dataCanceled);
-                    break;
-                default:
-                    recyclerAdapter.setData(dataAll);
-                    break;
-            }
         }
 
         @Override
@@ -152,10 +141,53 @@ public class EstimateFragment extends Fragment {
         }
     };
 
+    private void showListByMode(int showMode) {
+        if(showMode != -1) {
+            recyclerAdapter.setData(filteredData(showMode));
+        } else {
+            recyclerAdapter.setData(dataAll);
+        }
+    }
+
+    public void loadMoreData() {
+        page++;
+        isLoading = true;
+        String id = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
+        RetrofitAdmin.getInstance().getEstimateList(id, page, moreDataReceiver);
+    }
+
+    private DataReceiver<ArrayList<AdminEstimateDTO>> moreDataReceiver = new DataReceiver<ArrayList<AdminEstimateDTO>>() {
+        @Override
+        public void onReceive(ArrayList<AdminEstimateDTO> data) {
+            if(data.size() != 0) {
+                for (int i = 0; i < data.size(); i++) {
+                    AdminEstimate item = new AdminEstimate();
+                    item.set_id(data.get(i).get_id());
+                    item.setClientName(data.get(i).getClient().getName());
+                    item.setMessage(data.get(i).getMessage());
+                    item.setWritedTime(data.get(i).getWritedTime());
+                    item.setState(data.get(i).getState());
+                    dataAll.add(dataAll.size() - 1, item);
+                }
+            } else {
+                dataAll.remove(dataAll.size() - 1);
+                dataEnded = true;
+            }
+            isLoading = false;
+            showListByMode(showMode);
+        }
+
+        @Override
+        public void onFail() {
+            isLoading = false;
+            Toast.makeText(getContext(), R.string.fail_to_load_estimates, Toast.LENGTH_SHORT).show();
+        }
+    };
+
     private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            loadData();
+            loadFirstData();
         }
     };
 
@@ -180,25 +212,39 @@ public class EstimateFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
             case R.id.menu_refresh:
-                loadData();
+                loadFirstData();
                 break;
             case R.id.menu_show_all:
                 recyclerAdapter.setData(dataAll);
                 showMode = -1;
                 break;
             case R.id.menu_show_waiting:
-                recyclerAdapter.setData(dataWating);
                 showMode = EstimateStateType.STATE_WATING;
+                recyclerAdapter.setData(filteredData(showMode));
                 break;
             case R.id.menu_show_contacted:
-                recyclerAdapter.setData(dataContacted);
                 showMode = EstimateStateType.STATE_CONTACTED;
+                recyclerAdapter.setData(filteredData(showMode));
                 break;
             case R.id.menu_show_canceled:
-                recyclerAdapter.setData(dataCanceled);
                 showMode = EstimateStateType.STATE_CANCELED;
+                recyclerAdapter.setData(filteredData(showMode));
+
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private ArrayList<AdminEstimate> filteredData(int showMode) {
+        ArrayList<AdminEstimate> data = new ArrayList<>();
+        for(AdminEstimate est: dataAll) {
+            if(est != null && est.getState() == showMode) {
+                data.add(est);
+            }
+        }
+        if(!dataEnded) {
+            data.add(null);
+        }
+        return data;
     }
 }

@@ -6,9 +6,12 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.project.boostcamp.publiclibrary.data.AdminEstimate;
+import com.project.boostcamp.publiclibrary.data.ViewType;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
+import com.project.boostcamp.publiclibrary.object.BaseVH;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.adapter.viewholder.EstimateVH;
+import com.project.boostcamp.staffdinnerrestraurant.adapter.viewholder.LoadingVH;
 
 import java.util.ArrayList;
 
@@ -16,7 +19,7 @@ import java.util.ArrayList;
  * Created by Hong Tae Joon on 2017-07-28.
  */
 
-public class EstimateAdapter extends RecyclerView.Adapter<EstimateVH> {
+public class EstimateAdapter extends RecyclerView.Adapter<BaseVH> {
     private Context context;
     private ArrayList<AdminEstimate> data;
     private DataEvent<AdminEstimate> dataEvent;
@@ -32,18 +35,36 @@ public class EstimateAdapter extends RecyclerView.Adapter<EstimateVH> {
         notifyDataSetChanged();
     }
 
-    @Override
-    public EstimateVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new EstimateVH(LayoutInflater.from(context).inflate(R.layout.layout_estimate_item, parent, false), dataEvent, context);
+    public ArrayList<AdminEstimate> getData() {
+        return data;
     }
 
     @Override
-    public void onBindViewHolder(EstimateVH holder, int position) {
-        holder.setupView(data.get(position));
+    public BaseVH onCreateViewHolder(ViewGroup parent, int viewType) {
+        if(viewType == ViewType.NORMAL) {
+            return new EstimateVH(LayoutInflater.from(context).inflate(R.layout.item_estimate, parent, false), dataEvent, context);
+        } else if(viewType == ViewType.LOADING) {
+            return new LoadingVH(LayoutInflater.from(context).inflate(R.layout.item_loading, parent, false), null);
+        }
+        return null;
+    }
+
+    @Override
+    public void onBindViewHolder(BaseVH holder, int position) {
+        if(holder instanceof EstimateVH) {
+            ((EstimateVH)holder).setupView(data.get(position));
+        }
     }
 
     @Override
     public int getItemCount() {
         return data.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return data.get(position) == null
+                ? ViewType.LOADING
+                : ViewType.NORMAL;
     }
 }

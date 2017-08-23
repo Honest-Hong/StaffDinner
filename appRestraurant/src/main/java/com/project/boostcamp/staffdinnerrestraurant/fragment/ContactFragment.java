@@ -19,10 +19,9 @@ import android.widget.Toast;
 
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
-import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
-import com.project.boostcamp.publiclibrary.util.SQLiteHelper;
+import com.project.boostcamp.publiclibrary.sqlite.SQLiteHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinnerrestraurant.R;
 import com.project.boostcamp.staffdinnerrestraurant.activity.ContactDetailActivity;

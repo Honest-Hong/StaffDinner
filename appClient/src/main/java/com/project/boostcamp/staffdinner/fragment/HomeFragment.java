@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,6 +38,7 @@ import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.inter.GuidePlayer;
 import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
+import com.project.boostcamp.publiclibrary.sqlite.SQLiteHelper;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.activity.AdminDetailActivity;
@@ -66,10 +68,6 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
     @BindView(R.id.text_current_location) TextView textCurrentLocation;
     @BindView(R.id.recycler_view_review) RecyclerView recyclerReview;
     @BindView(R.id.recycler_view_new_admin) RecyclerView recyclerNewAdmin;
-    @BindView(R.id.progress_event) ProgressBar imageErrorEvent;
-    @BindView(R.id.progress_near_admin) ProgressBar imageErrorNearAdmin;
-    @BindView(R.id.progress_near_review) ProgressBar imageErrorNearReview;
-    @BindView(R.id.progress_new_admin) ProgressBar imageErrorNewAdmin;
     private EventPagerAdapter eventPagerAdapter;
     private NearAdminRecyclerAdapter nearAdminRecyclerAdapter;
     private NearReviewRecyclerAdapter nearReviewRecyclerAdapter;
@@ -79,6 +77,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
     private GuidePlayer guidePlayer;
     private double latitude;
     private double longitude;
+    private SQLiteHelper sqLiteHelper;
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
@@ -87,6 +86,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        sqLiteHelper = SQLiteHelper.getInstance(context);
         try {
             guidePlayer = (GuidePlayer)context;
         } catch (Exception e) {
@@ -154,59 +154,57 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
         circleIndicator.setViewPager(viewPager);
         scrollHandler = new Handler();
         startAutoScroll();
-        imageErrorEvent.setVisibility(data.size() == 0
-                ? View.VISIBLE
-                : View.GONE);
     }
 
     private DataReceiver<ArrayList<EventDTO>> eventDataReceiver = new DataReceiver<ArrayList<EventDTO>>() {
         @Override
         public void onReceive(ArrayList<EventDTO> data) {
             setupViewPager(data);
+            sqLiteHelper.refreshEvents(data);
         }
 
         @Override
         public void onFail() {
-            setupViewPager(new ArrayList<EventDTO>());
+            setupViewPager(sqLiteHelper.getEvents());
         }
     };
 
     private DataReceiver<ArrayList<NearAdminDTO>> nearAdminReceiver = new DataReceiver<ArrayList<NearAdminDTO>>() {
         @Override
         public void onReceive(ArrayList<NearAdminDTO> data) {
+            sqLiteHelper.refreshNearAdmins(data);
             nearAdminRecyclerAdapter.setData(data);
-            imageErrorNearAdmin.setVisibility(View.GONE);
         }
 
         @Override
         public void onFail() {
-            imageErrorNearAdmin.setVisibility(View.VISIBLE);
+            nearAdminRecyclerAdapter.setData(sqLiteHelper.getNearAdmins());
         }
     };
 
     private DataReceiver<ArrayList<ReviewDTO>> nearReviewReceiver = new DataReceiver<ArrayList<ReviewDTO>>() {
         @Override
         public void onReceive(ArrayList<ReviewDTO> data) {
+            sqLiteHelper.refreshNearReviews(data);
             nearReviewRecyclerAdapter.setData(data);
-            imageErrorNearReview.setVisibility(View.GONE);
         }
 
         @Override
         public void onFail() {
-            imageErrorNearReview.setVisibility(View.VISIBLE);
+            nearReviewRecyclerAdapter.setData(sqLiteHelper.getNearReviews());
         }
     };
 
     private DataReceiver<ArrayList<NewAdminDTO>> newAdminReceiver = new DataReceiver<ArrayList<NewAdminDTO>>() {
         @Override
         public void onReceive(ArrayList<NewAdminDTO> data) {
+            sqLiteHelper.refreshNewAdmins(data);
             newAdminRecyclerAdapter.setData(data);
-            imageErrorNewAdmin.setVisibility(View.GONE);
         }
 
         @Override
         public void onFail() {
-            imageErrorNewAdmin.setVisibility(View.VISIBLE);
+            newAdminRecyclerAdapter.setData(sqLiteHelper.getNewAdmins());
         }
     };
 

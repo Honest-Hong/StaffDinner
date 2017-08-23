@@ -25,7 +25,7 @@ import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
-import com.project.boostcamp.publiclibrary.util.SQLiteHelper;
+import com.project.boostcamp.publiclibrary.sqlite.SQLiteHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.staffdinner.R;
 import com.project.boostcamp.staffdinner.activity.ContactDetailActivity;
@@ -167,7 +167,6 @@ public class ContactFragment extends Fragment {
                 adapter.setData(data);
             }
             hideRefreshing();
-            Toast.makeText(getContext(), R.string.fail_to_load_contacts, Toast.LENGTH_SHORT).show();
         }
     };
 

@@ -98,7 +98,7 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
 
         @Override
         public void onFail() {
-            Toast.makeText(AdminDetailActivity.this, "Data loading error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AdminDetailActivity.this, R.string.not_connect_network, Toast.LENGTH_SHORT).show();
             finish();
         }
     };

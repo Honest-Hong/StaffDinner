@@ -45,7 +45,7 @@ import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.inter.GuidePlayer;
 import com.project.boostcamp.publiclibrary.inter.ReviewEventListener;
 import com.project.boostcamp.publiclibrary.util.Logger;
-import com.project.boostcamp.publiclibrary.util.SQLiteHelper;
+import com.project.boostcamp.publiclibrary.sqlite.SQLiteHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
 import com.project.boostcamp.staffdinner.R;

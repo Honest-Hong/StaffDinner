@@ -28,15 +28,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/view_pager"/>
 
-        <ProgressBar
-            android:id="@+id/progress_event"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:layout_constraintLeft_toLeftOf="@id/view_pager"
-            app:layout_constraintRight_toRightOf="@id/view_pager"
-            app:layout_constraintTop_toTopOf="@id/view_pager"
-            app:layout_constraintBottom_toBottomOf="@id/view_pager"/>
-
         <View
             android:id="@+id/line1"
             android:layout_width="0dp"
@@ -146,15 +137,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_refresh_location"/>
 
-        <ProgressBar
-            android:id="@+id/progress_near_admin"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:layout_constraintLeft_toLeftOf="@id/recycler_view_near_admin"
-            app:layout_constraintRight_toRightOf="@id/recycler_view_near_admin"
-            app:layout_constraintTop_toTopOf="@id/recycler_view_near_admin"
-            app:layout_constraintBottom_toBottomOf="@id/recycler_view_near_admin"/>
-
         <View
             android:id="@+id/line3"
             android:layout_width="0dp"
@@ -189,15 +171,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_lastest_review"/>
 
-        <ProgressBar
-            android:id="@+id/progress_near_review"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:layout_constraintLeft_toLeftOf="@id/recycler_view_review"
-            app:layout_constraintRight_toRightOf="@id/recycler_view_review"
-            app:layout_constraintTop_toTopOf="@id/recycler_view_review"
-            app:layout_constraintBottom_toBottomOf="@id/recycler_view_review"/>
-
         <View
             android:id="@+id/line4"
             android:layout_width="0dp"
@@ -231,15 +204,6 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_new_admin"/>
-
-        <ProgressBar
-            android:id="@+id/progress_new_admin"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:layout_constraintLeft_toLeftOf="@id/recycler_view_new_admin"
-            app:layout_constraintRight_toRightOf="@id/recycler_view_new_admin"
-            app:layout_constraintTop_toTopOf="@id/recycler_view_new_admin"
-            app:layout_constraintBottom_toBottomOf="@id/recycler_view_new_admin"/>
 
         <View
             android:layout_width="0dp"

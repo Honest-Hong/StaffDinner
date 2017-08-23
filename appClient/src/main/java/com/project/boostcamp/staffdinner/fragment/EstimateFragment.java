@@ -124,7 +124,6 @@ public class EstimateFragment extends Fragment {
             recyclerView.setVisibility(View.GONE);
             textEmpty.setVisibility(View.VISIBLE);
             imageEmpty.setVisibility(View.VISIBLE);
-            Toast.makeText(getContext(), R.string.fail_to_load_estimates, Toast.LENGTH_SHORT).show();
             hideRefreshing();
         }
     };

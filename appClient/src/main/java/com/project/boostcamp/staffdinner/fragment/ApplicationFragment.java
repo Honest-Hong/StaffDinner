@@ -472,7 +472,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
 
             @Override
             public void onFailure(Call<ResultStringDTO> call, Throwable t) {
-                Log.e("HTJ", "ApplicationFragment-submitApplication-onFailure: " + t.getMessage());
+                Toast.makeText(getContext(), R.string.not_connect_network, Toast.LENGTH_SHORT).show();
             }
         });
         scrollView.smoothScrollTo(0,0);
@@ -671,25 +671,16 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
                 .setReturnEvent(new DataEvent<String>() {
                     @Override
                     public void onClick(String data) {
-                        long addedTime = 0;
-                        switch(data) {
-                            case "30분 후":
-                                addedTime = 30 * 60 * 1000;
+                        String[] examples = getResources().getStringArray(R.array.example_time);
+                        int[] addTime = getResources().getIntArray(R.array.example_time_add);
+                        int index = 0;
+                        for(String str : examples) {
+                            if(str.equals(data)) {
                                 break;
-                            case "1시간 후":
-                                addedTime = 60 * 60 * 1000;
-                                break;
-                            case "1시간 30분 후":
-                                addedTime = 90 * 60 * 1000;
-                                break;
-                            case "2시간 후":
-                                addedTime = 120 * 60 * 1000;
-                                break;
-                            case "3시간 후":
-                                addedTime = 180 * 60 * 1000;
-                                break;
+                            }
+                            index++;
                         }
-                        setWheelTime(System.currentTimeMillis() + addedTime);
+                        setWheelTime(System.currentTimeMillis() + addTime[index] * 60 * 1000);
                         Toast.makeText(getContext(), data, Toast.LENGTH_SHORT).show();
                     }
                 })

@@ -5,14 +5,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.project.boostcamp.publiclibrary.domain.AdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.EventDTO;
 import com.project.boostcamp.publiclibrary.domain.GeoDTO;
 import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.NewAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
+import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * Created by Hong Tae Joon on 2017-08-10.
@@ -42,6 +45,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(SQLData.QUERY_CREATE_TABLE_NEAR_ADMINS);
         db.execSQL(SQLData.QUERY_CREATE_TABLE_NEAR_REVIEWS);
         db.execSQL(SQLData.QUERY_CREATE_TABLE_NEW_ADMINS);
+        db.execSQL(SQLData.QUERY_CREATE_ADMINS);
     }
 
     @Override
@@ -283,5 +287,78 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return ret;
+    }
+
+    /**
+     * 식당 가져오기
+     * @param id 식당 아이디
+     * @param type 식당 아이디 타입
+     * @return 식당 데이터
+     */
+    public AdminDTO getAdmin(String id, int type) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(SQLData.QUERY_SELECT_ADMIN,
+                new String[] { id, String.format(Locale.getDefault(), "%d", type) });
+        if(cursor.moveToNext()) {
+            AdminDTO admin = new AdminDTO();
+            admin.setId(cursor.getString(0));
+            admin.setType(cursor.getInt(1));
+            admin.setName(cursor.getString(2));
+            admin.setPhone(cursor.getString(3));
+            admin.setStyle(cursor.getString(4));
+            admin.setMenu(cursor.getString(5));
+            admin.setCost(cursor.getInt(6));
+            admin.setAddress(cursor.getString(7));
+            GeoDTO geo = new GeoDTO();
+            geo.setCoordinates(new double[] { cursor.getDouble(8), cursor.getDouble(9) });
+            admin.setGeo(geo);
+            admin.setBonusImageCount(cursor.getInt(7));
+            cursor.close();
+            return admin;
+        }
+        cursor.close();
+        return null;
+    }
+
+    /**
+     * 식당 추가하기
+     * @param admin
+     */
+    public void insertAdmin(AdminDTO admin, String address) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(SQLData.QUERY_INSERT_ADMIN, new Object[] {
+                admin.getId(),
+                admin.getType(),
+                admin.getName(),
+                admin.getPhone(),
+                admin.getStyle(),
+                admin.getMenu(),
+                admin.getCost(),
+                address,
+                admin.getGeo().getCoordinates()[1],
+                admin.getGeo().getCoordinates()[0],
+                admin.getBonusImageCount()
+        });
+    }
+
+    /**
+     * 식당 업데이트하기
+     * @param admin
+     */
+    public void updateAdmin(AdminDTO admin, String address) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(SQLData.QUERY_UPDATE_ADMIN, new Object[] {
+                admin.getName(),
+                admin.getPhone(),
+                admin.getStyle(),
+                admin.getMenu(),
+                admin.getCost(),
+                address,
+                admin.getGeo().getCoordinates()[1],
+                admin.getGeo().getCoordinates()[0],
+                admin.getBonusImageCount(),
+                admin.getId(),
+                admin.getType()
+        });
     }
 }

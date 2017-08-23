@@ -20,9 +20,9 @@ public class AdminDTO implements Parcelable {
     private String menu;
     private int cost;
     private GeoDTO geo;
-    private String image;
     private int type;
     private int bonusImageCount;
+    private String address;
 
     public AdminDTO() {
     }
@@ -35,7 +35,6 @@ public class AdminDTO implements Parcelable {
         menu = in.readString();
         cost = in.readInt();
         geo = in.readParcelable(GeoDTO.class.getClassLoader());
-        image = in.readString();
         type = in.readInt();
         bonusImageCount = in.readInt();
     }
@@ -66,7 +65,6 @@ public class AdminDTO implements Parcelable {
         parcel.writeString(menu);
         parcel.writeInt(cost);
         parcel.writeParcelable(geo, i);
-        parcel.writeString(image);
         parcel.writeInt(type);
         parcel.writeInt(bonusImageCount);
     }
@@ -127,14 +125,6 @@ public class AdminDTO implements Parcelable {
         this.geo = geo;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public int getType() {
         return type;
     }
@@ -149,5 +139,13 @@ public class AdminDTO implements Parcelable {
 
     public void setBonusImageCount(int bonusImageCount) {
         this.bonusImageCount = bonusImageCount;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -173,4 +173,42 @@ public class SQLData {
      */
     public static final String QUERY_SELECT_NEAR_REVIEWS
             = "SELECT * FROM nearReviews";
+
+    /**
+     * 식당 테이블 생성
+     */
+    public static final String QUERY_CREATE_ADMINS
+            = "CREATE TABLE admins (" +
+            "id TEXT," +
+            "type INTEGER," +
+            "name TEXT," +
+            "phone TEXT," +
+            "style TEXT," +
+            "menu TEXT," +
+            "cost INTEGER," +
+            "address TEXT," +
+            "lat REAL," +
+            "lng REAL," +
+            "bonusImageCount INTEGER," +
+            "PRIMARY KEY (id, type))";
+
+    /**
+     * 식당 추가
+     */
+    public static final String QUERY_INSERT_ADMIN
+            = "INSERT INTO admins VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    /**
+     * 식당 업데이트
+     */
+    public static final String QUERY_UPDATE_ADMIN
+            = "UPDATE admins" +
+            " SET name=?, phone=?, style=?, menu=?, cost=?, address=?, lat=?, lng=?, bonusImageCount=?" +
+            " WHERE id=? AND type=?";
+
+    /**
+     * 식당 찾기
+     */
+    public static final String QUERY_SELECT_ADMIN
+            = "SELECT * FROM admins WHERE id=? AND type=?";
 }

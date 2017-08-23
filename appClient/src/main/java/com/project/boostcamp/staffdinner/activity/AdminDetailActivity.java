@@ -30,6 +30,7 @@ import com.project.boostcamp.publiclibrary.domain.AdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewAverageDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
+import com.project.boostcamp.publiclibrary.sqlite.SQLiteHelper;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
 import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
 import com.project.boostcamp.publiclibrary.util.StringHelper;
@@ -68,6 +69,7 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
     private String adminId;
     private int adminType;
     private AdminDTO data;
+    private boolean useLocal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,14 +94,34 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
     private DataReceiver<AdminDTO> detailDataReceiver = new DataReceiver<AdminDTO>() {
         @Override
         public void onReceive(AdminDTO data) {
+            useLocal = false;
+            SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(AdminDetailActivity.this);
+            AdminDTO localAdmin = sqLiteHelper.getAdmin(adminId, adminType);
+            if(localAdmin == null) {
+                sqLiteHelper.insertAdmin(
+                        data,
+                        GeocoderHelper.getAddress(AdminDetailActivity.this, data.getGeo().toLatLng()));
+            } else {
+                sqLiteHelper.updateAdmin(
+                        data,
+                        GeocoderHelper.getAddress(AdminDetailActivity.this, data.getGeo().toLatLng()));
+            }
             AdminDetailActivity.this.data = data;
             setupView(data);
         }
 
         @Override
         public void onFail() {
-            Toast.makeText(AdminDetailActivity.this, R.string.not_connect_network, Toast.LENGTH_SHORT).show();
-            finish();
+            useLocal = true;
+            SQLiteHelper sqLiteHelper = SQLiteHelper.getInstance(AdminDetailActivity.this);
+            AdminDTO localAdmin = sqLiteHelper.getAdmin(adminId, adminType);
+            if(localAdmin == null) {
+                Toast.makeText(AdminDetailActivity.this, R.string.not_connect_network, Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                data = localAdmin;
+                setupView(localAdmin);
+            }
         }
     };
 
@@ -139,7 +161,11 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
         textStyle.setText(data.getStyle());
         textMenu.setText(data.getMenu());
         textCost.setText(getString(R.string.won, data.getCost()));
-        textLocation.setText(GeocoderHelper.getAddress(AdminDetailActivity.this, data.getGeo().toLatLng()));
+        if(useLocal) {
+            textLocation.setText(data.getAddress());
+        } else {
+            textLocation.setText(GeocoderHelper.getAddress(AdminDetailActivity.this, data.getGeo().toLatLng()));
+        }
         setupBonusImage(data.getBonusImageCount());
 
         SupportMapFragment map = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);

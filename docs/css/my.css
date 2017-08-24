@@ -1,0 +1,17 @@
+.my-background {
+    background-image: url(../images/features-bg.jpg);
+}
+
+.detail-info {
+    margin-bottom: 50px;
+}
+
+.my-h2 {
+    font-size: 30px;
+    padding-bottom: 20px;
+    color:#fff;
+}
+
+.my-title {
+    padding-bottom: 50px
+}

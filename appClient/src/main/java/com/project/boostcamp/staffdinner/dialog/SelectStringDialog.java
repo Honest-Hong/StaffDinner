@@ -16,6 +16,7 @@ import com.project.boostcamp.staffdinner.adapter.SelectStringAdapter;
 
 /**
  * Created by Hong Tae Joon on 2017-08-17.
+ * 문자열 선택 다이얼로그
  */
 
 public class SelectStringDialog extends DialogFragment {
@@ -29,7 +30,7 @@ public class SelectStringDialog extends DialogFragment {
         SelectStringAdapter adapter = new SelectStringAdapter(getContext(), dataEvent);
         adapter.setData(data);
         View v = LayoutInflater.from(getContext()).inflate(R.layout.dialog_select_string, null);
-        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = v.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
@@ -39,7 +40,7 @@ public class SelectStringDialog extends DialogFragment {
                 .create();
     }
 
-    private DataEvent<String> dataEvent = new DataEvent<String>() {
+    private final DataEvent<String> dataEvent = new DataEvent<String>() {
         @Override
         public void onClick(String data) {
             dismiss();

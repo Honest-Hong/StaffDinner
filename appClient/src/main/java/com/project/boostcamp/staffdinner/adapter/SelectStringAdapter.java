@@ -12,12 +12,13 @@ import com.project.boostcamp.staffdinner.adapter.viewholder.SelectStringVH;
 
 /**
  * Created by Hong Tae Joon on 2017-08-17.
+ * 문자열 선택 목록 어뎁터
  */
 
 public class SelectStringAdapter extends RecyclerView.Adapter<SelectStringVH> {
-    private Context context;
+    private final Context context;
     private String[] data;
-    private DataEvent<String> dataEvent;
+    private final DataEvent<String> dataEvent;
 
     public SelectStringAdapter(Context context, DataEvent<String> dataEvent) {
         this.context = context;

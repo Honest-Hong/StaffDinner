@@ -13,6 +13,7 @@ import com.kakao.auth.KakaoSDK;
 
 /**
  * Created by Hong Tae Joon on 2017-07-31.
+ * 글로벌 어플리케이션
  */
 
 public class GlobalApplication extends Application {

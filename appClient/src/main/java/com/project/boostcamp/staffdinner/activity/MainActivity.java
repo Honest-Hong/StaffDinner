@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     @BindView(R.id.bottom_nav) BottomNavigationView bottomNav;
     @BindView(R.id.view_pager) ViewPager viewPager;
     @BindView(R.id.navigation) NavigationView navigationView;
-    private MainViewPagerAdapter pagerAdapter;
 
     private ShowcaseView showcaseView;
     private int showcaseCount = 0;
@@ -122,7 +121,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     private void setupToolbar() {
         Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawer.addDrawerListener(toggle);
@@ -170,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
      * 탭이 3개로 고정되어있기 때문에 Limit을 걸어준다.
      */
     private void setupViewPager() {
-        pagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
+        MainViewPagerAdapter pagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOffscreenPageLimit(4);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -337,7 +338,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
      * GPS 다이얼로그 결과
      * GPS 기능을 킬 수 있도록 설정으로 연결하거나 아무 행동도 하지 않는다
      */
-    private DialogResultListener gpsDialogListener = new DialogResultListener() {
+    private final DialogResultListener gpsDialogListener = new DialogResultListener() {
         @Override
         public void onPositive() {
             Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -385,7 +386,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     /**
      * 쇼케이스를 띄워주는 행동
      */
-    private Runnable showcaseTask = new Runnable() {
+    private final Runnable showcaseTask = new Runnable() {
         @Override
         public void run() {
             if(showcaseView != null && showcaseView.isShowing()) {
@@ -406,7 +407,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     /**
      * 쇼케이스 내부의 버튼 클릭 리스너
      */
-    private View.OnClickListener showcaseClick = new View.OnClickListener() {
+    private final View.OnClickListener showcaseClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             showcaseView.hide();
@@ -421,7 +422,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         RetrofitClient.getInstance().getUserInformation(id, type, userDataReceiver);
     }
 
-    private DataReceiver<ClientDTO> userDataReceiver = new DataReceiver<ClientDTO>() {
+    private final DataReceiver<ClientDTO> userDataReceiver = new DataReceiver<ClientDTO>() {
         @Override
         public void onReceive(ClientDTO data) {
             setupNavigation(data.getName(), data.getPhone());
@@ -439,8 +440,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
      */
     private void setupNavigation(String name, String phone) {
         View v = navigationView.getHeaderView(0);
-        TextView textName = (TextView) v.findViewById(R.id.text_name);
-        TextView textPhone = (TextView) v.findViewById(R.id.text_phone);
+        TextView textName = v.findViewById(R.id.text_name);
+        TextView textPhone = v.findViewById(R.id.text_phone);
         textName.setText(name);
         textPhone.setText(StringHelper.toPhoneNumber(phone));
     }

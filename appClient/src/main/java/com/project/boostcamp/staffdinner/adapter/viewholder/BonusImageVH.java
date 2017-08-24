@@ -14,11 +14,12 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Hong Tae Joon on 2017-08-17.
+ * 식당의 추가 이미지 홀더
  */
 
 public class BonusImageVH extends BaseVH<String> {
     @BindView(R.id.image_view) ImageView imageView;
-    private Context context;
+    private final Context context;
 
     public BonusImageVH(View itemView, DataEvent<String> dataEvent, Context context) {
         super(itemView, dataEvent);

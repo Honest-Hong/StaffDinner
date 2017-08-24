@@ -17,10 +17,11 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Hong Tae Joon on 2017-08-11.
+ * 근처 식당 뷰 홀더
  */
 
 public class NearAdminVH extends BaseVH<NearAdminDTO> {
-    private Context context;
+    private final Context context;
     @BindView(R.id.image_view) ImageView imageView;
     @BindView(R.id.text_name) TextView textName;
     @BindView(R.id.text_distance) TextView textDistnace;

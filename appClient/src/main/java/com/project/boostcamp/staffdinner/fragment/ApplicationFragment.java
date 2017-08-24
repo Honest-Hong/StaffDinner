@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
+import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.ApplicationStateType;
 import com.project.boostcamp.publiclibrary.data.DefaultValue;
@@ -69,9 +70,6 @@ import java.util.Locale;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by Hong Tae Joon on 2017-07-25.
@@ -124,7 +122,9 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         ButterKnife.bind(this, v);
         setupView(v);
         setupWheel(v);
-        loadApplication();
+        // 신청서 정보 불러오기
+        String id = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
+        RetrofitClient.getInstance().getApplication(id, applicationReceiver);
         rootView = v;
         return v;
     }
@@ -216,37 +216,32 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
      * 서버에서 데이터를 불러올 수 있다면 서버의 데이터를 사용하고
      * 불러올 수 없다면 로컬 데이터를 사용합니다.
      */
-    private void loadApplication() {
-        String id = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
-        RetrofitClient.getInstance().clientService.getApplication(id).enqueue(new Callback<ClientApplicationDTO>() {
-            @Override
-            public void onResponse(Call<ClientApplicationDTO> call, Response<ClientApplicationDTO> response) {
-                ClientApplicationDTO dto = response.body();
-                application = new Application();
-                if(dto.getState() == ApplicationStateType.STATE_APPLIED) {
-                    application.setId(dto.get_id());
-                    application.setTitle(dto.getTitle());
-                    application.setNumber(dto.getNumber());
-                    application.setWantedTime(dto.getTime());
-                    application.setWantedStyle(dto.getStyle());
-                    application.setWantedMenu(dto.getMenu());
-                    application.setGeo(dto.getGeo().toGeo());
-                    application.setState(ApplicationStateType.STATE_APPLIED);
-                    application.setDistance(dto.getDistance());
-                } else {
-                }
-                setupTexts(application);
+    private final DataReceiver<ClientApplicationDTO> applicationReceiver = new DataReceiver<ClientApplicationDTO>() {
+        @Override
+        public void onReceive(ClientApplicationDTO data) {
+            application = new Application();
+            if(data.getState() == ApplicationStateType.STATE_APPLIED) {
+                application.setId(data.get_id());
+                application.setTitle(data.getTitle());
+                application.setNumber(data.getNumber());
+                application.setWantedTime(data.getTime());
+                application.setWantedStyle(data.getStyle());
+                application.setWantedMenu(data.getMenu());
+                application.setGeo(data.getGeo().toGeo());
+                application.setState(ApplicationStateType.STATE_APPLIED);
+                application.setDistance(data.getDistance());
             }
+            setupTexts(application);
+        }
 
-            @Override
-            public void onFailure(Call<ClientApplicationDTO> call, Throwable t) {
-                if(application == null) {
-                    application = new Application();
-                }
-                setupTexts(application);
+        @Override
+        public void onFail() {
+            if(application == null) {
+                application = new Application();
             }
-        });
-    }
+            setupTexts(application);
+        }
+    };
 
     /**
      * 신청서 데이터를 뷰에 뿌려주는 함수
@@ -405,7 +400,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         if(application.getState() == ApplicationStateType.STATE_EDITING) {
             submitApplication();
         } else {
-            cancelApplication();
+            RetrofitClient.getInstance().cancelApplication(application.getId(), cancelApplicationReceiver);
         }
     }
 
@@ -460,25 +455,27 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         dto.setWritedTime(TimeHelper.now());
         dto.setDistance(application.getDistance());
         String clientId = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
-        RetrofitClient.getInstance().clientService.setApplication(clientId, dto).enqueue(new Callback<ResultStringDTO>() {
-            @Override
-            public void onResponse(Call<ResultStringDTO> call, Response<ResultStringDTO> response) {
-                if(response.body().getResult() != null) {
-                    application.setId(response.body().getResult());
-                    SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
-                    setState(ApplicationStateType.STATE_APPLIED);
-                } else {
-                    Log.d("HTJ", "Not receive application id");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultStringDTO> call, Throwable t) {
-                Toast.makeText(getContext(), R.string.not_connect_network, Toast.LENGTH_SHORT).show();
-            }
-        });
+        RetrofitClient.getInstance().setApplication(clientId, dto, setApplicationReceiver);
         scrollView.smoothScrollTo(0,0);
     }
+
+    private final DataReceiver<ResultStringDTO> setApplicationReceiver = new DataReceiver<ResultStringDTO>() {
+        @Override
+        public void onReceive(ResultStringDTO data) {
+            if(data.getResult() != null) {
+                application.setId(data.getResult());
+                SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
+                setState(ApplicationStateType.STATE_APPLIED);
+            } else {
+                Log.d("HTJ", "Not receive application id");
+            }
+        }
+
+        @Override
+        public void onFail() {
+            Toast.makeText(getContext(), R.string.not_connect_network, Toast.LENGTH_SHORT).show();
+        }
+    };
 
     /**
      * 현재 입력되어있는 값들을 Application 객체로 반환시켜주는 함수
@@ -544,36 +541,33 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
     }
 
     /**
-     * 신청서를 취소하는 함수
+     * 신청서를 취소 요청 결과
      */
-    private void cancelApplication() {
-        RetrofitClient.getInstance().clientService.cancelApplication(application.getId()).enqueue(new Callback<ResultIntDTO>() {
-            @Override
-            public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
-                // 취소 성공
-                if(response.body().getResult() == 1) {
-                    application = new Application();
-                    setupTexts(application);
-                    application.setState(ApplicationStateType.STATE_EDITING);
-                    setState(ApplicationStateType.STATE_EDITING);
-                    SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
-                    scrollView.smoothScrollTo(0,0);
-                } else {
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResultIntDTO> call, Throwable t) {
-                // 취소 실패
-                Toast.makeText(getContext(), "서버 오류", Toast.LENGTH_SHORT).show();
+    private final DataReceiver<ResultIntDTO> cancelApplicationReceiver = new DataReceiver<ResultIntDTO>() {
+        @Override
+        public void onReceive(ResultIntDTO data) {
+            // 취소 성공
+            if(data.getResult() == 1) {
                 application = new Application();
                 setupTexts(application);
                 application.setState(ApplicationStateType.STATE_EDITING);
                 setState(ApplicationStateType.STATE_EDITING);
                 SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
+                scrollView.smoothScrollTo(0,0);
             }
-        });
-    }
+        }
+
+        @Override
+        public void onFail() {
+            // 취소 실패
+            Toast.makeText(getContext(), "서버 오류", Toast.LENGTH_SHORT).show();
+            application = new Application();
+            setupTexts(application);
+            application.setState(ApplicationStateType.STATE_EDITING);
+            setState(ApplicationStateType.STATE_EDITING);
+            SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
+        }
+    };
 
     /**
      * 신청서의 상태에 따라서 화면을 다르게 표시해주는 함수
@@ -616,7 +610,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
     /**
      * 스타일 선택 다이얼로그의 결과를 받는 인터페이스
      */
-    private ArrayResultListener<String> styleResult = new ArrayResultListener<String>() {
+    private final ArrayResultListener<String> styleResult = new ArrayResultListener<String>() {
         @Override
         public void onResult(ArrayList<String> array) {
             String str = "";

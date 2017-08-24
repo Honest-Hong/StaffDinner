@@ -16,11 +16,12 @@ import java.util.ArrayList;
 
 /**
  * Created by Hong Tae Joon on 2017-08-12.
+ * 새로운 식당 목록 어뎁터
  */
 
 public class NewAdminRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
-    private Context context;
-    private DataEvent<NewAdminDTO> dataEvent;
+    private final Context context;
+    private final DataEvent<NewAdminDTO> dataEvent;
     private ArrayList<NewAdminDTO> data;
 
     public NewAdminRecyclerAdapter(Context context, DataEvent<NewAdminDTO> dataEvent) {
@@ -48,7 +49,9 @@ public class NewAdminRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
 
     @Override
     public void onBindViewHolder(BaseVH holder, int position) {
-        holder.setupView(data.get(position));
+        if(holder instanceof NewAdminVH) {
+            ((NewAdminVH)holder).setupView(data.get(position));
+        }
     }
 
     @Override

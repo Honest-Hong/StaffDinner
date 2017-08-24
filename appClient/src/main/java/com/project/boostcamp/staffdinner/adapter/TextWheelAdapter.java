@@ -10,6 +10,7 @@ import com.project.boostcamp.publiclibrary.view.WheelPickerAdapter;
 
 /**
  * Created by Hong Tae Joon on 2017-07-27.
+ * 텍스트 전용 휠 어뎁터
  */
 
 public class TextWheelAdapter extends WheelPickerAdapter<String> {

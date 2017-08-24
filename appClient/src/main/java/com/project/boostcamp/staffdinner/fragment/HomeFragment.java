@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +18,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -58,6 +56,7 @@ import me.relex.circleindicator.CircleIndicator;
 
 /**
  * Created by Hong Tae Joon on 2017-08-10.
+ * 홈 화면 프래그먼트
  */
 
 public class HomeFragment extends Fragment implements ReviewEventListener {
@@ -90,7 +89,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
         try {
             guidePlayer = (GuidePlayer)context;
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
         }
     }
 
@@ -156,7 +155,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
         startAutoScroll();
     }
 
-    private DataReceiver<ArrayList<EventDTO>> eventDataReceiver = new DataReceiver<ArrayList<EventDTO>>() {
+    private final DataReceiver<ArrayList<EventDTO>> eventDataReceiver = new DataReceiver<ArrayList<EventDTO>>() {
         @Override
         public void onReceive(ArrayList<EventDTO> data) {
             setupViewPager(data);
@@ -169,7 +168,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
         }
     };
 
-    private DataReceiver<ArrayList<NearAdminDTO>> nearAdminReceiver = new DataReceiver<ArrayList<NearAdminDTO>>() {
+    private final DataReceiver<ArrayList<NearAdminDTO>> nearAdminReceiver = new DataReceiver<ArrayList<NearAdminDTO>>() {
         @Override
         public void onReceive(ArrayList<NearAdminDTO> data) {
             sqLiteHelper.refreshNearAdmins(data);
@@ -182,7 +181,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
         }
     };
 
-    private DataReceiver<ArrayList<ReviewDTO>> nearReviewReceiver = new DataReceiver<ArrayList<ReviewDTO>>() {
+    private final DataReceiver<ArrayList<ReviewDTO>> nearReviewReceiver = new DataReceiver<ArrayList<ReviewDTO>>() {
         @Override
         public void onReceive(ArrayList<ReviewDTO> data) {
             sqLiteHelper.refreshNearReviews(data);
@@ -195,7 +194,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
         }
     };
 
-    private DataReceiver<ArrayList<NewAdminDTO>> newAdminReceiver = new DataReceiver<ArrayList<NewAdminDTO>>() {
+    private final DataReceiver<ArrayList<NewAdminDTO>> newAdminReceiver = new DataReceiver<ArrayList<NewAdminDTO>>() {
         @Override
         public void onReceive(ArrayList<NewAdminDTO> data) {
             sqLiteHelper.refreshNewAdmins(data);
@@ -208,21 +207,21 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
         }
     };
 
-    private DataEvent<NearAdminDTO> nearAdminEvent = new DataEvent<NearAdminDTO>() {
+    private final DataEvent<NearAdminDTO> nearAdminEvent = new DataEvent<NearAdminDTO>() {
         @Override
         public void onClick(NearAdminDTO data) {
             redirectAdminDetailActivity(data.getAdminId(), data.getAdminType());
         }
     };
 
-    private DataEvent<ReviewDTO> nearReviewEvent = new DataEvent<ReviewDTO>() {
+    private final DataEvent<ReviewDTO> nearReviewEvent = new DataEvent<ReviewDTO>() {
         @Override
         public void onClick(ReviewDTO data) {
             redirectAdminDetailActivity(data.getReceiverId(), data.getReceiverType());
         }
     };
 
-    private DataEvent<NewAdminDTO> newAdminEvent = new DataEvent<NewAdminDTO>() {
+    private final DataEvent<NewAdminDTO> newAdminEvent = new DataEvent<NewAdminDTO>() {
         @Override
         public void onClick(NewAdminDTO data) {
             redirectAdminDetailActivity(data.getId(), data.getType());
@@ -246,7 +245,7 @@ public class HomeFragment extends Fragment implements ReviewEventListener {
         }, DefaultValue.DEFAULT_SCROLL_DELAY, DefaultValue.DEFAULT_SCROLL_TIME);
     }
 
-    private Runnable runScrollPager = new Runnable() {
+    private final Runnable runScrollPager = new Runnable() {
         @Override
         public void run() {
             final int currentPage = viewPager.getCurrentItem();

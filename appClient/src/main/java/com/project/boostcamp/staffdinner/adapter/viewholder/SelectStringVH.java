@@ -9,13 +9,14 @@ import com.project.boostcamp.staffdinner.R;
 
 /**
  * Created by Hong Tae Joon on 2017-08-17.
+ * 문자열 선택 뷰 홀더
  */
 
 public class SelectStringVH extends BaseVH<String> {
-    private TextView textView;
+    private final TextView textView;
     public SelectStringVH(View itemView, final DataEvent<String> dataEvent) {
         super(itemView, dataEvent);
-        textView = (TextView) itemView.findViewById(R.id.text_view);
+        textView = itemView.findViewById(R.id.text_view);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

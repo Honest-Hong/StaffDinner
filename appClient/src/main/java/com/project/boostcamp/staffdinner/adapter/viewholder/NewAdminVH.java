@@ -17,13 +17,14 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Hong Tae Joon on 2017-08-12.
+ * 새로운 식당 뷰 홀더
  */
 
 public class NewAdminVH extends BaseVH<NewAdminDTO> {
     @BindView(R.id.image_view) ImageView imageView;
     @BindView(R.id.text_name) TextView textName;
     @BindView(R.id.text_style) TextView textStyle;
-    private Context context;
+    private final Context context;
 
     public NewAdminVH(View itemView, final DataEvent<NewAdminDTO> dataEvent) {
         super(itemView, dataEvent);

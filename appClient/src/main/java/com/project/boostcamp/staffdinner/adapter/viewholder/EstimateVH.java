@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Hong Tae Joon on 2017-07-25.
+ * 견적서 내역 홀더
  */
 
 public class EstimateVH extends BaseVH<ClientEstimateDTO> implements View.OnClickListener{

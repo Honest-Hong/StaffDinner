@@ -38,6 +38,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Hong Tae Joon on 2017-07-25.
+ * 계약 내역 프래그먼트
  */
 
 public class ContactFragment extends Fragment {
@@ -113,12 +114,12 @@ public class ContactFragment extends Fragment {
      * 더 많은 내역을 불러오는 작업(하단)
      * @param page
      */
-    public void loadMoreData(int page) {
+    private void loadMoreData(int page) {
         String clientID = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
         RetrofitClient.getInstance().getContacts(clientID, page, moreDataReceiver);
     }
 
-    private DataEvent<ContactDTO> dataEvent = new DataEvent<ContactDTO>() {
+    private final DataEvent<ContactDTO> dataEvent = new DataEvent<ContactDTO>() {
         @Override
         public void onClick(ContactDTO data) {
             Intent intent = new Intent(getContext(), ContactDetailActivity.class);
@@ -135,7 +136,7 @@ public class ContactFragment extends Fragment {
      * - 실패할 경우
      * 로컬에 저장된 데이터를 보여주도록 처리한다.
      */
-    private DataReceiver<ArrayList<ContactDTO>> dataReceiver = new DataReceiver<ArrayList<ContactDTO>>() {
+    private final DataReceiver<ArrayList<ContactDTO>> dataReceiver = new DataReceiver<ArrayList<ContactDTO>>() {
         @Override
         public void onReceive(ArrayList<ContactDTO> data) {
             if(data.size() == 0) {
@@ -173,7 +174,7 @@ public class ContactFragment extends Fragment {
     /**
      * 하단에서 데이터를 추가로 불러오는 요청
      */
-    private DataReceiver<ArrayList<ContactDTO>> moreDataReceiver = new DataReceiver<ArrayList<ContactDTO>>() {
+    private final DataReceiver<ArrayList<ContactDTO>> moreDataReceiver = new DataReceiver<ArrayList<ContactDTO>>() {
         @Override
         public void onReceive(ArrayList<ContactDTO> data) {
             ArrayList<ContactDTO> arr = adapter.getData();
@@ -197,7 +198,7 @@ public class ContactFragment extends Fragment {
         }
     };
 
-    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+    private final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
             loadFirstData();

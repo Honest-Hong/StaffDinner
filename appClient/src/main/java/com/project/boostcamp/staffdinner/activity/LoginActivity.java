@@ -46,7 +46,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -105,7 +104,9 @@ public class LoginActivity extends AppCompatActivity {
             Session.getCurrentSession().open(AuthType.KAKAO_LOGIN_ALL, this);
         } else if(v.getId() == R.id.button_facebook) {
             progressDialog = MyProgressDialog.show(getSupportFragmentManager());
-            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
+            ArrayList<String> permissions = new ArrayList<>();
+            permissions.add("public_profile");
+            LoginManager.getInstance().logInWithReadPermissions(this, permissions);
         } else if(v.getId() == R.id.button_email) {
             showEmailInput();
         }
@@ -176,7 +177,7 @@ public class LoginActivity extends AppCompatActivity {
      * 카카오 로그인 성공시 requestMe를 사용하여 이름을 가져온다
      * id값은 카카오에서 제공하는 id이다
      */
-    private ISessionCallback callbackKaKao = new ISessionCallback() {
+    private final ISessionCallback callbackKaKao = new ISessionCallback() {
         @Override
         public void onSessionOpened() {
             List<String> propertyKeys = new ArrayList<>();
@@ -218,7 +219,7 @@ public class LoginActivity extends AppCompatActivity {
      * 페이스북 로그인 성공시 GraphAPI를 사용하여 이름을 가져온다
      * id는 페이스북에서 제공하는 id이다
      */
-    private FacebookCallback<LoginResult> callbackFacebook = new FacebookCallback<LoginResult>() {
+    private final FacebookCallback<LoginResult> callbackFacebook = new FacebookCallback<LoginResult>() {
         @Override
         public void onSuccess(LoginResult loginResult) {
             Log.d("HTJ", "facebook onSuccess");
@@ -322,7 +323,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(this, EmailSignUpActivity.class));
     }
 
-    private OnCompleteListener<AuthResult> onSignInComplete = new OnCompleteListener<AuthResult>() {
+    private final OnCompleteListener<AuthResult> onSignInComplete = new OnCompleteListener<AuthResult>() {
         @Override
         public void onComplete(@NonNull Task<AuthResult> task) {
             if(task.isSuccessful()) {

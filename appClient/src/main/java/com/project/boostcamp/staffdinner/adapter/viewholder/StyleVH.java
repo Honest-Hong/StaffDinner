@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Hong Tae Joon on 2017-08-09.
+ * 분위기 뷰 홀더
  */
 
 public class StyleVH extends RecyclerView.ViewHolder {

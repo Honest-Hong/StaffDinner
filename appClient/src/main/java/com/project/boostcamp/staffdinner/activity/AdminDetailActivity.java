@@ -80,8 +80,10 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
         Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar);
         toolbar.setTitle(R.string.admin_detail_activity_title);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        }
 
         adminId = getIntent().getStringExtra(ExtraType.EXTRA_LOGIN_ID);
         adminType = getIntent().getIntExtra(ExtraType.EXTRA_LOGIN_TYPE, -1);
@@ -91,7 +93,7 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
         RetrofitClient.getInstance().getAdminReviewAverage(adminId, adminType, reviewAverageDataReceiver);
     }
 
-    private DataReceiver<AdminDTO> detailDataReceiver = new DataReceiver<AdminDTO>() {
+    private final DataReceiver<AdminDTO> detailDataReceiver = new DataReceiver<AdminDTO>() {
         @Override
         public void onReceive(AdminDTO data) {
             useLocal = false;
@@ -125,7 +127,7 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
         }
     };
 
-    private DataReceiver<ArrayList<ReviewDTO>> reviewDataReceiver = new DataReceiver<ArrayList<ReviewDTO>>() {
+    private final DataReceiver<ArrayList<ReviewDTO>> reviewDataReceiver = new DataReceiver<ArrayList<ReviewDTO>>() {
         @Override
         public void onReceive(ArrayList<ReviewDTO> data) {
             setupReview(data);
@@ -137,7 +139,7 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
         }
     };
 
-    private DataReceiver<ReviewAverageDTO> reviewAverageDataReceiver = new DataReceiver<ReviewAverageDTO>() {
+    private final DataReceiver<ReviewAverageDTO> reviewAverageDataReceiver = new DataReceiver<ReviewAverageDTO>() {
         @Override
         public void onReceive(ReviewAverageDTO data) {
             textReviewAverage.setText(getString(R.string.rating_format, data.getAverage()));
@@ -193,11 +195,11 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
         for(ReviewDTO review: data) {
             View v = getLayoutInflater().inflate(R.layout.item_review, linear, false);
             v.setLayoutParams(layoutParams);
-            TextView textTo = (TextView)v.findViewById(R.id.text_receiver);
-            TextView textFrom = (TextView)v.findViewById(R.id.text_writer);
-            TextView textContent = (TextView) v.findViewById(R.id.text_content);
-            TextView textTime = (TextView) v.findViewById(R.id.text_time);
-            MaterialRatingBar ratingBar = (MaterialRatingBar) v.findViewById(R.id.rating_bar);
+            TextView textTo = v.findViewById(R.id.text_receiver);
+            TextView textFrom = v.findViewById(R.id.text_writer);
+            TextView textContent =  v.findViewById(R.id.text_content);
+            TextView textTime = v.findViewById(R.id.text_time);
+            MaterialRatingBar ratingBar = v.findViewById(R.id.rating_bar);
 
             textTo.setText(review.getReceiver());
             textFrom.setText(review.getWriter());
@@ -259,7 +261,7 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
         startActivity(intent);
     }
 
-    private DataEvent<String> bonusImageEvent = new DataEvent<String>() {
+    private final DataEvent<String> bonusImageEvent = new DataEvent<String>() {
         @Override
         public void onClick(String data) {
             new ImageDetailDialog.Builder(AdminDetailActivity.this)

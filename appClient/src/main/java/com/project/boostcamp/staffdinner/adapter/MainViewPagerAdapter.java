@@ -11,6 +11,7 @@ import com.project.boostcamp.staffdinner.fragment.HomeFragment;
 
 /**
  * Created by Hong Tae Joon on 2017-07-25.
+ * 메인 뷰 페이저 어뎁터
  */
 
 public class MainViewPagerAdapter extends FragmentPagerAdapter{

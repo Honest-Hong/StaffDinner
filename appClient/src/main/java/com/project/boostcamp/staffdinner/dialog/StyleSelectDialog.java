@@ -23,10 +23,10 @@ import java.util.Arrays;
 
 /**
  * Created by Hong Tae Joon on 2017-08-09.
+ * 분위기 선택 다이얼로그
  */
 
 public class StyleSelectDialog extends DialogFragment implements ViewHolderEvent<StyleListData> {
-    private RecyclerView recyclerView;
     private StyleRecyclerAdapter adapter;
     private ArrayList<StyleListData> data;
     private String selectedStyles;
@@ -77,7 +77,7 @@ public class StyleSelectDialog extends DialogFragment implements ViewHolderEvent
     }
 
     private void setupView(View v) {
-        recyclerView = (RecyclerView)v;
+        RecyclerView recyclerView = (RecyclerView)v;
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setHasFixedSize(true);
         adapter = new StyleRecyclerAdapter(getContext(), this);

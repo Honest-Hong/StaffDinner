@@ -74,8 +74,10 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
         Toolbar toolbar = (Toolbar)findViewById(R.id.tool_bar);
         toolbar.setTitle(R.string.estimate_detail_activity_title);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        }
 
         GlideApp.with(this)
                 .load(RetrofitClient.getInstance().getAdminImageUrl(estimate.getAdmin().getId(), estimate.getAdmin().getType()))
@@ -152,7 +154,7 @@ public class EstimateDetailActivity extends AppCompatActivity implements View.On
      * 계약에 성공하면 메인화면으로 돌아간다
      * 실패할경우에는 토스트 메시지를 띄워준다.
      */
-    private DataReceiver<ResultIntDTO> dataReceiver = new DataReceiver<ResultIntDTO>() {
+    private final DataReceiver<ResultIntDTO> dataReceiver = new DataReceiver<ResultIntDTO>() {
         @Override
         public void onReceive(ResultIntDTO data) {
             if(data.getResult() == 1) {

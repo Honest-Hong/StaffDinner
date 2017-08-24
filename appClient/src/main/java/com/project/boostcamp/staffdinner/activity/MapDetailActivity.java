@@ -129,9 +129,7 @@ public class MapDetailActivity extends AppCompatActivity implements OnMapReadyCa
             Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
                     .build(this);
             startActivityForResult(intent, RequestType.REQUEST_LOCATION);
-        } catch (GooglePlayServicesRepairableException e) {
-            e.printStackTrace();
-        } catch (GooglePlayServicesNotAvailableException e) {
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
             e.printStackTrace();
         }
     }

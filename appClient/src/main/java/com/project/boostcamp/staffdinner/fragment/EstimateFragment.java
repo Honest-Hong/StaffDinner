@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
@@ -94,7 +93,7 @@ public class EstimateFragment extends Fragment {
         RetrofitClient.getInstance().getEstimates(clientId, dataReceiver);
     }
 
-    private DataEvent<ClientEstimateDTO> dataEvent = new DataEvent<ClientEstimateDTO>() {
+    private final DataEvent<ClientEstimateDTO> dataEvent = new DataEvent<ClientEstimateDTO>() {
         @Override
         public void onClick(ClientEstimateDTO data) {
             Intent intent = new Intent(getContext(), EstimateDetailActivity.class);
@@ -103,7 +102,7 @@ public class EstimateFragment extends Fragment {
         }
     };
 
-    private DataReceiver<ArrayList<ClientEstimateDTO>> dataReceiver = new DataReceiver<ArrayList<ClientEstimateDTO>>() {
+    private final DataReceiver<ArrayList<ClientEstimateDTO>> dataReceiver = new DataReceiver<ArrayList<ClientEstimateDTO>>() {
         @Override
         public void onReceive(ArrayList<ClientEstimateDTO> data) {
             if(data.size() == 0) {
@@ -128,7 +127,7 @@ public class EstimateFragment extends Fragment {
         }
     };
 
-    private SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+    private final SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
             loadData();

@@ -9,13 +9,10 @@ import com.project.boostcamp.staffdinner.R;
 
 /**
  * Created by Hong Tae Joon on 2017-08-12.
+ * 빈 데이터 홀더
  */
 
 public class EmptyVH extends BaseVH<Object> {
-
-    public static EmptyVH vertical(ViewGroup parent, String text) {
-        return new EmptyVH(parent, text, R.layout.item_empty_vertical);
-    }
 
     public static EmptyVH horizontal(ViewGroup parent, String text) {
         return new EmptyVH(parent, text, R.layout.item_empty_horizontal);
@@ -23,7 +20,7 @@ public class EmptyVH extends BaseVH<Object> {
 
     private EmptyVH(ViewGroup parent, String text, int layout) {
         super(LayoutInflater.from(parent.getContext()).inflate(layout, parent, false), null);
-        TextView textView = (TextView) itemView.findViewById(R.id.text_view);
+        TextView textView = itemView.findViewById(R.id.text_view);
         textView.setText(text);
     }
 

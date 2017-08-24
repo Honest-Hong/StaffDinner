@@ -19,6 +19,7 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 /**
  * Created by Hong Tae Joon on 2017-08-11.
+ * 리뷰 작성 다이얼로그
  */
 
 public class WriteReviewDialog extends DialogFragment implements MaterialRatingBar.OnRatingChangeListener{
@@ -45,14 +46,14 @@ public class WriteReviewDialog extends DialogFragment implements MaterialRatingB
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View v = LayoutInflater.from(getContext()).inflate(R.layout.dialog_write_review, null);
-        editContent = (EditText) v.findViewById(R.id.edit_content);
-        textRating = (TextView) v.findViewById(R.id.text_rating);
-        ratingBar = (MaterialRatingBar) v.findViewById(R.id.rating_bar);
+        editContent = v.findViewById(R.id.edit_content);
+        textRating = v.findViewById(R.id.text_rating);
+        ratingBar = v.findViewById(R.id.rating_bar);
         ratingBar.setOnRatingChangeListener(this);
         ratingBar.setRating(2.5f);
-        TextView textWriter = (TextView) v.findViewById(R.id.text_writer);
+        TextView textWriter = v.findViewById(R.id.text_writer);
         textWriter.setText(getArguments().getString(ExtraType.EXTRA_WRITER));
-        TextView textReceiver = (TextView) v.findViewById(R.id.text_receiver);
+        TextView textReceiver = v.findViewById(R.id.text_receiver);
         textReceiver.setText(getArguments().getString(ExtraType.EXTRA_RECEIVER));
         return new AlertDialog.Builder(getContext())
                 .setTitle("리뷰 작성")

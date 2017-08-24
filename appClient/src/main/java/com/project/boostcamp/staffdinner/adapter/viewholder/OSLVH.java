@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Hong Tae Joon on 2017-08-18.
+ * 오픈소스 라이선스 뷰 홀더
  */
 
 public class OSLVH extends BaseVH<OSLData> {

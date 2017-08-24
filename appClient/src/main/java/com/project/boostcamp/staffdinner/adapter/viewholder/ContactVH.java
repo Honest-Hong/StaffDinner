@@ -16,10 +16,11 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Hong Tae Joon on 2017-07-25.
+ * 계약 내역 홀더
  */
 
 public class ContactVH extends BaseVH<ContactDTO> implements View.OnClickListener {
-    private Context context;
+    private final Context context;
     @BindView(R.id.frame_cloud) FrameLayout frameCloud;
     @BindView(R.id.text_client) TextView textClient;
     @BindView(R.id.text_admin) TextView textAdmin;

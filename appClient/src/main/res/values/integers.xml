@@ -3,6 +3,4 @@
     <integer name="max_length_message">25</integer>
     <integer name="max_length_review">25</integer>
     <integer name="max_length_menu">15</integer>
-    <integer name="max_length_name">6</integer>
-    <integer name="max_length_phone">11</integer>
 </resources>

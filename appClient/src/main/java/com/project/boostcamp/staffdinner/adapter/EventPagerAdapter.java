@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Hong Tae Joon on 2017-08-11.
+ * 이벤트 프래그먼트 뷰 페이저 어뎁터
  */
 
 public class EventPagerAdapter extends FragmentPagerAdapter {

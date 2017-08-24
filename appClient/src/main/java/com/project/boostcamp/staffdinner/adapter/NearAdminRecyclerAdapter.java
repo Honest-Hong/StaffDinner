@@ -16,12 +16,13 @@ import java.util.ArrayList;
 
 /**
  * Created by Hong Tae Joon on 2017-08-11.
+ * 근처 식당 목록 어뎁터
  */
 
 public class NearAdminRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
-    private Context context;
+    private final Context context;
     private ArrayList<NearAdminDTO> data;
-    private DataEvent<NearAdminDTO> dataEvent;
+    private final DataEvent<NearAdminDTO> dataEvent;
 
     public NearAdminRecyclerAdapter(Context context, DataEvent<NearAdminDTO> dataEvent) {
         this.context = context;
@@ -54,7 +55,9 @@ public class NearAdminRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
 
     @Override
     public void onBindViewHolder(BaseVH holder, int position) {
-        holder.setupView(data.get(position));
+        if(holder instanceof NearAdminVH) {
+            ((NearAdminVH)holder).setupView(data.get(position));
+        }
     }
 
     @Override

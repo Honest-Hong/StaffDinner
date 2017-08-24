@@ -37,6 +37,7 @@
     </LinearLayout>
 
     <EditText
+        android:labelFor="@+id/edit_content"
         android:id="@+id/edit_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

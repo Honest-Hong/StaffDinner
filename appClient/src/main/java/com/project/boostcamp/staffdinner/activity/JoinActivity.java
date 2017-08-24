@@ -5,7 +5,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -15,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitClient;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.domain.ClientJoinDTO;
@@ -27,9 +27,6 @@ import com.project.boostcamp.staffdinner.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * 회원가입을 위해서 기본 정보를 입력받는 액티비티
@@ -98,7 +95,7 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
             dto.setName(name);
             dto.setPhone(phone);
             dto.setToken(FirebaseInstanceId.getInstance().getToken());
-            RetrofitClient.getInstance().clientService.join(dto).enqueue(joinCallback);
+            RetrofitClient.getInstance().join(dto, joinReceiver);
         }
     }
 
@@ -132,19 +129,18 @@ public class JoinActivity extends AppCompatActivity implements View.OnClickListe
      * 회원가입을 성공하면 로그인 정보가 반환되어 로컬에 저장하고 메인 액티비티로 넘어간다
      * 실패할 경우 오류를 표시해준다
      */
-    private Callback<LoginDTO> joinCallback = new Callback<LoginDTO>() {
+    private final DataReceiver<LoginDTO> joinReceiver = new DataReceiver<LoginDTO>() {
         @Override
-        public void onResponse(Call<LoginDTO> call, Response<LoginDTO> response) {
-            LoginDTO dto = response.body();
-            if(dto.getId() != null) {
-                SharedPreperenceHelper.getInstance(JoinActivity.this).saveLogin(dto);
+        public void onReceive(LoginDTO data) {
+            if(data.getId() != null) {
+                SharedPreperenceHelper.getInstance(JoinActivity.this).saveLogin(data);
                 startMainActivity();
             }
         }
 
         @Override
-        public void onFailure(Call<LoginDTO> call, Throwable t) {
-            Toast.makeText(JoinActivity.this, R.string.fail_to_join, Toast.LENGTH_SHORT).show();
+        public void onFail() {
+            Toast.makeText(JoinActivity.this, R.string.not_connect_network, Toast.LENGTH_SHORT).show();
             finish();
         }
     };

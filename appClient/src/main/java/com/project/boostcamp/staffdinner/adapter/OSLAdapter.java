@@ -13,10 +13,11 @@ import java.util.ArrayList;
 
 /**
  * Created by Hong Tae Joon on 2017-08-18.
+ * 오픈소스 라이선스 목록 어뎁터
  */
 
 public class OSLAdapter extends RecyclerView.Adapter<OSLVH> {
-    private Context context;
+    private final Context context;
     private ArrayList<OSLData> data;
 
     public OSLAdapter(Context context, ArrayList<OSLData> data) {

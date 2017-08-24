@@ -21,8 +21,10 @@ public class OSLActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(R.string.open_source_license);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(R.string.open_source_license);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         OSLAdapter adapter = new OSLAdapter(this, getOSLData());
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);

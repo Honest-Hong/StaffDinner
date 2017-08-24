@@ -5,6 +5,7 @@ import com.bumptech.glide.module.AppGlideModule;
 
 /**
  * Created by Hong Tae Joon on 2017-07-25.
+ * 글라이드 앱 빌딩 용
  */
 
 @GlideModule

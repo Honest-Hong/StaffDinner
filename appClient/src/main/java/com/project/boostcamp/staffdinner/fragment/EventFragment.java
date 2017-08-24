@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by Hong Tae Joon on 2017-08-11.
+ * 이벤트 프레그먼트
  */
 
 public class EventFragment extends Fragment {

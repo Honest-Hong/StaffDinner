@@ -17,12 +17,13 @@ import java.util.ArrayList;
 
 /**
  * Created by Hong Tae Joon on 2017-07-25.
+ * 계약 내역 어뎁터
  */
 
 public class ContactRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
-    private Context context;
+    private final Context context;
     private ArrayList<ContactDTO> data;
-    private DataEvent<ContactDTO> dataEvent;
+    private final DataEvent<ContactDTO> dataEvent;
 
     public ContactRecyclerAdapter(Context context, DataEvent<ContactDTO> dataEvent) {
         this.context = context;

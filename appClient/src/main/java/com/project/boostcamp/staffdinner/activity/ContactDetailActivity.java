@@ -81,8 +81,10 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
         Toolbar toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setTitle(R.string.contact_detail_activity_title);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        }
 
         textAdmin.setText(contact.getAdminName());
         textClient.setText(getString(R.string.user_name, contact.getClientName()));
@@ -159,7 +161,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
     /**
      * 리뷰 다이얼로그 결과 리스너
      */
-    private ReviewListener reviewListener = new ReviewListener() {
+    private final ReviewListener reviewListener = new ReviewListener() {
         @Override
         public void onReview(String content, int rating) {
             ReviewAddDTO dto = new ReviewAddDTO();
@@ -174,7 +176,7 @@ public class ContactDetailActivity extends AppCompatActivity implements OnMapRea
     /**
      * 리뷰 등록 요청 결과 리스너
      */
-    private DataReceiver<ResultIntDTO> reviewResultReceiver = new DataReceiver<ResultIntDTO>() {
+    private final DataReceiver<ResultIntDTO> reviewResultReceiver = new DataReceiver<ResultIntDTO>() {
         @Override
         public void onReceive(ResultIntDTO data) {
             setResult(RESULT_OK);

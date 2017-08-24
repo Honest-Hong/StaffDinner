@@ -37,7 +37,7 @@ public class AccountActivity extends AppCompatActivity {
         RetrofitClient.getInstance().getUserInformation(id, type, userInformReceiver);
     }
 
-    private DataReceiver<ClientDTO> userInformReceiver = new DataReceiver<ClientDTO>() {
+    private final DataReceiver<ClientDTO> userInformReceiver = new DataReceiver<ClientDTO>() {
         @Override
         public void onReceive(ClientDTO data) {
             editName.setText(data.getName());

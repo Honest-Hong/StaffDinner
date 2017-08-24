@@ -5,8 +5,10 @@ import android.util.Log;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.google.gson.Gson;
 import com.project.boostcamp.publiclibrary.domain.AdminDTO;
+import com.project.boostcamp.publiclibrary.domain.ClientApplicationDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientDTO;
 import com.project.boostcamp.publiclibrary.domain.ClientEstimateDTO;
+import com.project.boostcamp.publiclibrary.domain.ClientJoinDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactAddDTO;
 import com.project.boostcamp.publiclibrary.domain.ContactDTO;
 import com.project.boostcamp.publiclibrary.domain.EventDTO;
@@ -14,6 +16,7 @@ import com.project.boostcamp.publiclibrary.domain.LoginDTO;
 import com.project.boostcamp.publiclibrary.domain.NearAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.NewAdminDTO;
 import com.project.boostcamp.publiclibrary.domain.ResultIntDTO;
+import com.project.boostcamp.publiclibrary.domain.ResultStringDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewAddDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewAverageDTO;
 import com.project.boostcamp.publiclibrary.domain.ReviewDTO;
@@ -38,8 +41,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
     private static RetrofitClient instance;
     private static final String BASE_URL = "http://52.78.76.86:3000/";
-    private Retrofit retrofit;
-    public ClientService clientService;
+    private ClientService clientService;
     public static RetrofitClient getInstance() {
         if(instance == null) {
             instance = new RetrofitClient();
@@ -48,7 +50,7 @@ public class RetrofitClient {
     }
 
     public RetrofitClient() {
-        retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .client(new OkHttpClient().newBuilder()
                         .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                         .addNetworkInterceptor(new StethoInterceptor()).build())
@@ -56,6 +58,20 @@ public class RetrofitClient {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         clientService = retrofit.create(ClientService.class);
+    }
+
+    public void join(ClientJoinDTO dto, final DataReceiver<LoginDTO> dataReceiver) {
+        clientService.join(dto).enqueue(new Callback<LoginDTO>() {
+            @Override
+            public void onResponse(Call<LoginDTO> call, Response<LoginDTO> response) {
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<LoginDTO> call, Throwable t) {
+                dataReceiver.onFail();
+            }
+        });
     }
 
     public void requestLogin(String id, int type, final DataReceiver<LoginDTO> dataReceiver) {
@@ -70,6 +86,48 @@ public class RetrofitClient {
 
             @Override
             public void onFailure(Call<LoginDTO> call, Throwable t) {
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    public void getApplication(String userId, final DataReceiver<ClientApplicationDTO> dataReceiver) {
+        clientService.getApplication(userId).enqueue(new Callback<ClientApplicationDTO>() {
+            @Override
+            public void onResponse(Call<ClientApplicationDTO> call, Response<ClientApplicationDTO> response) {
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ClientApplicationDTO> call, Throwable t) {
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    public void setApplication(String clientId, ClientApplicationDTO dto, final DataReceiver<ResultStringDTO> dataReceiver) {
+        RetrofitClient.getInstance().clientService.setApplication(clientId, dto).enqueue(new Callback<ResultStringDTO>() {
+            @Override
+            public void onResponse(Call<ResultStringDTO> call, Response<ResultStringDTO> response) {
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResultStringDTO> call, Throwable t) {
+                dataReceiver.onFail();
+            }
+        });
+    }
+
+    public void cancelApplication(String appId, final DataReceiver<ResultIntDTO> dataReceiver) {
+        clientService.cancelApplication(appId).enqueue(new Callback<ResultIntDTO>() {
+            @Override
+            public void onResponse(Call<ResultIntDTO> call, Response<ResultIntDTO> response) {
+                dataReceiver.onReceive(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResultIntDTO> call, Throwable t) {
                 dataReceiver.onFail();
             }
         });

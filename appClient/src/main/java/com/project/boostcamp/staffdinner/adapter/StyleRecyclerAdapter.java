@@ -14,12 +14,13 @@ import java.util.ArrayList;
 
 /**
  * Created by Hong Tae Joon on 2017-08-09.
+ * 분위기 종류 어뎁터
  */
 
 public class StyleRecyclerAdapter extends RecyclerView.Adapter<StyleVH> {
-    private Context context;
+    private final Context context;
     private ArrayList<StyleListData> styles;
-    private ViewHolderEvent<StyleListData> dataEvent;
+    private final ViewHolderEvent<StyleListData> dataEvent;
 
     public StyleRecyclerAdapter(Context context, ViewHolderEvent<StyleListData> dataEvent) {
         this.context = context;

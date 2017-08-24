@@ -15,6 +15,7 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 /**
  * Created by Hong Tae Joon on 2017-08-11.
+ * 리뷰 홀더
  */
 
 public class ReviewVH extends BaseVH<ReviewDTO> {

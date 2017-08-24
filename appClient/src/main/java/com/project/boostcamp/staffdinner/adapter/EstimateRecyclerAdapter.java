@@ -14,12 +14,13 @@ import java.util.ArrayList;
 
 /**
  * Created by Hong Tae Joon on 2017-08-04.
+ * 견적서 내역 어뎁터
  */
 
 public class EstimateRecyclerAdapter extends RecyclerView.Adapter<EstimateVH> {
-    private Context context;
+    private final Context context;
     private ArrayList<ClientEstimateDTO> data;
-    private DataEvent<ClientEstimateDTO> dataEvent;
+    private final DataEvent<ClientEstimateDTO> dataEvent;
 
     public EstimateRecyclerAdapter(Context context, DataEvent<ClientEstimateDTO> dataEvent) {
         this.context = context;

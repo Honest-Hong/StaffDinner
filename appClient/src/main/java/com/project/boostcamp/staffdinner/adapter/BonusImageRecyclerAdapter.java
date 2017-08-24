@@ -13,12 +13,13 @@ import java.util.ArrayList;
 
 /**
  * Created by Hong Tae Joon on 2017-08-17.
+ * 식당의 추가 이미지 어뎁터
  */
 
 public class BonusImageRecyclerAdapter extends RecyclerView.Adapter<BonusImageVH> {
-    private Context context;
+    private final Context context;
     private ArrayList<String> data;
-    private DataEvent<String> dataEvent;
+    private final DataEvent<String> dataEvent;
 
     public BonusImageRecyclerAdapter(Context context, DataEvent<String> dataEvent) {
         this.context = context;

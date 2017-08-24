@@ -15,13 +15,14 @@ import com.project.boostcamp.staffdinner.adapter.viewholder.ReviewVH;
 import java.util.ArrayList;
 
 /**
- * Created by Hong Tae Joon on 2017-08-11.
+ * Created by Hong Tae Joon on 2017-08-11
+ * 근처 리뷰 목록 어뎁터.
  */
 
 public class NearReviewRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
-    private Context context;
+    private final Context context;
     private ArrayList<ReviewDTO> data;
-    private DataEvent<ReviewDTO> dataEvent;
+    private final DataEvent<ReviewDTO> dataEvent;
 
     public NearReviewRecyclerAdapter(Context context, DataEvent<ReviewDTO> dataEvent) {
         this.context = context;
@@ -57,7 +58,9 @@ public class NearReviewRecyclerAdapter extends RecyclerView.Adapter<BaseVH> {
 
     @Override
     public void onBindViewHolder(BaseVH holder, int position) {
-        holder.setupView(data.get(position));
+        if(holder instanceof ReviewVH) {
+            ((ReviewVH)holder).setupView(data.get(position));
+        }
     }
 
     @Override

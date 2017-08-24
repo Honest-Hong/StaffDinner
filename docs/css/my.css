@@ -12,6 +12,37 @@
     color:#fff;
 }
 
-.my-title {
-    padding-bottom: 50px
+.my-title-black {
+    color: #333;
+    font-size: 50px;
+    font-weight: 700;
+    padding-bottom: 50px;
+    padding-top: 50px;
+}
+
+.my-title-white {
+    color: #fff;
+    font-size: 50px;
+    font-weight: 700;
+    padding-bottom: 50px;
+}
+
+.image-title {
+    font-size: 20px;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #333;
+}
+
+.text-content-white {
+    font-size: 18px;
+    padding: 20px;
+    color: #fff;
+}
+
+.text-content-black {
+    font-size: 18px;
+    padding: 20px;
+    color: #333;
 }

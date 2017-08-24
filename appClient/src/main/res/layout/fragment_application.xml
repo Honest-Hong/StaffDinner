@@ -363,6 +363,28 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_location_title"/>
 
+            <TextView
+                android:id="@+id/text_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:textSize="@dimen/fontSmall"
+                android:textColor="@color/black"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_location"/>
+
+            <ImageButton
+                android:id="@+id/button_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/background_rectangle_button_primary"
+                android:src="@drawable/ic_arrow_drop_down_green_24dp"
+                app:layout_constraintLeft_toRightOf="@id/text_distance"
+                app:layout_constraintTop_toTopOf="@id/text_distance"
+                app:layout_constraintBottom_toBottomOf="@id/text_distance"/>
+
             <fragment
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -371,7 +393,7 @@
                 android:layout_marginTop="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_search"/>
+                app:layout_constraintTop_toBottomOf="@+id/text_distance"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 

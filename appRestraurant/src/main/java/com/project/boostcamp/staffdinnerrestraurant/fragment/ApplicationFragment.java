@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.project.boostcamp.publiclibrary.api.DataReceiver;
 import com.project.boostcamp.publiclibrary.api.RetrofitAdmin;
 import com.project.boostcamp.publiclibrary.data.AdminApplication;
+import com.project.boostcamp.publiclibrary.data.DefaultValue;
 import com.project.boostcamp.publiclibrary.inter.DataEvent;
 import com.project.boostcamp.publiclibrary.domain.AdminApplicationDTO;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
@@ -36,7 +37,6 @@ import butterknife.ButterKnife;
  */
 
 public class ApplicationFragment extends Fragment {
-    private static final float MAX_DISTANCE = 2.0f;
     @BindView(R.id.recycler_view) RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
     @BindView(R.id.image_empty) ImageView imageEmpty;
@@ -78,7 +78,7 @@ public class ApplicationFragment extends Fragment {
     public void loadData() {
         showRefreshing();
         String id = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
-        RetrofitAdmin.getInstance().getApplicationList(id, 3, appDataReceiver);
+        RetrofitAdmin.getInstance().getApplicationList(id, DefaultValue.DEFAULT_MAX_DISTNACE, appDataReceiver);
     }
 
     private DataReceiver<ArrayList<AdminApplicationDTO>> appDataReceiver = new DataReceiver<ArrayList<AdminApplicationDTO>>() {

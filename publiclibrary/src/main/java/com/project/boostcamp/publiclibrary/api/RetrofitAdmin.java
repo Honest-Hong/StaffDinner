@@ -84,7 +84,7 @@ public class RetrofitAdmin {
         });
     }
 
-    public void getApplicationList(String id, int distance, final DataReceiver<ArrayList<AdminApplicationDTO>> dataReceiver) {
+    public void getApplicationList(String id, float distance, final DataReceiver<ArrayList<AdminApplicationDTO>> dataReceiver) {
         adminService.getApplications(id, distance).enqueue(new Callback<ArrayList<AdminApplicationDTO>>() {
             @Override
             public void onResponse(Call<ArrayList<AdminApplicationDTO>> call, Response<ArrayList<AdminApplicationDTO>> response) {

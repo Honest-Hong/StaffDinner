@@ -91,14 +91,20 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
     @BindView(R.id.text_style) TextView textStyle;
     @BindView(R.id.edit_menu) EditText editMenu; // 신청서의 메뉴 입력창
     @BindView(R.id.text_location) TextView textLocation; // 신청서의 위치 텍스트
+    @BindView(R.id.text_distance) TextView textDistance;
     @BindView(R.id.button_apply) Button btnApply; // 신청 버튼
     @BindView(R.id.button_up) ImageButton btnUp;
     @BindView(R.id.button_down) ImageButton btnDown;
     @BindView(R.id.button_search) ImageButton btnSearch;
+    @BindView(R.id.button_message) ImageButton btnMessage;
+    @BindView(R.id.button_time) ImageButton btnTime;
+    @BindView(R.id.button_menu) ImageButton btnMenu;
+    @BindView(R.id.button_distance) ImageButton btnDistance;
     @BindView(R.id.button_style) Button btnStyle;
     @BindView(R.id.wheel_hour) WheelPicker wheelHour; // 선청서의 시간 선택 도구
     @BindView(R.id.wheel_minute) WheelPicker wheelMinute; // 신청서의 분 선택 도구
     @BindView(R.id.wheel_date) WheelPicker wheelDate;
+
     private TextWheelAdapter wheelAdapterHour; //  신청서의 시간 뷰 어댑터
     private TextWheelAdapter wheelAdapterMinute; // 신청서의 분 뷰 어댑터
     private TextWheelAdapter wheelAdapterDate;
@@ -127,8 +133,6 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
         SupportMapFragment mapFragment = (SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        // TODO: 2017-07-28 키보드로 잘못 된 입력 예외 처리 하기
     }
 
     /**
@@ -144,7 +148,6 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         uiSettings.setZoomGesturesEnabled(false);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(DEFAULT_LOCATION, DefaultValue.DEFAULT_ZOON));
 
-        // TODO: 2017-08-04 신청서가 존재하는 경우 현재 위치로 하지 않도록 하기
         if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             setMyLocation();
@@ -220,7 +223,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
             public void onResponse(Call<ClientApplicationDTO> call, Response<ClientApplicationDTO> response) {
                 ClientApplicationDTO dto = response.body();
                 application = new Application();
-                if(dto.get_id() != null) {
+                if(dto.getState() == ApplicationStateType.STATE_APPLIED) {
                     application.setId(dto.get_id());
                     application.setTitle(dto.getTitle());
                     application.setNumber(dto.getNumber());
@@ -229,13 +232,14 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
                     application.setWantedMenu(dto.getMenu());
                     application.setGeo(dto.getGeo().toGeo());
                     application.setState(ApplicationStateType.STATE_APPLIED);
+                    application.setDistance(dto.getDistance());
+                } else {
                 }
                 setupTexts(application);
             }
 
             @Override
             public void onFailure(Call<ClientApplicationDTO> call, Throwable t) {
-//                application = SharedPreperenceHelper.getInstance(getContext()).getApply();
                 if(application == null) {
                     application = new Application();
                 }
@@ -260,12 +264,10 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         editNumber.setText(String.format(Locale.getDefault(), "%d", application.getNumber()));
         textStyle.setText(application.getWantedStyle());
         editMenu.setText(application.getWantedMenu());
+        textDistance.setText(getString(R.string.available_move_distance, application.getDistance()));
         setWheelTime(application.getWantedTime());
 
-
-        // TODO: 2017-08-03 정확한 날짜를 가리키도록 하기
         setState(application.getState());
-        // TODO: 2017-07-28 저장된 위치 맵에 출력하기
     }
 
     private void setWheelTime(long time) {
@@ -364,7 +366,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
                     return;
                 }
                 String appId = application.getId();
-                application = getApplicationFromEditText(appId);
+                makeApplicationFromEditText(appId);
                 MyAlertDialog.newInstance(getString(R.string.dialog_alert_title),
                         getString(
                                 R.string.dialog_apply_message,
@@ -456,11 +458,11 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         dto.setMenu(application.getWantedMenu());
         dto.setGeo(application.getGeo().toGeoDTO());
         dto.setWritedTime(TimeHelper.now());
+        dto.setDistance(application.getDistance());
         String clientId = SharedPreperenceHelper.getInstance(getContext()).getLoginId();
         RetrofitClient.getInstance().clientService.setApplication(clientId, dto).enqueue(new Callback<ResultStringDTO>() {
             @Override
             public void onResponse(Call<ResultStringDTO> call, Response<ResultStringDTO> response) {
-                Log.d("HTJ", "ApplicationFragment-submitApplication-onResponse: " + response.body());
                 if(response.body().getResult() != null) {
                     application.setId(response.body().getResult());
                     SharedPreperenceHelper.getInstance(getContext()).saveApplication(application);
@@ -482,8 +484,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
      * 현재 입력되어있는 값들을 Application 객체로 반환시켜주는 함수
      * @param appId 신청서 아이디
      */
-    private Application getApplicationFromEditText(String appId) {
-        Application application = new Application();
+    private void makeApplicationFromEditText(String appId) {
         // 데이터 최신화 작업
         application.setId(appId);
         application.setTitle(editTitle.getText().toString());
@@ -502,7 +503,6 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
                 marker.getPosition().longitude,
                 marker.getPosition().latitude));
         application.setWritedTime(TimeHelper.now());
-        return application;
     }
 
     /**
@@ -647,6 +647,10 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         btnDown.setEnabled(!block);
         btnSearch.setEnabled(!block);
         btnStyle.setEnabled(!block);
+        btnMessage.setEnabled(!block);
+        btnTime.setEnabled(!block);
+        btnMenu.setEnabled(!block);
+        btnDistance.setEnabled(!block);
     }
 
     @OnClick(R.id.button_message)
@@ -699,5 +703,29 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
                     }
                 })
                 .create().show(getFragmentManager(), null);
+    }
+
+    @OnClick(R.id.button_distance)
+    public void getDistance() {
+        new SelectStringDialog.Builder()
+                .setTitle(getString(R.string.select_available_move_distance))
+                .setData(getResources().getStringArray(R.array.example_distance))
+                .setReturnEvent(new DataEvent<String>() {
+                    @Override
+                    public void onClick(String data) {
+                        String[] examples = getResources().getStringArray(R.array.example_distance);
+                        int[] reals = getResources().getIntArray(R.array.example_distance_real);
+                        int index = 0;
+                        for(String str: examples) {
+                            if(str.equals(data)) {
+                                break;
+                            }
+                            index++;
+                        }
+                        float distance = reals[index] / 1000.0f;
+                        application.setDistance(distance);
+                        textDistance.setText(getString(R.string.available_move_distance, distance));
+                    }
+                }).create().show(getFragmentManager(), null);
     }
 }

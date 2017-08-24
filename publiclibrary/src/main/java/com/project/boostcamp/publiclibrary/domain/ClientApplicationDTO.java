@@ -16,6 +16,7 @@ public class ClientApplicationDTO {
     private GeoDTO geo;
     private int state;
     private long writedTime;
+    private double distance;
 
     public String get_id() {
         return _id;
@@ -87,6 +88,14 @@ public class ClientApplicationDTO {
 
     public void setWritedTime(long writedTime) {
         this.writedTime = writedTime;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     @Override

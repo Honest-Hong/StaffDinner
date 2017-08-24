@@ -23,6 +23,7 @@ public class Application implements Parcelable{
     private int state;
 
     public Application() {
+        distance = 1.0;
     }
 
     protected Application(Parcel in) {

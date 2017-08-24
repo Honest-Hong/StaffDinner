@@ -15,4 +15,5 @@ public class DefaultValue {
     public static final int DEFAULT_MAX_DATE = 14;
     public static final int DEFAULT_SCROLL_TIME = 5000;
     public static final int DEFAULT_SCROLL_DELAY = 2000;
+    public static final float DEFAULT_MAX_DISTNACE = 5.0f;
 }

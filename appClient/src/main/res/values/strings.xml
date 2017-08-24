@@ -137,4 +137,6 @@
     <string name="wrong_phone_number">올바르지 않은 전화번호 형식입니다.</string>
     <string name="fail_to_join">회원가입에 실패하였습니다</string>
     <string name="not_connect_network">네트워크가 연결되어있지 않습니다</string>
+    <string name="select_available_move_distance">이동 가능한 거리 선택</string>
+    <string name="available_move_distance">이동할 수 있는 거리 : %1$.1fkm</string>
 </resources>

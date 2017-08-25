@@ -44,6 +44,6 @@ public class GeocoderHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return str.replace("대한민국", "");
+        return str.replace("대한민국 ", "");
     }
 }

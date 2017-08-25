@@ -59,7 +59,8 @@
             android:id="@+id/button_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_margin="4dp"
+            android:background="@drawable/background_rectangle_button_primary"
             android:alpha="0.8"
             android:text="@string/text_select_this"/>
 

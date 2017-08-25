@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/to"
-            android:textColor="@color/black"
+            android:textColor="@color/grey"
             android:textSize="@dimen/fontSmall"/>
 
         <TextView
@@ -26,7 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/grey"
-            android:textSize="@dimen/fontSmall"/>
+            android:textSize="@dimen/fontSmall"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/text_time"
@@ -58,7 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/from"
-            android:textColor="@color/black"
+            android:textColor="@color/grey"
             android:textSize="@dimen/fontSmall"/>
 
         <TextView
@@ -66,7 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/grey"
-            android:textSize="@dimen/fontSmall"/>
+            android:textSize="@dimen/fontSmall"
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <TextView

@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.RequestType;
 import com.project.boostcamp.publiclibrary.util.GeocoderHelper;
+import com.project.boostcamp.publiclibrary.util.MarkerBuilder;
 import com.project.boostcamp.staffdinner.R;
 
 import butterknife.BindView;
@@ -87,8 +88,7 @@ public class MapDetailActivity extends AppCompatActivity implements OnMapReadyCa
         LatLng latLng = new LatLng(latitude, longitude);
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
         if(readOnly) {
-            googleMap.addMarker(new MarkerOptions()
-                    .position(latLng));
+            googleMap.addMarker(MarkerBuilder.simple(latLng));
             textLocation.setText(GeocoderHelper.getAddress(this, latLng));
         } else {
             UiSettings uiSettings = googleMap.getUiSettings();

@@ -19,14 +19,14 @@
     <string name="text_style">분위기</string>
     <string name="text_menu">메뉴</string>
     <string name="text_location">위치</string>
-    <string name="text_apply_success">신청 완료</string>
+    <string name="text_apply_success">신청이 완료되었습니다.</string>
     <string name="text_apply_canceled">취소됨</string>
     <string name="text_apply_contacted">계약됨</string>
     <string name="text_count_person">명</string>
     <string name="text_apply">신청</string>
     <string name="cancel">취소</string>
-    <string name="text_rewrite">다시 작성</string>
-    <string name="text_need_input">작성 필요</string>
+    <string name="text_rewrite">다시 작성하기</string>
+    <string name="text_need_input">작성이 필요합니다!</string>
     <string name="user_name">%1$s님</string>
     <string name="text_contact_apply_title">신청서 내용</string>
     <string name="text_contact_estimate_title">견적서 내용</string>

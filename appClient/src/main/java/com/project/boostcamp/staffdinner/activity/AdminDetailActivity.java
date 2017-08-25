@@ -248,8 +248,8 @@ public class AdminDetailActivity extends AppCompatActivity implements OnMapReady
     @Override
     public void onMapClick(LatLng latLng) {
         Intent intentMap = new Intent(this, MapDetailActivity.class);
-        intentMap.putExtra(ExtraType.EXTRA_LATITUDE, latLng.latitude);
-        intentMap.putExtra(ExtraType.EXTRA_LONGITUDE, latLng.longitude);
+        intentMap.putExtra(ExtraType.EXTRA_LATITUDE, data.getGeo().getCoordinates()[1]);
+        intentMap.putExtra(ExtraType.EXTRA_LONGITUDE, data.getGeo().getCoordinates()[0]);
         intentMap.putExtra(ExtraType.EXTRA_READ_ONLY, true);
         startActivity(intentMap);
     }

@@ -42,8 +42,14 @@
         <item name="met_floatingLabelTextSize">@dimen/fontSmall</item>
     </style>
 
-    <style name="ApplicationTextView">
+    <style name="TextViewTitleApplication">
         <item name="android:textSize">@dimen/fontSmall</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/grey</item>
+    </style>
+
+    <style name="TextViewTitleHome">
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">@dimen/fontSmall</item>
+        <item name="android:textStyle">normal</item>
     </style>
 </resources>

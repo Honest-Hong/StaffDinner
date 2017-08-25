@@ -202,20 +202,17 @@
         <div class="row">
           <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms">
             <div class="entry-header text-center">
-              <video src="./videos/홈 메뉴.mp4" height=640 controls/>
-              <!--<iframe width="100%" height="500" src="https://www.youtube.com/embed/XBjdH0LFnQg" frameborder="0" allowfullscreen></iframe>-->
+              <video src="./videos/홈 메뉴.mp4" width=100% controls/>
             </div>
           </div>   
           <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms">
             <div class="entry-header text-center">
-              <video src="./videos/신청서 메뉴.mp4" height=640 controls/>
-              <!--<iframe width="100%" height="500" src="https://www.youtube.com/embed/XBjdH0LFnQg" frameborder="0" allowfullscreen></iframe>-->
+              <video src="./videos/신청서 메뉴.mp4" width=100% controls/>
             </div>
           </div>  
           <div class="col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="400ms">
             <div class="entry-header text-center">
-              <video src="./videos/견적서 보내기.mp4" height=640 controls/>
-              <!--<iframe width="100%" height="500" src="https://www.youtube.com/embed/XBjdH0LFnQg" frameborder="0" allowfullscreen></iframe>-->
+              <video src="./videos/견적서 보내기.mp4" width=100% controls/>
             </div>
           </div>               
       </div>
@@ -238,12 +235,12 @@
         </div>
         <div class="col-sm-3">
           <div class="detail-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-            <img src="./images/신청서 도착 알림.gif" height=480/>
+            <img src="./images/신청서 도착 알림.gif" width=100%/>
           </div>
         </div>
         <div class="col-sm-3">
           <div class="detail-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-            <img src="./images/계약 성사 알림.gif" height=480/>
+            <img src="./images/계약 성사 알림.gif" width=100%/>
           </div>
         </div>
       </div>
@@ -257,7 +254,7 @@
         </div>
         <div class="col-sm-6 text-center">
           <div class="detail-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-            <img src="./images/신청서 목록.gif" height=480/>
+            <img src="./images/신청서 목록.gif" width=50%/>
           </div>
         </div>
       </div>
@@ -270,7 +267,7 @@
         </div>
         <div class="col-sm-6 text-center">
           <div class="detail-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-            <img src="./images/신청서 취소 알림.gif" height=480/>
+            <img src="./images/신청서 취소 알림.gif" width=50%/>
           </div>
         </div>
       </div>
@@ -283,7 +280,7 @@
         </div>
         <div class="col-sm-6 text-center">
           <div class="detail-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-            <img src="./images/페이징.gif" height=480/>
+            <img src="./images/페이징.gif" width=50%/>
           </div>
         </div>
       </div>
@@ -296,7 +293,7 @@
         </div>
         <div class="col-sm-6 text-center">
           <div class="detail-info wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
-            <img src="./images/로컬 저장소.gif" height=480/>
+            <img src="./images/로컬 저장소.gif" width=50%/>
           </div>
         </div>
       </div>
@@ -425,26 +422,25 @@
     <div id="contact-us" class="parallax">
       <div class="container">
         <div class="row">
-          <div class="heading text-center col-sm-8 col-sm-offset-2 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
+          <div class="heading text-center col-sm-10 col-sm-offset-1 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="300ms">
             <div class="my-title-white">후기</div>
           </div>
         </div>
         <div class="row">
-          <div class="text-center col-sm-8 col-sm-offset-2 wow fadeInUp"  data-wow-duration="1000ms" data-wow-delay="500ms">
+          <div class="text-center text-content-white col-sm-10 col-sm-offset-1 wow fadeInUp"  data-wow-duration="1000ms" data-wow-delay="500ms">
+            <h2>트러블 슈팅</h2>
+            <p>  갤러리로부터 이미지를 불러오는 과정에서 버전별, 기기별 달라지는 경로때문에 나타난 문제가 발생하였습니다. 라이브러리를 사용해보았지만 오히려 라이브러리끼리 버전 충돌이 났고 결국 호환을 위한 함수를 코딩하였습니다.</p>
+            <br>
+            <p>  MongoDB를 사용한 이유는 NoSQL을 한번 사용해 보고 싶었고 위도 경고 거리 계산을 내장하고 있기 때문이었습니다. 실제 로 거리 계산을 해보았지만 실패하였습니다. 공식 문서를 다시 여러번 읽은 후 처음부터 다시 구축하면서 해결하였습니다.</p>
+            <br>
+            <p>  만료된 신청서를 삭제하기 위해서 서버에 Crontab을 사용했습니다. 하지만 시간이 지나자 MongoDB가 작동을 멈추게 되었고 로그를 확인하여 문제점을 찾았습니다. 프로그램이 MongoDB에 connect를 한 후 종료되지 않았거나 close되지 않았기 때문이어서 이를 해결하였습니다.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="text-center text-content-white col-sm-10 col-sm-offset-1 wow fadeInUp"  data-wow-duration="1000ms" data-wow-delay="500ms">
             <h2>배운점</h2>
-            <p>배웠습니다...</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="text-center col-sm-8 col-sm-offset-2 wow fadeInUp"  data-wow-duration="1000ms" data-wow-delay="500ms">
-            <h2>향상된 점</h2>
-            <p>향상되었습니다...</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="text-center col-sm-8 col-sm-offset-2 wow fadeInUp"  data-wow-duration="1000ms" data-wow-delay="500ms">
-            <h2>좋았던 점</h2>
-            <p>좋았습니다...</p>
+            <p>  부스트캠프에 들어오기 전, 저는 최신 기술에 대한 정보가 별로 없었습니다. 대표적으로 이미지 로딩 라이브러리가 존재하며 왜 이것을 사용하는지에 대한 내용을 전혀 몰랐습니다. 이렇게 무식했던 제가 부스트캠프의 과정을 밟아가면서 중요한 기술에 대해 많이 알게 되었습니다. Retrofit이라는 네트워크 통신 라이브러리. Realm이라는 데이터베이스. Firebase의 유용한 기능. 이 외에도 나열할 수 없을 만큼 많이 배웠습니다.</p>
+            <p>  물론 최신 기술에 대해서만 배운 것은 아닙니다. 튜터님들께서 튜터링 시간에 항상 강조하신 내용이 있었습니다. CS 기초와 Java 기초였습니다. 부스트캠프 기간동안 기초와 관련해서 여러번 질문을 받았었습니다. 자신있게 대답한 내용도 있었지만 부족한 답변이 많았습니다. 부스트캠프에 들어오지 않았더라면 받지 못했을 질문들이었을 것입니다. 바로 부족했던 대답들에 대해 공부를 하고, 자신있던 내용도 다시 공부하는 계기가 되었습니다. 그리고 이후 공부를 할 때 무엇을 중점으로 보아야하는지 알게되었습니다.</p>
           </div>
         </div>
       </div>

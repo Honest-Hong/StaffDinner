@@ -1,5 +1,10 @@
-.my-background {
+.my-background1 {
     background-image: url(../images/features-bg.jpg);
+}
+
+.my-background-green {
+    /*background-image: url(../images/slider/2.jpg);*/
+    background-color: #3c963f;
 }
 
 .detail-info {
@@ -27,12 +32,19 @@
     padding-bottom: 50px;
 }
 
+.my-title-green {
+    color: #4CAF50;
+    font-size: 50px;
+    font-weight: 700;
+    padding-bottom: 50px;
+}
+
 .image-title {
     font-size: 20px;
     font-weight: bold;
     padding-top: 20px;
     padding-bottom: 20px;
-    color: #333;
+    color: #fff;
 }
 
 .text-content-white {
@@ -45,4 +57,17 @@
     font-size: 18px;
     padding: 20px;
     color: #333;
+}
+
+.my-row-top {
+    margin-bottom: 100px;
+}
+
+.my-row {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.my-row-bottom {
+    margin-top: 100px;
 }

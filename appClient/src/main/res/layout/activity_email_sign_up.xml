@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/password"
-            android:inputType="numberPassword"
+            android:inputType="textPassword"
             android:maxLines="1"
             app:met_helperText="@string/email_sign_up_password_help"
             app:layout_constraintTop_toBottomOf="@id/edit_email"

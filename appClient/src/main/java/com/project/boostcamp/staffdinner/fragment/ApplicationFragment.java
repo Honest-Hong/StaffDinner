@@ -12,6 +12,8 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,6 +92,7 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
     @BindView(R.id.edit_menu) EditText editMenu; // 신청서의 메뉴 입력창
     @BindView(R.id.text_location) TextView textLocation; // 신청서의 위치 텍스트
     @BindView(R.id.text_distance) TextView textDistance;
+    @BindView(R.id.text_title_count) TextView textTitleCount;
     @BindView(R.id.button_apply) Button btnApply; // 신청 버튼
     @BindView(R.id.button_up) ImageButton btnUp;
     @BindView(R.id.button_down) ImageButton btnDown;
@@ -133,6 +136,27 @@ public class ApplicationFragment extends Fragment implements OnMapReadyCallback,
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getContext());
         SupportMapFragment mapFragment = (SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        editTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                int count = editable.length();
+                textTitleCount.setText(getString(R.string.title_count, editable.length(), DefaultValue.DEFAULT_MAX_MESSAGE));
+                if(count > 25 || count < 8) {
+                    textTitleCount.setTextColor(ContextCompat.getColor(getContext(), R.color.red));
+                } else {
+                    textTitleCount.setTextColor(ContextCompat.getColor(getContext(), R.color.green));
+                }
+            }
+        });
     }
 
     /**

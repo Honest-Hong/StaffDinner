@@ -122,4 +122,5 @@
     <string name="not_connect_network">네트워크가 연결되어있지 않습니다</string>
     <string name="select_available_move_distance">이동 가능한 거리 선택</string>
     <string name="available_move_distance">이동할 수 있는 거리 : %1$.1fkm</string>
+    <string name="title_count">%1$d (8~) / %2$d</string>
 </resources>

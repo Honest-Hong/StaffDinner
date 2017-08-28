@@ -381,7 +381,7 @@
                 <div class="overlay-text">
                   <div class="folio-info">
                     <div class="my-h2">Node.js - Express</div>
-                    <p>서버 프레임워크</p>
+                    <div class="my-p">서버 프레임워크</div>
                   </div>
                 </div>
               </div>
@@ -398,7 +398,7 @@
                 <div class="overlay-text">
                   <div class="folio-info">
                     <div class="my-h2">MongoDB</div>
-                    <p>데이터베이스</p>
+                    <div class="my-p">서버 데이터베이스</div>
                   </div>
                 </div>
               </div>
@@ -415,7 +415,7 @@
                 <div class="overlay-text">
                   <div class="folio-info">
                     <div class="my-h2">FCM</div>
-                    <p>실시간 알림</p>
+                    <div class="my-p">신청서, 견적서, 계약 등 실시간 알림</div>
                   </div>
                 </div>
               </div>
@@ -432,7 +432,7 @@
                 <div class="overlay-text">
                   <div class="folio-info">
                     <div class="my-h2">Retrofit 2</div>
-                    <p>안드로이드 서버 통신 라이브러리</p>
+                    <div class="my-p"p>안드로이드 서버 통신 라이브러리</div>
                   </div>
                 </div>
               </div>
@@ -449,7 +449,7 @@
                 <div class="overlay-text">
                   <div class="folio-info">
                     <div class="my-h2">Glide</div>
-                    <p>안드로이드 이미지 로딩 라이브러리</p>
+                    <div class="my-p">빠른 네트워크 이미지 로딩과 이미지 캐싱</div>
                   </div>
                 </div>
               </div>
@@ -466,7 +466,7 @@
                 <div class="overlay-text">
                   <div class="folio-info">
                     <div class="my-h2">Google Maps</div>
-                    <p>안드로이드 지도 API</p>
+                    <div class="my-p"p>안드로이드 지도 API</div>
                   </div>
                 </div>
               </div>
@@ -483,7 +483,7 @@
                 <div class="overlay-text">
                   <div class="folio-info">
                     <div class="my-h2">SQLite</div>
-                    <p>네트워크가 끊겼을 경우 저장된 로컬 데이터</p>
+                    <div class="my-p">네트워크가 끊겼을 경우 저장된 로컬 데이터</div>
                   </div>
                 </div>
               </div>
@@ -504,19 +504,31 @@
         </div>
         <div class="row">
           <div class="text-center text-content-white col-sm-10 col-sm-offset-1 wow fadeInUp"  data-wow-duration="1000ms" data-wow-delay="500ms">
-            <h2>트러블 슈팅</h2>
-            <p>  갤러리로부터 이미지를 불러오는 과정에서 버전별, 기기별 달라지는 경로때문에 나타난 문제가 발생하였습니다. 라이브러리를 사용해보았지만 오히려 라이브러리끼리 버전 충돌이 났고 결국 호환을 위한 함수를 코딩하였습니다.</p>
+            <div class="my-h2" style="color:#4CAF50">트러블 슈팅</h2>
+            <div class="my-p" style="margin-top: 50px">갤러리로부터 이미지를 불러오는 과정에서 호환성 문제가 발생하였습니다. 여러 라이브러리로 대체해보았지만 원하는 방식이 없어 직접 코딩하였습니다.</div>
             <br>
-            <p>  MongoDB를 사용한 이유는 NoSQL을 한번 사용해 보고 싶었고 위도 경고 거리 계산을 내장하고 있기 때문이었습니다. 실제 로 거리 계산을 해보았지만 실패하였습니다. 공식 문서를 다시 여러번 읽은 후 처음부터 다시 구축하면서 해결하였습니다.</p>
+            <div class="my-p">MongoDB에서 거리를 계산하는데 쿼리 오류가 발생했습니다. MongoDB 공식 문서를 여러번 다시 읽고 데이터베이스를 처음부터 다시 구축하면서 해결하였습니다.</div>
             <br>
-            <p>  만료된 신청서를 삭제하기 위해서 서버에 Crontab을 사용했습니다. 하지만 시간이 지나자 MongoDB가 작동을 멈추게 되었고 로그를 확인하여 문제점을 찾았습니다. 프로그램이 MongoDB에 connect를 한 후 종료되지 않았거나 close되지 않았기 때문이어서 이를 해결하였습니다.</p>
+            <div class="my-p">리눅스의 Crontab을 사용하는 과정에서 MongoDB를 터뜨렸습니다. Crontab의 로그를 확인하여 문제점 찾고 프로그램을 수정하여 문제를 해결하였습니다.</div>
           </div>
         </div>
         <div class="row">
           <div class="text-center text-content-white col-sm-10 col-sm-offset-1 wow fadeInUp"  data-wow-duration="1000ms" data-wow-delay="500ms">
-            <h2>배운점</h2>
-            <p>  부스트캠프에 들어오기 전, 저는 최신 기술에 대한 정보가 별로 없었습니다. 대표적으로 이미지 로딩 라이브러리가 존재하며 왜 이것을 사용하는지에 대한 내용을 알지 못했습니다. 이렇게 부족했던 제가 부스트캠프의 과정을 밟아가면서 중요한 기술에 대해 많이 알게 되었습니다. Retrofit이라는 네트워크 통신 라이브러리. Realm이라는 데이터베이스. Firebase의 유용한 기능. 이 외에도 나열할 수 없을 만큼 많이 배웠습니다.</p>
-            <p>  물론 최신 기술에 대해서만 배운 것은 아닙니다. 튜터님들께서 튜터링 시간에 항상 강조하신 내용이 있었습니다. CS 기초와 Java 기초였습니다. 부스트캠프 기간동안 기초와 관련해서 여러번 질문을 받았었습니다. 자신있게 대답한 내용도 있었지만 부족한 답변이 많았습니다. 부스트캠프에 들어오지 않았더라면 받지 못했을 질문들이었을 것입니다. 바로 부족했던 대답들에 대해 공부를 하고, 자신있던 내용도 다시 공부하는 계기가 되었습니다. 그리고 이후 공부를 할 때 무엇을 중점으로 보아야하는지 알게되었습니다.</p>
+            <div class="my-h2" style="color:#4CAF50">배운점</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="text-center text-content-white col-sm-4 col-sm-offset-1 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
+            <div class="my-p">부족 했던 최신 기술 정보</div>
+            <div class="my-p">완벽하지 않았던 CS기초</div>
+            <div class="my-p">모르고 있던 CS기초</div>
+          </div>
+          <div class="text-center text-content-white col-sm-2 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
+            <div style="font-size: 50px; font-weight:300; margin-top: 50px;">→</div>
+          </div>
+          <div class="text-center text-content-white col-sm-4 wow fadeInUp" data-wow-duration="1000ms" data-wow-delay="500ms">
+            <div class="my-p">다양해진 최신 기술 정보</div>
+            <div class="my-p">탄탄해진 CS기초</div>
           </div>
         </div>
       </div>

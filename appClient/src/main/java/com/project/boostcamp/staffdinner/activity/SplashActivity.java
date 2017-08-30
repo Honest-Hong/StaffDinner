@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.bumptech.glide.request.target.Target;
 import com.project.boostcamp.publiclibrary.data.ExtraType;
 import com.project.boostcamp.publiclibrary.data.RequestType;
+import com.project.boostcamp.publiclibrary.util.HashkeyHelper;
 import com.project.boostcamp.publiclibrary.util.Logger;
 import com.project.boostcamp.publiclibrary.util.PermissionHelper;
 import com.project.boostcamp.publiclibrary.util.SharedPreperenceHelper;
@@ -37,6 +38,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+//        Logger.i(this, "Hashkey", HashkeyHelper.getHashkey(this));
         GlideApp.with(this)
                 .load(R.drawable.green_background)
                 .centerCrop()

@@ -35,6 +35,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra(ExtraType.EXTRA_NOTIFICATION_TYPE, Integer.parseInt(remoteMessage.getData().get("type")));
+        startActivity(intent);
         manager.notify(0, NotiHelper.simple(this,
                 remoteMessage.getNotification().getTitle(),
                 remoteMessage.getNotification().getBody(),
